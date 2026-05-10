@@ -8,6 +8,9 @@ package com.mycompany.javafit;
  *
  * @author Dani
  */
+
+import java.util.ArrayList;
+
 public class Socio extends Usuario {
     
     private String nombre;
@@ -15,6 +18,8 @@ public class Socio extends Usuario {
     private String direccion;
     private String tarjetaCredito;
     private boolean socioVIP;
+    private ArrayList<Reserva> reservas;
+    
 
     public Socio(String correo, String clave, String nombre, String telefono, String direccion, String tarjetaCredito, boolean socioVIP) {
         super(correo, clave);
@@ -23,6 +28,8 @@ public class Socio extends Usuario {
         this.direccion = direccion;
         this.tarjetaCredito = tarjetaCredito;
         this.socioVIP = socioVIP;
+        this.reservas = new ArrayList();
+
     }
     
     

@@ -8,6 +8,17 @@ package com.mycompany.javafit;
  *
  * @author Dani
  */
-public class Administrador {
+public class Administrador extends Usuario{
+
+    public Administrador(String correo, String clave) {
+        super(correo, clave);
+    }
+
+    @Override
+    public String toString() {
+        return "Administrador{" + '}';
+    }
+    
+    
     
 }
