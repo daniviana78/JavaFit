@@ -8,7 +8,10 @@ package com.mycompany.javafit;
  *
  * @author Dani
  */
-public class Usuario {
+
+import java.io.*;
+
+public class Usuario implements Serializable {
     
     private String correo;
     

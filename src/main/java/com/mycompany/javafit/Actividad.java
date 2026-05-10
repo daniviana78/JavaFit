@@ -10,6 +10,7 @@ package com.mycompany.javafit;
  */
 
 import java.util.ArrayList;
+import java.util.Objects;
 import javax.swing.ImageIcon;
 
 public class Actividad {
@@ -72,6 +73,24 @@ public class Actividad {
 
     public void setMonitor(String monitor) {
         this.monitor = monitor;
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Actividad other = (Actividad) obj;
+        if (!Objects.equals(this.titulo, other.titulo)) {
+            return false;
+        }
+        return true;
     }
 
     @Override
