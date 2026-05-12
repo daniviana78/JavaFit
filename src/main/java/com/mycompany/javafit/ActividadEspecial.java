@@ -4,13 +4,15 @@
  */
 package com.mycompany.javafit;
 
-import javax.swing.ImageIcon;
-
 /**
  *
  * @author Dani
  */
-public class ActividadEspecial extends Actividad {
+
+import java.io.*;
+import javax.swing.ImageIcon;
+
+public class ActividadEspecial extends Actividad implements Serializable {
     
     private double precio;
     private String descripcion;

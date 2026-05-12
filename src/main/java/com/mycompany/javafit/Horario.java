@@ -9,9 +9,10 @@ package com.mycompany.javafit;
  * @author Dani
  */
 
+import java.io.*;
 import java.time.LocalTime;
 
-public class Horario {
+public class Horario implements Serializable{
 
     private String dia;
     private LocalTime horaInicio;

@@ -9,11 +9,13 @@ package com.mycompany.javafit;
  * @author Dani
  */
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Objects;
 import javax.swing.ImageIcon;
 
-public class Actividad {
+
+public class Actividad implements Serializable {
     
     private String titulo;
     private String tipo;

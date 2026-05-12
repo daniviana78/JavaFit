@@ -8,7 +8,10 @@ package com.mycompany.javafit;
  *
  * @author Dani
  */
-public class Administrador extends Usuario{
+
+import java.io.*;
+
+public class Administrador extends Usuario implements Serializable{
 
     public Administrador(String correo, String clave) {
         super(correo, clave);

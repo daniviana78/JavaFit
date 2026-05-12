@@ -9,9 +9,10 @@ package com.mycompany.javafit;
  * @author Dani
  */
 
+import java.io.*;
 import java.util.ArrayList;
 
-public class Socio extends Usuario {
+public class Socio extends Usuario implements Serializable {
     
     private String nombre;
     private String telefono;

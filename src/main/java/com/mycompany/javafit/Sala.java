@@ -8,7 +8,10 @@ package com.mycompany.javafit;
  *
  * @author Dani
  */
-public class Sala {
+
+import java.io.*;
+
+public class Sala implements Serializable {
     
     private String nombre;
     private int aforo;

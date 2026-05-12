@@ -8,11 +8,17 @@ package com.mycompany.javafit;
  *
  * @author Dani
  */
-import java.util.ArrayList;
-import java.io.*;
-import javax.swing.ImageIcon;
 
-public class Gimnasio {
+import java.io.*;
+import java.util.ArrayList;
+import javax.swing.ImageIcon;
+import java.util.Collections;
+import java.util.Comparator;
+import java.time.LocalDate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+public class Gimnasio implements Serializable {
     
     private static Gimnasio instancia= null;
     private ArrayList<Socio> socios;
@@ -23,6 +29,7 @@ public class Gimnasio {
     private Usuario usuarioLogeado;
     
     public Gimnasio() {
+
     }
     
     public static Gimnasio getInstancia() {
@@ -96,6 +103,7 @@ public class Gimnasio {
 
     }
     
+    
     public boolean crearActividad(String titulo, String tipo, Sala sala, String monitor, ImageIcon imagen, double precio, String descripcion){
         
         Actividad nuevaActividadEspecial = new ActividadEspecial(titulo, tipo, sala, monitor, imagen, precio, descripcion);
@@ -112,9 +120,121 @@ public class Gimnasio {
 
     }
     
-    public boolean modificarActividad(String titulo, String tipo, Sala sala, String monitor, ImageIcon imagen, double precio, String descripcion){
-        return true;
+    public boolean borrarActividad(String titulo){
+                
+        for(int i=0;i<actividades.size();i++){
+            Actividad act= actividades.get(i);
+            String pruebaTitulo= act.getTitulo();
+            
+            if (titulo.equals(pruebaTitulo)){
+                actividades.remove(act);
+                guardarDatos();
+                return true;
+            }
+
+        }
+        return false;
     }
+    
+    public boolean modificarActividad(String tituloOriginal, String nuevoTipo, Sala nuevaSala, String nuevoMonitor, ImageIcon nuevaImagen, double nuevoPrecio, String nuevaDesc) {
+    
+        for (int i = 0; i < actividades.size(); i++) {
+            Actividad act = actividades.get(i);
+
+            if (act.getTitulo().equals(tituloOriginal)) {
+                
+                act.setTipo(nuevoTipo);
+                act.setSala(nuevaSala);
+                act.setMonitor(nuevoMonitor);
+                act.setImagen(nuevaImagen);
+
+                if (act instanceof ActividadEspecial) {
+                    
+                    ActividadEspecial esp = (ActividadEspecial) act;
+                    esp.setPrecio(nuevoPrecio);
+                    esp.setDescripcion(nuevaDesc);
+                }
+
+                guardarDatos(); // Guardamos el cambio en el archivo
+                return true;
+            }
+        }
+        return false;
+}
+    
+    public ArrayList<Actividad> consultarActividades(){
+        return new ArrayList<>(actividades);
+        
+    }
+    
+    public ArrayList<Actividad> consultarActividadPorTitulo(String tipo) {
+        ArrayList<Actividad> actividadesConsultadas= new ArrayList();
+        
+            for (int i=0; i<actividades.size();i++){
+                if(actividades.get(i).getTipo().equals(tipo))
+                    actividadesConsultadas.add(actividades.get(i));
+            }
+            return actividadesConsultadas;
+            
+    }
+    
+    public ArrayList<Socio> consultarSocios(){
+        return new ArrayList<>(socios);
+        
+    }
+    
+    public ArrayList<Socio> consultarSocios(boolean socioVIP){
+        ArrayList<Socio> sociosConsultados= new ArrayList();
+        
+            for (int i=0; i<socios.size();i++){
+                if(socios.get(i).isSocioVIP()==socioVIP)
+                    sociosConsultados.add(socios.get(i));
+            }
+            return sociosConsultados;
+            
+    }
+    
+    public ArrayList<Reserva> consultarReservas(){
+        ArrayList<Reserva> reservasConsultadas= new ArrayList();
+        
+            reservas.stream()
+                    .forEach(r -> {
+                
+                    reservasConsultadas.add(r);
+                });
+                        
+            Comparator<Reserva> fechaComp= new Comparator<Reserva>() {
+                @Override
+                public int compare(Reserva r1, Reserva r2) {
+                    return r1.getFechaReserva().compareTo(r2.getFechaReserva());
+            }
+        };
+            Collections.sort(reservasConsultadas, fechaComp);
+            return reservasConsultadas;
+    }    
+    public ArrayList<Reserva> consultarReservas(LocalDate fecha){
+        ArrayList<Reserva> reservasConsultadas= new ArrayList();
+        
+            reservas.stream()
+                    .forEach(r -> {
+                LocalDate fechaReserva= r.getFechaReserva();
+                
+                if(fecha==null || !fechaReserva.isBefore(fecha)){
+                    reservasConsultadas.add(r);
+                }
+                        
+            });
+            
+            Comparator<Reserva> fechaComp= new Comparator<Reserva>() {
+                @Override
+                public int compare(Reserva r1, Reserva r2) {
+                    return r1.getFechaReserva().compareTo(r2.getFechaReserva());
+            }
+        };
+            Collections.sort(reservasConsultadas, fechaComp);
+            return reservasConsultadas;
+    }
+    
     
     public void guardarDatos() {
         

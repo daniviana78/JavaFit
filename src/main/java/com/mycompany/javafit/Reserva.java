@@ -8,10 +8,10 @@ package com.mycompany.javafit;
  *
  * @author Dani
  */
-
+import java.io.*;
 import java.time.LocalDate;
 
-public class Reserva {
+public class Reserva implements Serializable {
     
     private Actividad actividad;
     private Socio cliente;
