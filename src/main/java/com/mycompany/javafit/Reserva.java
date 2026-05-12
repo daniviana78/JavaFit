@@ -19,6 +19,14 @@ public class Reserva implements Serializable {
     private LocalDate fechaReserva;
     private double importe;
 
+    public Reserva(Actividad actividad, Socio cliente, Horario turno, LocalDate fechaReserva) {
+        this.actividad = actividad;
+        this.cliente = cliente;
+        this.turno = turno;
+        this.fechaReserva = fechaReserva;
+    }
+    
+
     public Actividad getActividad() {
         return actividad;
     }

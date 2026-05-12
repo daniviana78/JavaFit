@@ -76,6 +76,15 @@ public class Actividad implements Serializable {
     public void setMonitor(String monitor) {
         this.monitor = monitor;
     }
+
+    public ArrayList<Horario> getHorarios() {
+        return horarios;
+    }
+
+    public void setHorarios(ArrayList<Horario> horarios) {
+        this.horarios = horarios;
+    }
+    
     
     @Override
     public boolean equals(Object obj) {

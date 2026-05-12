@@ -33,7 +33,6 @@ public class Socio extends Usuario implements Serializable {
 
     }
     
-    
 
     public String getNombre() {
         return nombre;
