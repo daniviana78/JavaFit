@@ -205,11 +205,21 @@ public class Gimnasio implements Serializable {
         }
     }
     
-    public Socio loginSocio(String correo, String clave){
-        return socios.stream()
+    public Usuario login(String correo, String clave){
+        Usuario user= socios.stream()
                 .filter(s -> s.getCorreo().equalsIgnoreCase(correo) && s.getClave().equals(clave))
                 .findFirst()
                 .orElse(null);
+       if (user==null){
+            user = administradores.stream()
+                .filter(a -> a.getCorreo().equalsIgnoreCase(correo) && a.getClave().equals(clave))
+                .findFirst()
+                .orElse(null);      
+       }
+       
+       this.setUsuarioLogeado(user);
+       
+       return user;
                 
     }
     
