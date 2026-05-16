@@ -34,11 +34,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jLabelJavaFit = new javax.swing.JLabel();
         jLabelBienvenido = new javax.swing.JLabel();
         jButtonRegistrarse = new javax.swing.JButton();
-        jTextFieldCorreo = new javax.swing.JTextField();
+        campoCorreo = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabelClave = new javax.swing.JLabel();
-        jTextFieldClave = new javax.swing.JTextField();
         jButtonIniciarSesion = new javax.swing.JButton();
+        campoClave = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("JavaFit");
@@ -52,16 +52,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jButtonRegistrarse.setText("¿No eres socio? Regístrate");
         jButtonRegistrarse.addActionListener(this::jButtonRegistrarseActionPerformed);
 
-        jTextFieldCorreo.addActionListener(this::jTextFieldCorreoActionPerformed);
+        campoCorreo.addActionListener(this::campoCorreoActionPerformed);
 
         jLabel3.setText("Introduzca su correo electrónico:");
 
         jLabelClave.setText("Introduzca su clave:");
 
-        jTextFieldClave.addActionListener(this::jTextFieldClaveActionPerformed);
-
         jButtonIniciarSesion.setText("Iniciar sesión");
         jButtonIniciarSesion.addActionListener(this::jButtonIniciarSesionActionPerformed);
+
+        campoClave.addActionListener(this::campoClaveActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -78,15 +78,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                         .addComponent(jLabelBienvenido)
                         .addGap(104, 104, 104))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextFieldCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(campoCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(jLabelClave)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextFieldClave, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(campoClave)))
                         .addGap(28, 28, 28))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(64, 64, 64)
@@ -100,16 +100,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabelJavaFit)
-                .addGap(21, 21, 21)
+                .addGap(9, 9, 9)
                 .addComponent(jLabelBienvenido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelClave)
-                    .addComponent(jTextFieldClave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campoClave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(54, 54, 54)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonRegistrarse)
@@ -131,17 +131,49 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         ventanaReg.setVisible(true);
     }//GEN-LAST:event_jButtonRegistrarseActionPerformed
 
-    private void jTextFieldCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldCorreoActionPerformed
+    private void campoCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoCorreoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldCorreoActionPerformed
-
-    private void jTextFieldClaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldClaveActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldClaveActionPerformed
+    }//GEN-LAST:event_campoCorreoActionPerformed
 
     private void jButtonIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIniciarSesionActionPerformed
         // TODO add your handling code here:
+        // 1. Recogemos los datos
+String correo = campoCorreo.getText().trim();
+String clave = new String(campoClave.getPassword());
+
+// 2. Le preguntamos a la clase Gimnasio de tu compañero si el usuario existe
+com.mycompany.javafit.Usuario user = com.mycompany.javafit.Gimnasio.getInstancia().login(correo, clave);
+
+// 3. Comprobamos la respuesta
+if (user != null) {
+    
+    // Si es un Administrador, abrimos su ventana
+    if (user instanceof com.mycompany.javafit.Administrador) {
+        VentanaAdministrador ventanaAdmin = new VentanaAdministrador();
+        ventanaAdmin.setVisible(true);
+        this.dispose();
+    } 
+    // Si es un Socio, abrimos la suya
+    else if (user instanceof com.mycompany.javafit.Socio) {
+        VentanaSocio ventanaSocio = new VentanaSocio();
+        ventanaSocio.setVisible(true);
+        this.dispose();
+    }
+    
+} else {
+    // Si devuelve null, los datos están mal
+    javax.swing.JOptionPane.showMessageDialog(this, 
+        "Correo o contraseña incorrectos.", 
+        "Error", 
+        javax.swing.JOptionPane.ERROR_MESSAGE);
+}
+        
+ 
     }//GEN-LAST:event_jButtonIniciarSesionActionPerformed
+
+    private void campoClaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoClaveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoClaveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -169,13 +201,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPasswordField campoClave;
+    private javax.swing.JTextField campoCorreo;
     private javax.swing.JButton jButtonIniciarSesion;
     private javax.swing.JButton jButtonRegistrarse;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelBienvenido;
     private javax.swing.JLabel jLabelClave;
     private javax.swing.JLabel jLabelJavaFit;
-    private javax.swing.JTextField jTextFieldClave;
-    private javax.swing.JTextField jTextFieldCorreo;
     // End of variables declaration//GEN-END:variables
 }

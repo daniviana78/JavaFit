@@ -17,7 +17,38 @@ public class VentanaAdministrador extends javax.swing.JFrame {
      */
     public VentanaAdministrador() {
         initComponents();
+        // Llamamos al método con "null, null" para que muestre a TODOS los socios al arrancar
+    cargarTablaSocios(null, null);
     }
+    private void cargarTablaSocios(String filtroCorreo, Boolean filtroVip) {
+    // 1. Obtenemos el "cerebro" de tu tabla (Asegúrate de que el nombre de tu JTable sea correcto, yo usaré tablaSocios)
+    javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tablaSocios.getModel();
+    
+    // 2. Vaciamos la tabla primero (para que no se dupliquen los datos si buscamos varias veces)
+    modelo.setRowCount(0);
+    
+    // 3. Le pedimos la lista a la clase de tu compañero
+    // Su método buscarSocios acepta null si queremos ver a todo el mundo
+    java.util.ArrayList<com.mycompany.javafit.Socio> lista = com.mycompany.javafit.Gimnasio.getInstancia().buscarSocios(filtroCorreo, filtroVip);
+    
+    // 4. Recorremos la lista y metemos cada socio en la tabla
+    for (com.mycompany.javafit.Socio s : lista) {
+        
+        // Creamos una "fila" con 6 huecos (uno por cada columna que pusiste en NetBeans)
+        Object[] fila = new Object[6]; 
+        
+        // Usamos los getters de la clase Socio de tu compañero para rellenar los huecos
+        fila[0] = s.getNombre();
+        fila[1] = s.getCorreo();
+        fila[2] = s.getTelefono();
+        fila[3] = s.getDireccion();
+        fila[4] = s.getTarjetaCredito(); // (En la vida real esto se oculta, ¡pero aquí lo mostramos!)
+        fila[5] = s.isSocioVIP() ? "Sí" : "No"; // Si es true pone "Sí", si es false pone "No"
+        
+        // Añadimos la fila completa al modelo
+        modelo.addRow(fila);
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -42,12 +73,12 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jTextField7 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
-        jCheckBox2 = new javax.swing.JCheckBox();
+        campoBusquedaCorreo = new javax.swing.JTextField();
+        checkBoxVip = new javax.swing.JCheckBox();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tablaSocios = new javax.swing.JTable();
         ConsultaDeReservas = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jTextField9 = new javax.swing.JTextField();
@@ -57,25 +88,27 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         jTable3 = new javax.swing.JTable();
         GestiónDeActividades = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        botonGuardarActividad = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        campoTitulo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        comboTipo = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        campoSala = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        campoAforo = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox<>();
         jComboBox3 = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        campoMonitor = new javax.swing.JTextField();
+        checkBoxEspecial = new javax.swing.JCheckBox();
         jTextField5 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        campoDescripcion = new javax.swing.JTextArea();
+        jLabel13 = new javax.swing.JLabel();
+        campoPrecio = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -85,8 +118,6 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Yoga", "Musculación", "Cardio", "Natación", "Todos" }));
 
         jLabel8.setText("Monitor:");
-
-        jTextField6.setText("jTextField6");
 
         jButton4.setText("Buscar");
         jButton4.addActionListener(this::jButton4ActionPerformed);
@@ -154,14 +185,10 @@ public class VentanaAdministrador extends javax.swing.JFrame {
 
         jLabel9.setText("Buscar por Nombre:");
 
-        jTextField7.setText("jTextField7");
-
         jLabel10.setText("Correo electrónico:");
 
-        jTextField8.setText("jTextField8");
-
-        jCheckBox2.setText("Socios VIP");
-        jCheckBox2.addActionListener(this::jCheckBox2ActionPerformed);
+        checkBoxVip.setText("Socios VIP");
+        checkBoxVip.addActionListener(this::checkBoxVipActionPerformed);
 
         jButton6.setText("Buscar");
         jButton6.addActionListener(this::jButton6ActionPerformed);
@@ -169,7 +196,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         jButton7.setText("Limpiar");
         jButton7.addActionListener(this::jButton7ActionPerformed);
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tablaSocios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -188,7 +215,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane3.setViewportView(jTable2);
+        jScrollPane3.setViewportView(tablaSocios);
 
         javax.swing.GroupLayout ConsultaDeSociosLayout = new javax.swing.GroupLayout(ConsultaDeSocios);
         ConsultaDeSocios.setLayout(ConsultaDeSociosLayout);
@@ -202,9 +229,9 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField8, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
+                .addComponent(campoBusquedaCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox2)
+                .addComponent(checkBoxVip)
                 .addGap(18, 18, 18))
             .addGroup(ConsultaDeSociosLayout.createSequentialGroup()
                 .addGap(151, 151, 151)
@@ -222,8 +249,8 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                     .addComponent(jLabel9)
                     .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCheckBox2))
+                    .addComponent(campoBusquedaCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(checkBoxVip))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(ConsultaDeSociosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -235,8 +262,6 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         jTabbedPane1.addTab("Consulta de Socios", ConsultaDeSocios);
 
         jLabel11.setText("Consultar desde la fecha:");
-
-        jTextField9.setText("jTextField9");
 
         jButton8.setText("Filtrar Reservas");
         jButton8.addActionListener(this::jButton8ActionPerformed);
@@ -297,28 +322,22 @@ public class VentanaAdministrador extends javax.swing.JFrame {
 
         jLabel1.setText("Título");
 
-        jButton1.setText("Guardar");
-        jButton1.addActionListener(this::jButton1ActionPerformed);
+        botonGuardarActividad.setText("Guardar");
+        botonGuardarActividad.addActionListener(this::botonGuardarActividadActionPerformed);
 
         jButton2.setText("Modificar");
         jButton2.addActionListener(this::jButton2ActionPerformed);
 
         jButton3.setText("Eliminar");
 
-        jTextField1.setText("jTextField1");
-
         jLabel2.setText("Tipo de Actividad");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Yoga", "Musculación", "Cardio", "Natación" }));
-        jComboBox1.addActionListener(this::jComboBox1ActionPerformed);
+        comboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Yoga", "Musculación", "Cardio", "Natación" }));
+        comboTipo.addActionListener(this::comboTipoActionPerformed);
 
         jLabel3.setText("Sala");
 
-        jTextField2.setText("jTextField2");
-
         jLabel4.setText("Aforo");
-
-        jTextField3.setText("jTextField3");
 
         jLabel5.setText("Horarios");
 
@@ -328,16 +347,14 @@ public class VentanaAdministrador extends javax.swing.JFrame {
 
         jLabel6.setText("Monitor");
 
-        jTextField4.setText("jTextField4");
+        checkBoxEspecial.setText("¿Es actividad especial?");
+        checkBoxEspecial.addActionListener(this::checkBoxEspecialActionPerformed);
 
-        jCheckBox1.setText("¿Es actividad especial?");
-        jCheckBox1.addActionListener(this::jCheckBox1ActionPerformed);
+        campoDescripcion.setColumns(20);
+        campoDescripcion.setRows(5);
+        jScrollPane1.setViewportView(campoDescripcion);
 
-        jTextField5.setText("jTextField5");
-
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        jLabel13.setText("Precio");
 
         javax.swing.GroupLayout GestiónDeActividadesLayout = new javax.swing.GroupLayout(GestiónDeActividades);
         GestiónDeActividades.setLayout(GestiónDeActividadesLayout);
@@ -345,53 +362,60 @@ public class VentanaAdministrador extends javax.swing.JFrame {
             GestiónDeActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(GestiónDeActividadesLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addGroup(GestiónDeActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, GestiónDeActividadesLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(GestiónDeActividadesLayout.createSequentialGroup()
+                .addGroup(GestiónDeActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, GestiónDeActividadesLayout.createSequentialGroup()
                         .addGroup(GestiónDeActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(GestiónDeActividadesLayout.createSequentialGroup()
                                 .addGroup(GestiónDeActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel6)
-                                    .addComponent(jCheckBox1)
-                                    .addGroup(GestiónDeActividadesLayout.createSequentialGroup()
-                                        .addGap(6, 6, 6)
-                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(91, 91, 91)
-                                        .addComponent(jButton2)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(checkBoxEspecial))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(GestiónDeActividadesLayout.createSequentialGroup()
                                 .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jScrollPane1)))
                         .addGap(15, 15, 15))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, GestiónDeActividadesLayout.createSequentialGroup()
+                    .addGroup(GestiónDeActividadesLayout.createSequentialGroup()
                         .addGroup(GestiónDeActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(campoMonitor, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(GestiónDeActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(GestiónDeActividadesLayout.createSequentialGroup()
                                     .addComponent(jLabel1)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(campoTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(GestiónDeActividadesLayout.createSequentialGroup()
                                     .addComponent(jLabel3)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(campoSala, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(18, 18, 18)
                                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(campoAforo, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(GestiónDeActividadesLayout.createSequentialGroup()
                                     .addComponent(jLabel5)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap(36, Short.MAX_VALUE))))
+                        .addContainerGap(36, Short.MAX_VALUE))
+                    .addGroup(GestiónDeActividadesLayout.createSequentialGroup()
+                        .addGroup(GestiónDeActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(GestiónDeActividadesLayout.createSequentialGroup()
+                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(campoPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(GestiónDeActividadesLayout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(comboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(GestiónDeActividadesLayout.createSequentialGroup()
+                        .addComponent(botonGuardarActividad, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(104, 104, 104)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36))))
         );
         GestiónDeActividadesLayout.setVerticalGroup(
             GestiónDeActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -399,17 +423,17 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(GestiónDeActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campoTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(GestiónDeActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addGroup(GestiónDeActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoSala, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campoAforo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(GestiónDeActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(GestiónDeActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -419,19 +443,23 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(GestiónDeActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campoMonitor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox1)
+                .addComponent(checkBoxEspecial)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(GestiónDeActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jTextField5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 235, Short.MAX_VALUE)
+                .addGroup(GestiónDeActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addGroup(GestiónDeActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap())
+                    .addComponent(jLabel13)
+                    .addComponent(campoPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(GestiónDeActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botonGuardarActividad)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3))
+                .addGap(98, 98, 98))
         );
 
         jTabbedPane1.addTab("Gestión de Actividades", GestiónDeActividades);
@@ -468,17 +496,63 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void comboTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTipoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_comboTipoActionPerformed
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+    private void checkBoxEspecialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxEspecialActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+    }//GEN-LAST:event_checkBoxEspecialActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void botonGuardarActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarActividadActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        // 1. Recogemos los datos de texto
+String titulo = campoTitulo.getText().trim();
+String tipo = comboTipo.getSelectedItem().toString(); 
+String monitor = campoMonitor.getText().trim();
+String nombreSala = campoSala.getText().trim();
+
+// Comprobación de que no falten datos clave
+if (titulo.isEmpty() || monitor.isEmpty() || nombreSala.isEmpty()) {
+    javax.swing.JOptionPane.showMessageDialog(this, "El título, monitor y sala son obligatorios.");
+    return; // Paramos aquí
+}
+
+javax.swing.ImageIcon imagen_nula = null;
+
+try {
+    // 2. Sacamos el número del aforo de tu nuevo cuadro de texto
+    int aforo = Integer.parseInt(campoAforo.getText().trim());
+    
+    // ¡Aquí está la magia! Creamos la sala con TUS datos reales
+    com.mycompany.javafit.Sala salaReal = new com.mycompany.javafit.Sala(nombreSala, aforo);
+    
+    boolean exito = false;
+
+    // 3. Comprobamos si es Especial o Normal
+    if (checkBoxEspecial.isSelected()) { // Asegúrate de que tu checkbox se llame así
+        double precio = Double.parseDouble(campoPrecio.getText().trim());
+        String descripcion = campoDescripcion.getText().trim();
+        
+        exito = com.mycompany.javafit.Gimnasio.getInstancia().crearActividad(
+                titulo, tipo, salaReal, monitor, imagen_nula, precio, descripcion);
+    } else {
+        exito = com.mycompany.javafit.Gimnasio.getInstancia().crearActividad(
+                titulo, tipo, salaReal, monitor, imagen_nula);
+    }
+
+    // 4. Avisamos del resultado
+    if (exito) {
+        javax.swing.JOptionPane.showMessageDialog(this, "¡Actividad '" + titulo + "' creada con éxito!");
+    } else {
+        javax.swing.JOptionPane.showMessageDialog(this, "Error: Ya existe una actividad con ese título.");
+    }
+
+} catch (NumberFormatException e) {
+    // Si meten letras donde van números (en aforo o en precio), salta esto:
+    javax.swing.JOptionPane.showMessageDialog(this, "Cuidado: Revisa que el 'Aforo' (y el 'Precio') sean números.");
+}
+    }//GEN-LAST:event_botonGuardarActividadActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
@@ -488,12 +562,22 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
+    private void checkBoxVipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxVipActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox2ActionPerformed
+    }//GEN-LAST:event_checkBoxVipActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
+        // Sacamos lo que haya escrito el admin
+String correo = campoBusquedaCorreo.getText().trim();
+if (correo.isEmpty()) correo = null; // Si está vacío, mandamos null
+
+// Comprobamos si marcó la casilla de VIP
+Boolean esVip = checkBoxVip.isSelected();
+if (!esVip) esVip = null; // Si no la marcó, mandamos null para que no filtre por VIP
+
+// Recargamos la tabla con esos filtros
+cargarTablaSocios(correo, esVip);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
@@ -534,7 +618,17 @@ public class VentanaAdministrador extends javax.swing.JFrame {
     private javax.swing.JPanel ConsultaDeReservas;
     private javax.swing.JPanel ConsultaDeSocios;
     private javax.swing.JPanel GestiónDeActividades;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton botonGuardarActividad;
+    private javax.swing.JTextField campoAforo;
+    private javax.swing.JTextField campoBusquedaCorreo;
+    private javax.swing.JTextArea campoDescripcion;
+    private javax.swing.JTextField campoMonitor;
+    private javax.swing.JTextField campoPrecio;
+    private javax.swing.JTextField campoSala;
+    private javax.swing.JTextField campoTitulo;
+    private javax.swing.JCheckBox checkBoxEspecial;
+    private javax.swing.JCheckBox checkBoxVip;
+    private javax.swing.JComboBox<String> comboTipo;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -543,9 +637,6 @@ public class VentanaAdministrador extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
@@ -553,6 +644,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -567,17 +659,11 @@ public class VentanaAdministrador extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
+    private javax.swing.JTable tablaSocios;
     // End of variables declaration//GEN-END:variables
 }

@@ -30,7 +30,12 @@ public class Gimnasio implements Serializable {
     private Usuario usuarioLogeado;
     
     public Gimnasio() {
-
+        //Creamos el administrador por defecto que pide la práctica
+        Administrador adminPorDefecto = new Administrador("admin@javafit.com", "admin");
+        
+        // Lo añadimos a la lista de administradores
+        this.administradores.add(adminPorDefecto);
+        
     }
     
     public static Gimnasio getInstancia() {

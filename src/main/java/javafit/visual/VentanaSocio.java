@@ -78,8 +78,6 @@ public class VentanaSocio extends javax.swing.JFrame {
 
         jLabel3.setText("Monitor:");
 
-        jTextField1.setText("jTextField1");
-
         jLabel4.setText("Día:");
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo" }));
@@ -220,31 +218,19 @@ public class VentanaSocio extends javax.swing.JFrame {
 
         jLabel5.setText("Nombre:");
 
-        jTextField2.setText("jTextField2");
-
         jLabel6.setText("Correo:");
 
-        jTextField3.setText("jTextField3");
+        jTextField3.addActionListener(this::jTextField3ActionPerformed);
 
         jLabel7.setText("Teléfono:");
 
-        jTextField4.setText("jTextField4");
-
         jLabel8.setText("Dirección:");
-
-        jTextField5.setText("jTextField5");
 
         jLabel9.setText("Tarjeta de crédito:");
 
-        jTextField6.setText("jTextField6");
-
         jLabel10.setText("Contraseña:");
 
-        jPasswordField2.setText("jPasswordField2");
-
         jLabel11.setText("Estado:");
-
-        jLabel12.setText("jLabel12");
 
         jButton5.setText("Guardar Cambios");
 
@@ -362,6 +348,10 @@ public class VentanaSocio extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3ActionPerformed
 
     /**
      * @param args the command line arguments
