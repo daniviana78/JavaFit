@@ -8,6 +8,11 @@ package javafit.visual;
  *
  * @author Usuario
  */
+
+import com.mycompany.javafit.*;
+import javax.swing.*;
+import java.util.ArrayList;
+
 public class VentanaAdministrador extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaAdministrador.class.getName());
@@ -18,20 +23,20 @@ public class VentanaAdministrador extends javax.swing.JFrame {
     public VentanaAdministrador() {
         initComponents();
         // Llamamos al método con "null, null" para que muestre a TODOS los socios al arrancar
-    cargarTablaSocios(null, null);
+        cargarTablaSocios(null, null);
     }
     private void cargarTablaSocios(String filtroCorreo, Boolean filtroVip) {
-    // 1. Obtenemos el "cerebro" de tu tabla (Asegúrate de que el nombre de tu JTable sea correcto, yo usaré tablaSocios)
+    // Obtenemos el "cerebro" de tu tabla (Asegúrate de que el nombre de tu JTable sea correcto, yo usaré tablaSocios)
     javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tablaSocios.getModel();
     
-    // 2. Vaciamos la tabla primero (para que no se dupliquen los datos si buscamos varias veces)
+    // Vaciamos la tabla primero (para que no se dupliquen los datos si buscamos varias veces)
     modelo.setRowCount(0);
     
-    // 3. Le pedimos la lista a la clase de tu compañero
+    // Le pedimos la lista a la clase de tu compañero
     // Su método buscarSocios acepta null si queremos ver a todo el mundo
-    java.util.ArrayList<com.mycompany.javafit.Socio> lista = com.mycompany.javafit.Gimnasio.getInstancia().buscarSocios(filtroCorreo, filtroVip);
+    ArrayList<Socio> lista = Gimnasio.getInstancia().buscarSocios(filtroCorreo, filtroVip);
     
-    // 4. Recorremos la lista y metemos cada socio en la tabla
+    // Recorremos la lista y metemos cada socio en la tabla
     for (com.mycompany.javafit.Socio s : lista) {
         
         // Creamos una "fila" con 6 huecos (uno por cada columna que pusiste en NetBeans)
@@ -88,9 +93,9 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         jTable3 = new javax.swing.JTable();
         GestiónDeActividades = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        botonGuardarActividad = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jButtonGuardarActividad = new javax.swing.JButton();
+        jButtonModificarActividad = new javax.swing.JButton();
+        jButtonBorrarActividad = new javax.swing.JButton();
         campoTitulo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         comboTipo = new javax.swing.JComboBox<>();
@@ -104,11 +109,12 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         campoMonitor = new javax.swing.JTextField();
         checkBoxEspecial = new javax.swing.JCheckBox();
-        jTextField5 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         campoDescripcion = new javax.swing.JTextArea();
         jLabel13 = new javax.swing.JLabel();
         campoPrecio = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
+        jButtonImportarImagen = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -163,7 +169,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                 .addComponent(jButton4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton5)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         ConsultaDeActividadesLayout.setVerticalGroup(
@@ -229,7 +235,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(campoBusquedaCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
+                .addComponent(campoBusquedaCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(checkBoxVip)
                 .addGap(18, 18, 18))
@@ -303,7 +309,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton9)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 518, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 508, Short.MAX_VALUE)
         );
         ConsultaDeReservasLayout.setVerticalGroup(
             ConsultaDeReservasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -322,13 +328,16 @@ public class VentanaAdministrador extends javax.swing.JFrame {
 
         jLabel1.setText("Título");
 
-        botonGuardarActividad.setText("Guardar");
-        botonGuardarActividad.addActionListener(this::botonGuardarActividadActionPerformed);
+        jButtonGuardarActividad.setText("Guardar");
+        jButtonGuardarActividad.addActionListener(this::jButtonGuardarActividadActionPerformed);
 
-        jButton2.setText("Modificar");
-        jButton2.addActionListener(this::jButton2ActionPerformed);
+        jButtonModificarActividad.setText("Modificar");
+        jButtonModificarActividad.addActionListener(this::jButtonModificarActividadActionPerformed);
 
-        jButton3.setText("Eliminar");
+        jButtonBorrarActividad.setText("Eliminar");
+        jButtonBorrarActividad.addActionListener(this::jButtonBorrarActividadActionPerformed);
+
+        campoTitulo.addActionListener(this::campoTituloActionPerformed);
 
         jLabel2.setText("Tipo de Actividad");
 
@@ -356,66 +365,64 @@ public class VentanaAdministrador extends javax.swing.JFrame {
 
         jLabel13.setText("Precio");
 
+        jLabel14.setText("Descripción:");
+
+        jButtonImportarImagen.setText("Importar imágen");
+        jButtonImportarImagen.addActionListener(this::jButtonImportarImagenActionPerformed);
+
         javax.swing.GroupLayout GestiónDeActividadesLayout = new javax.swing.GroupLayout(GestiónDeActividades);
         GestiónDeActividades.setLayout(GestiónDeActividadesLayout);
         GestiónDeActividadesLayout.setHorizontalGroup(
             GestiónDeActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(GestiónDeActividadesLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addGroup(GestiónDeActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, GestiónDeActividadesLayout.createSequentialGroup()
-                        .addGroup(GestiónDeActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(GestiónDeActividadesLayout.createSequentialGroup()
-                                .addGroup(GestiónDeActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(checkBoxEspecial))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(GestiónDeActividadesLayout.createSequentialGroup()
-                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jScrollPane1)))
-                        .addGap(15, 15, 15))
+                .addGroup(GestiónDeActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(GestiónDeActividadesLayout.createSequentialGroup()
-                        .addGroup(GestiónDeActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(campoMonitor, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(GestiónDeActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(GestiónDeActividadesLayout.createSequentialGroup()
-                                    .addComponent(jLabel1)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(campoTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(GestiónDeActividadesLayout.createSequentialGroup()
-                                    .addComponent(jLabel3)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(campoSala, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(campoAforo, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(GestiónDeActividadesLayout.createSequentialGroup()
-                                    .addComponent(jLabel5)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap(36, Short.MAX_VALUE))
-                    .addGroup(GestiónDeActividadesLayout.createSequentialGroup()
-                        .addGroup(GestiónDeActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(GestiónDeActividadesLayout.createSequentialGroup()
-                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(campoPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(GestiónDeActividadesLayout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(18, 18, 18)
-                                .addComponent(comboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(GestiónDeActividadesLayout.createSequentialGroup()
-                        .addComponent(botonGuardarActividad, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(104, 104, 104)
-                        .addComponent(jButton2)
+                        .addComponent(jButtonGuardarActividad, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36))))
+                        .addComponent(jButtonModificarActividad)
+                        .addGap(101, 101, 101)
+                        .addComponent(jButtonBorrarActividad, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(GestiónDeActividadesLayout.createSequentialGroup()
+                        .addComponent(jLabel14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1))
+                    .addComponent(checkBoxEspecial)
+                    .addGroup(GestiónDeActividadesLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(comboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(GestiónDeActividadesLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(campoTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(GestiónDeActividadesLayout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(campoSala, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(campoAforo, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(GestiónDeActividadesLayout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(GestiónDeActividadesLayout.createSequentialGroup()
+                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(campoPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, GestiónDeActividadesLayout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(campoMonitor, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(25, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, GestiónDeActividadesLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonImportarImagen)
+                .addGap(189, 189, 189))
         );
         GestiónDeActividadesLayout.setVerticalGroup(
             GestiónDeActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -440,26 +447,28 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                         .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(GestiónDeActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(campoMonitor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(campoMonitor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButtonImportarImagen)
+                .addGap(9, 9, 9)
                 .addComponent(checkBoxEspecial)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(GestiónDeActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                    .addComponent(jLabel14)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addGroup(GestiónDeActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
                     .addComponent(campoPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(40, 40, 40)
                 .addGroup(GestiónDeActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botonGuardarActividad)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
-                .addGap(98, 98, 98))
+                    .addComponent(jButtonGuardarActividad)
+                    .addComponent(jButtonModificarActividad)
+                    .addComponent(jButtonBorrarActividad))
+                .addGap(44, 44, 44))
         );
 
         jTabbedPane1.addTab("Gestión de Actividades", GestiónDeActividades);
@@ -492,9 +501,86 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButtonModificarActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarActividadActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        String titulo = campoTitulo.getText().trim();
+        
+        if (titulo.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "El campo 'Título' no puede estar vacío.","Campo vacío", javax.swing.JOptionPane.WARNING_MESSAGE);
+        }
+
+        // Buscamos la actividad original en el sistema utilizando la lista del Gimnasio
+        ArrayList<Actividad> listaActividades = 
+                com.mycompany.javafit.Gimnasio.getInstancia().getActividades();
+        
+        // Localizamos la actividad por su título (ignorando mayúsculas/minúsculas)
+        Actividad act = listaActividades.stream()
+                .filter(a -> a.getTitulo().equalsIgnoreCase(titulo))
+                .findFirst()
+                .orElse(null);
+
+        // Si no existe, avisamos al usuario y paramos
+        if (act == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                    "No se ha encontrado ninguna actividad con el título '" + titulo + "'.", "Actividad no encontrada", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Si existe, recogemos el resto de nuevos datos de la interfaz para aplicar el cambio
+        String nuevoTipo = comboTipo.getSelectedItem().toString();
+        String nuevoMonitor = campoMonitor.getText().trim();
+        String nombreSala = campoSala.getText().trim();
+
+        if (nuevoMonitor.isEmpty() || nombreSala.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "El monitor y la sala no pueden quedar vacíos.");
+            return;
+        }
+
+        try {
+            // Validamos que el aforo sea un número correcto
+            int nuevoAforo = Integer.parseInt(campoAforo.getText().trim());
+            com.mycompany.javafit.Sala nuevaSala = new com.mycompany.javafit.Sala(nombreSala, nuevoAforo);
+
+            // Variables para el caso de que sea una Actividad Especial
+            double nuevoPrecio = 0;
+            String nuevaDescripcion = "";
+
+            if (checkBoxEspecial.isSelected()) {
+                nuevoPrecio = Double.parseDouble(campoPrecio.getText().trim());
+                nuevaDescripcion = campoDescripcion.getText().trim();
+            }
+
+            // Llamamos al método 'modificarActividad'
+            boolean exito = com.mycompany.javafit.Gimnasio.getInstancia().modificarActividad(
+                    act, titulo, nuevoTipo, nuevaSala, nuevoMonitor, 
+                    this.imagenActividad, nuevoPrecio, nuevaDescripcion
+            );
+
+            // Informamos del resultado y limpiamos la pantalla
+            if (exito) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Actividad '" + titulo + "' modificada con éxito");
+                
+                // Limpiamos los campos del formulario para dejarlo listo
+                campoTitulo.setText("");
+                campoMonitor.setText("");
+                campoSala.setText("");
+                campoAforo.setText("");
+                campoPrecio.setText("");
+                campoDescripcion.setText("");
+                checkBoxEspecial.setSelected(false);
+                this.imagenActividad = null;
+                
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Ocurrió un error inesperado al intentar modificar.");
+            }
+
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                    "Error de formato: 'Aforo' y 'Precio' deben ser números.", 
+                    "Error de datos", 
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButtonModificarActividadActionPerformed
 
     private void comboTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTipoActionPerformed
         // TODO add your handling code here:
@@ -504,55 +590,52 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_checkBoxEspecialActionPerformed
 
-    private void botonGuardarActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarActividadActionPerformed
+    private void jButtonGuardarActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActividadActionPerformed
         // TODO add your handling code here:
-        // 1. Recogemos los datos de texto
-String titulo = campoTitulo.getText().trim();
-String tipo = comboTipo.getSelectedItem().toString(); 
-String monitor = campoMonitor.getText().trim();
-String nombreSala = campoSala.getText().trim();
+        // Recogemos los datos de texto
+        String titulo = campoTitulo.getText().trim();
+        String tipo = comboTipo.getSelectedItem().toString(); 
+        String monitor = campoMonitor.getText().trim();
+        String nombreSala = campoSala.getText().trim();
 
-// Comprobación de que no falten datos clave
-if (titulo.isEmpty() || monitor.isEmpty() || nombreSala.isEmpty()) {
-    javax.swing.JOptionPane.showMessageDialog(this, "El título, monitor y sala son obligatorios.");
-    return; // Paramos aquí
-}
-
-javax.swing.ImageIcon imagen_nula = null;
-
-try {
-    // 2. Sacamos el número del aforo de tu nuevo cuadro de texto
-    int aforo = Integer.parseInt(campoAforo.getText().trim());
-    
-    // ¡Aquí está la magia! Creamos la sala con TUS datos reales
-    com.mycompany.javafit.Sala salaReal = new com.mycompany.javafit.Sala(nombreSala, aforo);
-    
-    boolean exito = false;
-
-    // 3. Comprobamos si es Especial o Normal
-    if (checkBoxEspecial.isSelected()) { // Asegúrate de que tu checkbox se llame así
-        double precio = Double.parseDouble(campoPrecio.getText().trim());
-        String descripcion = campoDescripcion.getText().trim();
-        
-        exito = com.mycompany.javafit.Gimnasio.getInstancia().crearActividad(
-                titulo, tipo, salaReal, monitor, imagen_nula, precio, descripcion);
-    } else {
-        exito = com.mycompany.javafit.Gimnasio.getInstancia().crearActividad(
-                titulo, tipo, salaReal, monitor, imagen_nula);
+    // Comprobación de que no falten datos clave
+    if (titulo.isEmpty() || monitor.isEmpty() || nombreSala.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "El título, monitor y sala son obligatorios.");
+        return;
     }
 
-    // 4. Avisamos del resultado
-    if (exito) {
-        javax.swing.JOptionPane.showMessageDialog(this, "¡Actividad '" + titulo + "' creada con éxito!");
-    } else {
-        javax.swing.JOptionPane.showMessageDialog(this, "Error: Ya existe una actividad con ese título.");
-    }
 
-} catch (NumberFormatException e) {
-    // Si meten letras donde van números (en aforo o en precio), salta esto:
-    javax.swing.JOptionPane.showMessageDialog(this, "Cuidado: Revisa que el 'Aforo' (y el 'Precio') sean números.");
-}
-    }//GEN-LAST:event_botonGuardarActividadActionPerformed
+    try {
+        // Sacamos el número del aforo
+        int aforo = Integer.parseInt(campoAforo.getText().trim());
+
+        // Creamos la sala 
+        Sala sala = new com.mycompany.javafit.Sala(nombreSala, aforo);
+
+        boolean exito = false;
+
+        // Comprobamos si es Especial o Normal
+        if (checkBoxEspecial.isSelected()) { // Asegúrate de que tu checkbox se llame así
+            double precio = Double.parseDouble(campoPrecio.getText().trim());
+            String descripcion = campoDescripcion.getText().trim();
+
+            exito = Gimnasio.getInstancia().crearActividad(
+                    titulo, tipo, sala, monitor, this.imagenActividad, precio, descripcion);
+        } else {
+            exito = Gimnasio.getInstancia().crearActividad(
+                    titulo, tipo, sala, monitor, this.imagenActividad);
+        }
+
+        if (exito) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Actividad '" + titulo + "' creada con éxito");
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error: Ya existe una actividad con ese título.");
+        }
+
+    } catch (NumberFormatException e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Deben introducirse números en 'Aforo' y 'Precio'");
+    }
+    }//GEN-LAST:event_jButtonGuardarActividadActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
@@ -568,16 +651,17 @@ try {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        // Sacamos lo que haya escrito el admin
-String correo = campoBusquedaCorreo.getText().trim();
-if (correo.isEmpty()) correo = null; // Si está vacío, mandamos null
+            String correo = campoBusquedaCorreo.getText().trim();
+            if (correo.isEmpty()) 
+                correo = null; // Si está vacío, mandamos null
 
-// Comprobamos si marcó la casilla de VIP
-Boolean esVip = checkBoxVip.isSelected();
-if (!esVip) esVip = null; // Si no la marcó, mandamos null para que no filtre por VIP
+            // Comprobamos si marcó la casilla de VIP
+            Boolean esVip = checkBoxVip.isSelected();
+            if (!esVip) 
+                esVip = null; // Si no la marcó, mandamos null para que no filtre por VIP
 
-// Recargamos la tabla con esos filtros
-cargarTablaSocios(correo, esVip);
+            // Recargamos la tabla con esos filtros
+            cargarTablaSocios(correo, esVip);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
@@ -587,6 +671,56 @@ cargarTablaSocios(correo, esVip);
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButtonImportarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportarImagenActionPerformed
+        // TODO add your handling code here:
+        
+    javax.swing.JFileChooser selector = new javax.swing.JFileChooser();
+    
+    javax.swing.filechooser.FileNameExtensionFilter filtro = 
+            new javax.swing.filechooser.FileNameExtensionFilter("Imágenes (JPG, PNG)", "jpg", "jpeg", "png");
+    selector.setFileFilter(filtro);
+    
+    int resultado = selector.showOpenDialog(this);
+    
+    if (resultado == javax.swing.JFileChooser.APPROVE_OPTION) {
+        java.io.File archivoImagen = selector.getSelectedFile();
+        
+        this.imagenActividad = new ImageIcon(archivoImagen.getAbsolutePath());
+        
+        }
+    }//GEN-LAST:event_jButtonImportarImagenActionPerformed
+
+    private void jButtonBorrarActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarActividadActionPerformed
+        // TODO add your handling code here:
+            String titulo= campoTitulo.getText().trim();
+            
+            if (titulo.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "El campo 'Título' no puede estar vacío.","Campo vacío", javax.swing.JOptionPane.WARNING_MESSAGE);
+            }
+            
+            boolean eliminado= Gimnasio.getInstancia().borrarActividad(titulo);
+            
+            if (eliminado==true){
+                javax.swing.JOptionPane.showMessageDialog(this, "Actividad eliminada correctamente.");
+                
+                campoTitulo.setText("");
+                campoMonitor.setText("");
+                campoSala.setText("");
+                campoAforo.setText("");
+                campoPrecio.setText("");
+                campoDescripcion.setText("");
+                this.imagenActividad = null;
+            }
+            else {
+                javax.swing.JOptionPane.showMessageDialog(this, "No se ha encontrado ninguna actividad con ese título.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        
+    }//GEN-LAST:event_jButtonBorrarActividadActionPerformed
+
+    private void campoTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTituloActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoTituloActionPerformed
 
     /**
      * @param args the command line arguments
@@ -618,7 +752,6 @@ cargarTablaSocios(correo, esVip);
     private javax.swing.JPanel ConsultaDeReservas;
     private javax.swing.JPanel ConsultaDeSocios;
     private javax.swing.JPanel GestiónDeActividades;
-    private javax.swing.JButton botonGuardarActividad;
     private javax.swing.JTextField campoAforo;
     private javax.swing.JTextField campoBusquedaCorreo;
     private javax.swing.JTextArea campoDescripcion;
@@ -629,14 +762,16 @@ cargarTablaSocios(correo, esVip);
     private javax.swing.JCheckBox checkBoxEspecial;
     private javax.swing.JCheckBox checkBoxVip;
     private javax.swing.JComboBox<String> comboTipo;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
+    private javax.swing.JButton jButtonBorrarActividad;
+    private javax.swing.JButton jButtonGuardarActividad;
+    private javax.swing.JButton jButtonImportarImagen;
+    private javax.swing.JButton jButtonModificarActividad;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
@@ -645,6 +780,7 @@ cargarTablaSocios(correo, esVip);
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -660,10 +796,11 @@ cargarTablaSocios(correo, esVip);
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable3;
-    private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField9;
     private javax.swing.JTable tablaSocios;
     // End of variables declaration//GEN-END:variables
+    private javax.swing.ImageIcon imagenActividad = null;
 }
+

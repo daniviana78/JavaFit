@@ -10,27 +10,17 @@ package com.mycompany.javafit;
  */
 
 import java.io.*;
-import java.time.LocalTime;
 
 public class Horario implements Serializable{
 
     private String dia;
-    private LocalTime horaInicio;
-    private LocalTime horaFin;
+    private String turno;
 
-    public Horario(String dia, LocalTime horaInicio, LocalTime horaFin) {
+    public Horario(String dia, String turno) {
         this.dia = dia;
-        this.horaInicio = horaInicio;
-        this.horaFin = horaFin;
+        this.turno= turno;
     }
-
-    public LocalTime getHoraFin() {
-        return horaFin;
-    }
-
-    public void setHoraFin(LocalTime horaFin) {
-        this.horaFin = horaFin;
-    }
+    
 
     public String getDia() {
         return dia;
@@ -39,18 +29,20 @@ public class Horario implements Serializable{
     public void setDia(String dia) {
         this.dia = dia;
     }
-    
-    public LocalTime getHoraInicio() {
-        return horaInicio;
+
+    public String getTurno() {
+        return turno;
     }
 
-    public void setHoraInicio(LocalTime horaInicio) {
-        this.horaInicio = horaInicio;
+    public void setTurno(String turno) {
+        this.turno = turno;
     }
+    
+    
 
     @Override
     public String toString() {
-        return "Horario{" + "dia=" + dia + ", horaInicio=" + horaInicio + ", horaFin=" + horaFin + '}';
+        return "Horario{" + "dia=" + dia + ", turno=" + turno + '}';
     }
     
 }
