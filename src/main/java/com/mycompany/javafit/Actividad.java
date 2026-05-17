@@ -20,17 +20,17 @@ public class Actividad implements Serializable {
     private String titulo;
     private String tipo;
     private Sala sala;
-    private ArrayList<Horario> horarios;
+    private ArrayList<Horario> horarios= new ArrayList<>();
     private String monitor;
     private ImageIcon imagen;
 
-    public Actividad(String titulo, String tipo, Sala sala, String monitor, ImageIcon imagen) {
+    public Actividad(String titulo, String tipo, Sala sala, ArrayList horarios, String monitor, ImageIcon imagen) {
         this.titulo = titulo;
         this.tipo = tipo;
         this.sala = sala;
         this.monitor = monitor;
         this.imagen = imagen;
-        this.horarios = new ArrayList();
+        this.horarios = horarios;
     }
     
 
@@ -84,6 +84,7 @@ public class Actividad implements Serializable {
     public void setHorarios(ArrayList<Horario> horarios) {
         this.horarios = horarios;
     }
+    
     
     
     @Override

@@ -10,6 +10,7 @@ package com.mycompany.javafit;
  */
 
 import java.io.*;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
 public class ActividadEspecial extends Actividad implements Serializable {
@@ -17,8 +18,8 @@ public class ActividadEspecial extends Actividad implements Serializable {
     private double precio;
     private String descripcion;
 
-    public ActividadEspecial(String titulo, String tipo, Sala sala, String monitor, ImageIcon imagen, double precio, String descripcion) {
-        super(titulo, tipo, sala, monitor, imagen);
+    public ActividadEspecial(String titulo, String tipo, Sala sala, ArrayList horarios, String monitor, ImageIcon imagen, double precio, String descripcion) {
+        super(titulo, tipo, sala, horarios, monitor, imagen);
         this.precio = precio;
         this.descripcion = descripcion;
     }

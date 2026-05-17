@@ -93,9 +93,9 @@ public class Gimnasio implements Serializable {
         this.usuarioLogeado = usuarioLogeado;
     }
     
-    public boolean crearActividad(String titulo, String tipo, Sala sala, String monitor, ImageIcon imagen){
+    public boolean crearActividad(String titulo, String tipo, Sala sala, ArrayList horarios, String monitor, ImageIcon imagen){
         
-        Actividad nuevaActividad = new Actividad(titulo, tipo, sala, monitor, imagen);
+        Actividad nuevaActividad = new Actividad(titulo, tipo, sala, horarios, monitor, imagen);
         
         if(!actividades.contains(nuevaActividad)){
             
@@ -110,9 +110,9 @@ public class Gimnasio implements Serializable {
     }
     
     
-    public boolean crearActividad(String titulo, String tipo, Sala sala, String monitor, ImageIcon imagen, double precio, String descripcion){
+    public boolean crearActividad(String titulo, String tipo, Sala sala, ArrayList horarios, String monitor, ImageIcon imagen, double precio, String descripcion){
         
-        Actividad nuevaActividadEspecial = new ActividadEspecial(titulo, tipo, sala, monitor, imagen, precio, descripcion);
+        Actividad nuevaActividadEspecial = new ActividadEspecial(titulo, tipo, sala, horarios, monitor, imagen, precio, descripcion);
         
         if(!actividades.contains(nuevaActividadEspecial)){
             
