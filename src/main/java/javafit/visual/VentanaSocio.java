@@ -8,6 +8,7 @@ package javafit.visual;
  *
  * @author Usuario
  */
+
 public class VentanaSocio extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaSocio.class.getName());
@@ -17,6 +18,25 @@ public class VentanaSocio extends javax.swing.JFrame {
      */
     public VentanaSocio() {
         initComponents();
+        cargarDatosPerfil();
+    }
+    private void cargarDatosPerfil() {
+        com.mycompany.javafit.Socio socioActual = (com.mycompany.javafit.Socio) com.mycompany.javafit.Gimnasio.getInstancia().getUsuarioLogeado();
+        
+        if (socioActual != null) {
+            campoNombre.setText(socioActual.getNombre());
+            campoCorreo.setText(socioActual.getCorreo());
+            campoTelefono.setText(socioActual.getTelefono());
+            campoDireccion.setText(socioActual.getDireccion());
+            campoTarjeta.setText(socioActual.getTarjetaCredito());
+            campoClave.setText(socioActual.getClave());
+            
+            if (socioActual.isSocioVIP()) {
+                campoEstado.setText("Socio VIP (10% Descuento)");
+            } else {
+                campoEstado.setText("Socio Básico");
+            }
+        }
     }
 
     /**
@@ -50,20 +70,21 @@ public class VentanaSocio extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         MiPerfil = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        campoNombre = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        campoCorreo = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        campoTelefono = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        campoDireccion = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        campoTarjeta = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jPasswordField2 = new javax.swing.JPasswordField();
+        campoClave = new javax.swing.JPasswordField();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
+        botonGuardarCambios = new javax.swing.JButton();
+        campoEstado = new javax.swing.JTextField();
 
         jPasswordField1.setText("jPasswordField1");
 
@@ -225,7 +246,7 @@ public class VentanaSocio extends javax.swing.JFrame {
 
         jLabel6.setText("Correo:");
 
-        jTextField3.addActionListener(this::jTextField3ActionPerformed);
+        campoCorreo.addActionListener(this::campoCorreoActionPerformed);
 
         jLabel7.setText("Teléfono:");
 
@@ -237,7 +258,10 @@ public class VentanaSocio extends javax.swing.JFrame {
 
         jLabel11.setText("Estado:");
 
-        jButton5.setText("Guardar Cambios");
+        botonGuardarCambios.setText("Guardar Cambios");
+        botonGuardarCambios.addActionListener(this::botonGuardarCambiosActionPerformed);
+
+        campoEstado.setEditable(false);
 
         javax.swing.GroupLayout MiPerfilLayout = new javax.swing.GroupLayout(MiPerfil);
         MiPerfil.setLayout(MiPerfilLayout);
@@ -251,35 +275,39 @@ public class VentanaSocio extends javax.swing.JFrame {
                             .addGroup(MiPerfilLayout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField3))
+                                .addComponent(campoCorreo))
                             .addGroup(MiPerfilLayout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(campoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(MiPerfilLayout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField4))
+                                .addComponent(campoTelefono))
                             .addGroup(MiPerfilLayout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField5))
+                                .addComponent(campoDireccion))
                             .addGroup(MiPerfilLayout.createSequentialGroup()
                                 .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField6))
-                            .addGroup(MiPerfilLayout.createSequentialGroup()
-                                .addComponent(jLabel10)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPasswordField2))
-                            .addGroup(MiPerfilLayout.createSequentialGroup()
-                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(campoTarjeta, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MiPerfilLayout.createSequentialGroup()
+                                .addGroup(MiPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(MiPerfilLayout.createSequentialGroup()
+                                        .addComponent(jLabel10)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(campoClave))
+                                    .addGroup(MiPerfilLayout.createSequentialGroup()
+                                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(campoEstado)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(MiPerfilLayout.createSequentialGroup()
                         .addGap(161, 161, 161)
-                        .addComponent(jButton5)))
-                .addContainerGap(42, Short.MAX_VALUE))
+                        .addComponent(botonGuardarCambios)))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         MiPerfilLayout.setVerticalGroup(
             MiPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -287,34 +315,35 @@ public class VentanaSocio extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addGroup(MiPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(MiPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campoCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(MiPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(MiPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campoDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(MiPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campoTarjeta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(MiPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campoClave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(MiPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(jLabel12))
+                    .addComponent(jLabel12)
+                    .addComponent(campoEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton5)
-                .addContainerGap(85, Short.MAX_VALUE))
+                .addComponent(botonGuardarCambios)
+                .addContainerGap(79, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Mi Perfil", MiPerfil);
@@ -354,44 +383,77 @@ public class VentanaSocio extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void campoCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoCorreoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_campoCorreoActionPerformed
+
+    private void botonGuardarCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarCambiosActionPerformed
+        // TODO add your handling code here:
+        // 1. Obtenemos el socio que está usando la aplicación ahora mismo
+com.mycompany.javafit.Socio socioActual = (com.mycompany.javafit.Socio) com.mycompany.javafit.Gimnasio.getInstancia().getUsuarioLogeado();
+
+if (socioActual != null) {
+    // 2. Actualizamos sus datos usando los "setters" de la clase de tu compañero
+    socioActual.setNombre(campoNombre.getText().trim());
+    socioActual.setTelefono(campoTelefono.getText().trim());
+    socioActual.setDireccion(campoDireccion.getText().trim());
+    socioActual.setTarjetaCredito(campoTarjeta.getText().trim());
+    
+    // Si queréis permitir que cambie su correo, quita las // de la línea de abajo:
+    // socioActual.setCorreo(campoCorreo.getText().trim());
+    
+    // La contraseña hay que sacarla así porque es un campo de seguridad especial:
+    String nuevaClave = new String(campoClave.getPassword());
+    socioActual.setClave(nuevaClave);
+
+    // 3. Avisamos al usuario con un mensaje en pantalla
+    javax.swing.JOptionPane.showMessageDialog(this, "¡Tus datos se han actualizado correctamente!");
+} else {
+    javax.swing.JOptionPane.showMessageDialog(this, "Error: No se ha podido identificar al usuario.");
+}
+    }//GEN-LAST:event_botonGuardarCambiosActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+    /* Set the Nimbus look and feel */
+    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+    /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
+     */
+    try {
+        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            if ("Nimbus".equals(info.getName())) {
+                javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                break;
             }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new VentanaSocio().setVisible(true));
+    } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+        logger.log(java.util.logging.Level.SEVERE, null, ex);
     }
+    //</editor-fold>
+
+    /* Create and display the form */
+    java.awt.EventQueue.invokeLater(() -> new VentanaSocio().setVisible(true));
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel BusquedaYReserva;
     private javax.swing.JPanel MiPerfil;
     private javax.swing.JPanel MisReservas;
+    private javax.swing.JButton botonGuardarCambios;
+    private javax.swing.JPasswordField campoClave;
+    private javax.swing.JTextField campoCorreo;
+    private javax.swing.JTextField campoDireccion;
+    private javax.swing.JTextField campoEstado;
+    private javax.swing.JTextField campoNombre;
+    private javax.swing.JTextField campoTarjeta;
+    private javax.swing.JTextField campoTelefono;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
@@ -407,7 +469,6 @@ public class VentanaSocio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JPasswordField jPasswordField2;
     private javax.swing.JScrollBar jScrollBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -415,10 +476,5 @@ public class VentanaSocio extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
     // End of variables declaration//GEN-END:variables
 }
