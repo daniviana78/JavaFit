@@ -50,9 +50,22 @@ public class VentanaSocio extends javax.swing.JFrame {
                 fila[1] = act.getTipo();
                 fila[2] = act.getMonitor();
                 
-                // Nota: Como vimos antes que al crear actividad no se guardaba el día, 
-                // aquí puedes poner un texto por defecto o intentar sacar la fecha si tu compañero lo programó después.
-                fila[3] = "Horario a consultar"; 
+                // --- CÓDIGO PARA SACAR LOS DÍAS ---
+                String diasTexto = "";
+                // 1. Comprobamos si la actividad tiene horarios guardados
+                if (act.getHorarios() != null && !act.getHorarios().isEmpty()) {
+                    // 2. Si tiene, los recorremos todos
+                    for (com.mycompany.javafit.Horario h : act.getHorarios()) {
+                        diasTexto += h.getDia() + " "; // Sumamos los días separados por un espacio
+                    }
+                } else {
+                    // Si la lista está vacía, ponemos un texto de aviso
+                    diasTexto = "Sin horarios"; 
+                }
+                
+                // 3. Lo metemos en la columna de la tabla (y le quitamos los espacios sobrantes de los lados)
+                fila[3] = diasTexto.trim(); 
+                // ----------------------------------------
                 
                 modelo.addRow(fila);
             }
@@ -168,6 +181,11 @@ public class VentanaSocio extends javax.swing.JFrame {
             }
         });
         tablaActividades.getTableHeader().setReorderingAllowed(false);
+        tablaActividades.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaActividadesMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tablaActividades);
         if (tablaActividades.getColumnModel().getColumnCount() > 0) {
             tablaActividades.getColumnModel().getColumn(2).setResizable(false);
@@ -515,6 +533,42 @@ if (socioActual != null) {
     
 
     }//GEN-LAST:event_botonReservarActionPerformed
+
+    private void tablaActividadesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaActividadesMouseClicked
+        // TODO add your handling code here:
+        // 1. Obtenemos la fila en la que el usuario ha hecho clic
+    int fila = tablaActividades.getSelectedRow();
+    
+    if (fila >= 0) {
+        
+        // 2. Sacamos el título de la actividad (suponiendo que sigue en la columna 0)
+        String titulo = tablaActividades.getValueAt(fila, 0).toString();
+        
+        // 3. Buscamos la actividad con tu código usando Streams (¡muy elegante!)
+        com.mycompany.javafit.Actividad actSeleccionada = com.mycompany.javafit.Gimnasio.getInstancia().getActividades().stream()
+                .filter(a -> a.getTitulo().equalsIgnoreCase(titulo))
+                .findFirst()
+                .orElse(null);
+        
+        // 4. Si la encontramos, abrimos su ficha
+        if (actSeleccionada != null) {
+            
+            if (actSeleccionada instanceof com.mycompany.javafit.ActividadEspecial) {
+                // Es especial, abrimos la ventana VIP
+                javafit.visual.VentanaActividadEspecial ficha = new javafit.visual.VentanaActividadEspecial((com.mycompany.javafit.ActividadEspecial) actSeleccionada);
+                ficha.setVisible(true);
+                // Esto asegura que al cerrar la ficha NO se cierre todo el programa, solo esa ventanita
+                ficha.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+                
+            } else {
+                // Es normal, abrimos la ficha estándar
+                javafit.visual.VentanaActividad ficha = new javafit.visual.VentanaActividad(actSeleccionada);
+                ficha.setVisible(true);
+                ficha.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+            }
+        }
+    }
+    }//GEN-LAST:event_tablaActividadesMouseClicked
 
     /**
      * @param args the command line arguments
