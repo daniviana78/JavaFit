@@ -157,7 +157,7 @@ public class VentanaSocio extends javax.swing.JFrame {
         MisReservas = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
-        jButton3 = new javax.swing.JButton();
+        cancelarReserva = new javax.swing.JButton();
         MiPerfil = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         campoNombre = new javax.swing.JTextField();
@@ -237,10 +237,6 @@ public class VentanaSocio extends javax.swing.JFrame {
         BusquedaYReserva.setLayout(BusquedaYReservaLayout);
         BusquedaYReservaLayout.setHorizontalGroup(
             BusquedaYReservaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BusquedaYReservaLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(botonReservar)
-                .addGap(113, 113, 113))
             .addGroup(BusquedaYReservaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(BusquedaYReservaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -266,6 +262,10 @@ public class VentanaSocio extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(campoDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(19, 19, 19))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BusquedaYReservaLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(botonReservar)
+                .addGap(161, 161, 161))
         );
         BusquedaYReservaLayout.setVerticalGroup(
             BusquedaYReservaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -284,9 +284,9 @@ public class VentanaSocio extends javax.swing.JFrame {
                     .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(botonReservar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Búsqueda y Reserva", BusquedaYReserva);
@@ -312,8 +312,8 @@ public class VentanaSocio extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jTable2);
 
-        jButton3.setText("Cancelar Reserva");
-        jButton3.addActionListener(this::jButton3ActionPerformed);
+        cancelarReserva.setText("Cancelar Reserva");
+        cancelarReserva.addActionListener(this::cancelarReservaActionPerformed);
 
         javax.swing.GroupLayout MisReservasLayout = new javax.swing.GroupLayout(MisReservas);
         MisReservas.setLayout(MisReservasLayout);
@@ -325,7 +325,7 @@ public class VentanaSocio extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MisReservasLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton3)
+                .addComponent(cancelarReserva)
                 .addGap(189, 189, 189))
         );
         MisReservasLayout.setVerticalGroup(
@@ -334,7 +334,7 @@ public class VentanaSocio extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
+                .addComponent(cancelarReserva)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -484,9 +484,68 @@ public class VentanaSocio extends javax.swing.JFrame {
         cargarTablaActividades("Todos", "");
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void cancelarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarReservaActionPerformed
+        // TODO add your handling code here:                                                   
+    // 1. Comprobamos si el usuario ha seleccionado alguna fila de la tabla de reservas
+    // (Asegúrate de que tu tabla de reservas se llama jTable2, si no, cambia el nombre)
+    int filaSeleccionada = jTable2.getSelectedRow();
+    
+    if (filaSeleccionada == -1) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Por favor, selecciona primero la reserva que deseas cancelar.");
+        return;
+    }
+    
+    // 2. Extraemos los datos clave de la fila seleccionada para identificar la reserva única
+    String diaClase = jTable2.getValueAt(filaSeleccionada, 0).toString();
+    String tituloActividad = jTable2.getValueAt(filaSeleccionada, 1).toString();
+    String turnoClase = jTable2.getValueAt(filaSeleccionada, 2).toString();
+    
+    // 3. Obtenemos el socio que está usando la aplicación actualmente
+    com.mycompany.javafit.Socio socioActual = (com.mycompany.javafit.Socio) com.mycompany.javafit.Gimnasio.getInstancia().getUsuarioLogeado();
+    
+    if (socioActual != null) {
+        // 4. Preguntamos al usuario si está seguro de cancelar para evitar errores accidentales
+        int respuesta = javax.swing.JOptionPane.showConfirmDialog(this, 
+                "¿Estás seguro de que quieres cancelar tu reserva de " + tituloActividad + "?", 
+                "Confirmar cancelación", javax.swing.JOptionPane.YES_NO_OPTION);
+        
+        if (respuesta == javax.swing.JOptionPane.YES_OPTION) {
+            
+            // 5. Traemos todas las reservas del sistema para buscar la que coincide exactamente
+            java.util.ArrayList<com.mycompany.javafit.Reserva> listaReservasSistema = com.mycompany.javafit.Gimnasio.getInstancia().getReservas();
+            com.mycompany.javafit.Reserva reservaAEliminar = null;
+            
+            if (listaReservasSistema != null) {
+                for (com.mycompany.javafit.Reserva res : listaReservasSistema) {
+                    // Comprobamos si coincide el cliente, el título de la clase, el día y el turno exacto
+                    if (res.getCliente() != null && res.getCliente().getCorreo().equals(socioActual.getCorreo()) &&
+                        res.getActividad() != null && res.getActividad().getTitulo().equalsIgnoreCase(tituloActividad) &&
+                        res.getTurno() != null && res.getTurno().getDia().equalsIgnoreCase(diaClase) &&
+                        res.getTurno().getTurno().equalsIgnoreCase(turnoClase)) {
+                        
+                        reservaAEliminar = res;
+                        break; // La hemos encontrado, salimos del bucle
+                    }
+                }
+            }
+            
+            // 6. Si encontramos la reserva en el sistema, la borramos y actualizamos el archivo
+            if (reservaAEliminar != null) {
+                listaReservasSistema.remove(reservaAEliminar);
+                
+                // Forzamos el guardado en el archivo datos.dat para que el cambio persista al cerrar
+                com.mycompany.javafit.Gimnasio.getInstancia().guardarDatos();
+                
+                javax.swing.JOptionPane.showMessageDialog(this, "La reserva se ha cancelado correctamente.");
+                
+                // 7. Refrescamos la tabla inmediatamente para que desaparezca visualmente
+                cargarTablaMisReservas();
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Error: No se pudo localizar la reserva seleccionada en el sistema.");
+            }
+        }
+    }
+    }//GEN-LAST:event_cancelarReservaActionPerformed
 
     private void campoCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoCorreoActionPerformed
         // TODO add your handling code here:
@@ -551,19 +610,44 @@ if (socioActual != null) {
         // 5. Sacamos el día del desplegable (cambia 'comboDia' por 'jComboBox2' si te sale rojo)
         String diaElegido = campoDia.getSelectedItem().toString(); 
 
+        
         // 6. Creamos el objeto Horario envolviendo el día
         com.mycompany.javafit.Horario turnoObjeto = new com.mycompany.javafit.Horario(diaElegido, "Mañana"); 
+        boolean yaExisteReserva = false;
+        java.util.ArrayList<com.mycompany.javafit.Reserva> listaReservasSistema = com.mycompany.javafit.Gimnasio.getInstancia().getReservas();
+        
+        if (listaReservasSistema != null) {
+            for (com.mycompany.javafit.Reserva res : listaReservasSistema) {
+                // Comprobamos si coincide todo: mismo cliente, misma actividad y mismo turno/día
+                if (res.getCliente() != null && res.getCliente().getCorreo().equals(socioActual.getCorreo()) &&
+                    res.getActividad() != null && res.getActividad().getTitulo().equalsIgnoreCase(actividadElegida.getTitulo()) &&
+                    res.getTurno() != null && res.getTurno().getDia().equalsIgnoreCase(turnoObjeto.getDia()) &&
+                    res.getTurno().getTurno().equalsIgnoreCase(turnoObjeto.getTurno())) {
+                    
+                    yaExisteReserva = true;
+                    break; // Ya lo encontramos, no hace falta seguir buscando
+                }
+            }
+        }
 
-        // 7. Llamamos al método oficial de tu compañero para reservar
+        // Si el bucle detectó que ya está apuntado, frenamos la reserva inmediatamente
+        if (yaExisteReserva) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "¡Ya estás inscrito en esta actividad para el " + diaElegido + "! No puedes duplicar la reserva.", 
+                "Reserva Duplicada", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return; // Detiene la ejecución del método aquí mismo
+        }
+        // =========================================================================
+
+        // 7. Si pasa el control, llamamos al método oficial de tu compañero para reservar
         boolean exito = com.mycompany.javafit.Gimnasio.getInstancia().reservar(actividadElegida, socioActual, turnoObjeto);
         
         if (exito) {
             javax.swing.JOptionPane.showMessageDialog(this, "¡Reserva confirmada para: " + tituloClase + "!");
-            cargarTablaMisReservas();
+            cargarTablaMisReservas(); 
         } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "No se ha podido reservar (quizás está llena o ya la habías reservado).");
+            javax.swing.JOptionPane.showMessageDialog(this, "No se ha podido reservar (quizás está llena).");
         }
-        
     } else {
         javax.swing.JOptionPane.showMessageDialog(this, "Error del sistema al procesar la reserva.");
     }
@@ -646,9 +730,9 @@ if (socioActual != null) {
     private javax.swing.JTextField campoTarjeta;
     private javax.swing.JTextField campoTelefono;
     private javax.swing.JComboBox<String> campoTipo;
+    private javax.swing.JButton cancelarReserva;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
