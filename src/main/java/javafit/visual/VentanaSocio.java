@@ -20,7 +20,45 @@ public class VentanaSocio extends javax.swing.JFrame {
         initComponents();
         cargarDatosPerfil();
         cargarTablaActividades("Todos", "");
+        cargarTablaMisReservas();
     }
+    private void cargarTablaMisReservas() {
+    // 1. Obtenemos el modelo de tu tabla de reservas (cambia jTable2 por el nombre de tu tabla si fuese necesario)
+    javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jTable2.getModel();
+    
+    // 2. Vaciamos la tabla por completo antes de rellenar para evitar duplicados
+    modelo.setRowCount(0);
+    
+    // 3. Identificamos al socio que está logeado en este momento
+    com.mycompany.javafit.Socio socioActual = (com.mycompany.javafit.Socio) com.mycompany.javafit.Gimnasio.getInstancia().getUsuarioLogeado();
+    
+    if (socioActual != null) {
+        
+        // 4. Le pedimos TODAS las reservas del gimnasio a la clase principal de Dani
+        // (Usa Ctrl + Espacio en .getReservas() si te saliera rojo por haberlo llamado diferente en Gimnasio.java)
+        java.util.ArrayList<com.mycompany.javafit.Reserva> todasLasReservas = com.mycompany.javafit.Gimnasio.getInstancia().getReservas();
+        
+        if (todasLasReservas != null) {
+            // 5. Recorremos la lista completa del gimnasio
+            for (com.mycompany.javafit.Reserva res : todasLasReservas) {
+                
+                // ¡AQUÍ ESTÁ EL TRUCO! Comprobamos si el cliente de esa reserva es nuestro socio actual
+                if (res.getCliente() != null && res.getCliente().getCorreo().equals(socioActual.getCorreo())) {
+                    
+                    Object[] fila = new Object[4];
+                    
+                    // Usamos los métodos exactos que hemos visto en su clase Reserva.java:
+                    fila[0] = res.getTurno().getDia();          // Columna Fecha / Día
+                    fila[1] = res.getActividad().getTitulo();   // Columna Actividad
+                    fila[2] = res.getTurno().getTurno();        // Columna Horario / Turno
+                    fila[3] = "Confirmada (" + res.getImporte() + "€)"; // Columna Estado con el precio de Dani
+                    
+                    modelo.addRow(fila);
+                }
+            }
+        }
+    }
+}
     private void cargarTablaActividades(String tipoFiltro, String monitorFiltro) {
     // 1. Obtenemos el modelo de tu tabla
     javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tablaActividades.getModel();
@@ -199,33 +237,35 @@ public class VentanaSocio extends javax.swing.JFrame {
         BusquedaYReserva.setLayout(BusquedaYReservaLayout);
         BusquedaYReservaLayout.setHorizontalGroup(
             BusquedaYReservaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(BusquedaYReservaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(BusquedaYReservaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(BusquedaYReservaLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(BusquedaYReservaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(BusquedaYReservaLayout.createSequentialGroup()
-                                .addComponent(campoTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(campoMonitor, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel4))
-                            .addGroup(BusquedaYReservaLayout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton2)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BusquedaYReservaLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(botonReservar)
                 .addGap(113, 113, 113))
+            .addGroup(BusquedaYReservaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(BusquedaYReservaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(BusquedaYReservaLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())
+                    .addGroup(BusquedaYReservaLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(BusquedaYReservaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(BusquedaYReservaLayout.createSequentialGroup()
+                                .addComponent(campoTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(52, 52, 52)
+                                .addComponent(jLabel3)
+                                .addGap(18, 18, 18)
+                                .addComponent(campoMonitor, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(45, 45, 45)
+                                .addComponent(jLabel4))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BusquedaYReservaLayout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addGap(45, 45, 45)
+                                .addComponent(jButton2)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(campoDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(19, 19, 19))))
         );
         BusquedaYReservaLayout.setVerticalGroup(
             BusquedaYReservaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -279,14 +319,14 @@ public class VentanaSocio extends javax.swing.JFrame {
         MisReservas.setLayout(MisReservasLayout);
         MisReservasLayout.setHorizontalGroup(
             MisReservasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(MisReservasLayout.createSequentialGroup()
-                .addContainerGap(7, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MisReservasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(MisReservasLayout.createSequentialGroup()
-                .addGap(148, 148, 148)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MisReservasLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(189, 189, 189))
         );
         MisReservasLayout.setVerticalGroup(
             MisReservasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -364,8 +404,8 @@ public class VentanaSocio extends javax.swing.JFrame {
                                 .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(MiPerfilLayout.createSequentialGroup()
                         .addGap(161, 161, 161)
-                        .addComponent(botonGuardarCambios)))
-                .addContainerGap(30, Short.MAX_VALUE))
+                        .addComponent(botonGuardarCambios, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(118, Short.MAX_VALUE))
         );
         MiPerfilLayout.setVerticalGroup(
             MiPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -400,8 +440,8 @@ public class VentanaSocio extends javax.swing.JFrame {
                     .addComponent(jLabel12)
                     .addComponent(campoEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(botonGuardarCambios)
-                .addContainerGap(79, Short.MAX_VALUE))
+                .addComponent(botonGuardarCambios, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(70, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Mi Perfil", MiPerfil);
@@ -470,7 +510,8 @@ if (socioActual != null) {
     // La contraseña hay que sacarla así porque es un campo de seguridad especial:
     String nuevaClave = new String(campoClave.getPassword());
     socioActual.setClave(nuevaClave);
-
+    // Llamamos al método que sobreescribe el archivo datos.dat
+    com.mycompany.javafit.Gimnasio.getInstancia().guardarDatos();
     // 3. Avisamos al usuario con un mensaje en pantalla
     javax.swing.JOptionPane.showMessageDialog(this, "¡Tus datos se han actualizado correctamente!");
 } else {
@@ -518,6 +559,7 @@ if (socioActual != null) {
         
         if (exito) {
             javax.swing.JOptionPane.showMessageDialog(this, "¡Reserva confirmada para: " + tituloClase + "!");
+            cargarTablaMisReservas();
         } else {
             javax.swing.JOptionPane.showMessageDialog(this, "No se ha podido reservar (quizás está llena o ya la habías reservado).");
         }
@@ -525,13 +567,6 @@ if (socioActual != null) {
     } else {
         javax.swing.JOptionPane.showMessageDialog(this, "Error del sistema al procesar la reserva.");
     }
-
-    
-    
-    
-    
-    
-
     }//GEN-LAST:event_botonReservarActionPerformed
 
     private void tablaActividadesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaActividadesMouseClicked
