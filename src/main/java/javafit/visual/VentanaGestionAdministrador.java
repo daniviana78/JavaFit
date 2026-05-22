@@ -683,8 +683,6 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
         String tipo = comboTipo.getSelectedItem().toString(); 
         String monitor = campoMonitor.getText().trim();
         String nombreSala = campoSala.getText().trim();
-        String dia = jComboBoxDia.getSelectedItem().toString();
-        String turno = jComboBoxTurno.getSelectedItem().toString();
 
     // Comprobación de que no falten datos clave
     if (titulo.isEmpty() || monitor.isEmpty() || nombreSala.isEmpty()) {
@@ -717,10 +715,10 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
             String descripcion = campoDescripcion.getText().trim();
 
             exito = Gimnasio.getInstancia().crearActividad(
-                    titulo, tipo, sala, this.horarios, monitor, this.imagenActividad, precio, descripcion);
+                    titulo, tipo, sala, new java.util.ArrayList<>(this.horarios), monitor, this.imagenActividad, precio, descripcion);
         } else {
             exito = Gimnasio.getInstancia().crearActividad(
-                    titulo, tipo, sala, this.horarios, monitor, this.imagenActividad);
+                    titulo, tipo, sala, new java.util.ArrayList<>(this.horarios), monitor, this.imagenActividad);
         }
 
         if (exito) {
