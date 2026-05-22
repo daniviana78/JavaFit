@@ -76,6 +76,15 @@ public class Socio extends Usuario implements Serializable {
         this.socioVIP = socioVIP;
     }
 
+    public ArrayList<Reserva> getReservas() {
+        return reservas;
+    }
+
+    public void setReservas(ArrayList<Reserva> reservas) {
+        this.reservas = reservas;
+    }
+    
+
     @Override
     public String toString() {
         return "Socio{" + "nombre=" + nombre + ", telefono=" + telefono + ", direccion=" + direccion + ", tarjetaCredito=" + tarjetaCredito + ", socioVIP=" + socioVIP + '}';

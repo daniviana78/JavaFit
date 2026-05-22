@@ -233,7 +233,7 @@ public class Gimnasio implements Serializable {
         LocalDate fechaReserva= LocalDate.now();
         
         long reservasActuales= reservas.stream()
-                .filter(r -> r.getActividad().equals(act) && r.getTurno().equals(turno))
+                .filter(r -> r.getActividad().equals(act) && r.getHorario().equals(turno))
                 .count();
         
         if (reservasActuales < act.getSala().getAforo()) {
@@ -314,7 +314,7 @@ public class Gimnasio implements Serializable {
                 salida.println("\n");
                 salida.println("Cliente: " + r.getCliente());
                 salida.println("\n");
-                salida.println("Turno: " + r.getTurno());
+                salida.println("Turno: " + r.getHorario());
                 salida.println("\n");
                 salida.println("Fecha de realización de la reserva: " + r.getFechaReserva());
                 salida.println("---------------------------------------------------------------------------------");

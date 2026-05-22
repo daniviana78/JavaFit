@@ -12,22 +12,51 @@ package javafit.visual;
 import com.mycompany.javafit.*;
 import javax.swing.*;
 import java.util.ArrayList;
+import java.time.LocalDate;
 
-public class VentanaAdministrador extends javax.swing.JFrame {
+public class VentanaGestionAdministrador extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaAdministrador.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaGestionAdministrador.class.getName());
 
     /**
      * Creates new form VentanaAdministrador
      */
-    public VentanaAdministrador() {
+    public VentanaGestionAdministrador() {
         initComponents();
         // Llamamos al método con "null, null" para que muestre a TODOS los socios al arrancar
+        cargarTablaActividades(null, null, null);
         cargarTablaSocios(null, null);
+        cargarTablaReservas(null,null);
     }
+     
+    private void cargarTablaActividades(String filtroTipo, String filtroMonitor, String filtroDia) {
+        // 1. Obtenemos el modelo de tu JTable de actividades
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jTableActividades.getModel();
+
+        // 2. Vaciamos la tabla para que no se dupliquen los datos al buscar varias veces
+        modelo.setRowCount(0);
+
+        // 3. Le pedimos la lista filtrada al "cerebro" del Gimnasio
+        ArrayList<Actividad> lista = Gimnasio.getInstancia().buscarActividades(filtroTipo, filtroMonitor, filtroDia);
+
+        // 4. Recorremos la lista y metemos solo los 3 datos solicitados
+        for (Actividad act : lista) {
+
+            // Creamos una "fila" con 3 huecos (uno para Título, otro para Tipo y otro para Monitor)
+            Object[] fila = new Object[3]; 
+
+            fila[0] = act.getTitulo();
+            fila[1] = act.getTipo();
+            fila[2] = act.getMonitor();
+
+            // 5. Añadimos la fila al modelo de la tabla
+            modelo.addRow(fila);
+        }
+    }
+    
     private void cargarTablaSocios(String filtroCorreo, Boolean filtroVip) {
         // Obtenemos el "cerebro" de tu tabla (Asegúrate de que el nombre de tu JTable sea correcto, yo usaré tablaSocios)
-        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tablaSocios.getModel();
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jTableSocios.getModel();
 
         // Vaciamos la tabla primero (para que no se dupliquen los datos si buscamos varias veces)
         modelo.setRowCount(0);
@@ -40,20 +69,43 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         for (com.mycompany.javafit.Socio s : lista) {
 
             // Creamos una "fila" con 6 huecos (uno por cada columna que pusiste en NetBeans)
-            Object[] fila = new Object[6]; 
+            Object[] fila = new Object[3]; 
 
             // Usamos los getters de la clase Socio de tu compañero para rellenar los huecos
             fila[0] = s.getNombre();
             fila[1] = s.getCorreo();
-            fila[2] = s.getTelefono();
-            fila[3] = s.getDireccion();
-            fila[4] = s.getTarjetaCredito(); // (En la vida real esto se oculta, ¡pero aquí lo mostramos!)
-            fila[5] = s.isSocioVIP() ? "Sí" : "No"; // Si es true pone "Sí", si es false pone "No"
+            fila[2] = s.isSocioVIP() ? "Sí" : "No"; // Si es true pone "Sí", si es false pone "No"
 
             // Añadimos la fila completa al modelo
-            modelo.addRow(fila);
+                modelo.addRow(fila);
+        }
     }
-}
+    
+    private void cargarTablaReservas(Socio s, LocalDate fecha) {
+        // 1. Obtenemos el modelo de tu JTable de reservas
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jTableReservas.getModel();
+
+        // 2. Vaciamos la tabla para que no se dupliquen los datos al recargar
+        modelo.setRowCount(0);
+
+        // 3. Le pedimos la lista de reservas al Gimnasio (o desde donde las recuperes de forma global)
+        ArrayList<Reserva> lista = Gimnasio.getInstancia().buscarReservas(s, fecha); 
+
+        // 4. Recorremos la lista de reservas y metemos los 3 datos que me has pedido
+        for (Reserva res : lista) {
+
+            // Creamos una "fila" con 3 huecos (Fecha, Correo Socio y Título Actividad)
+            Object[] fila = new Object[3]; 
+
+            fila[0] = res.getFechaReserva();             // O res.getFecha(), según tu atributo
+            fila[1] = res.getCliente().getCorreo();        // Sacamos el correo desde el objeto Socio de la reserva
+            fila[2] = res.getActividad().getTitulo();    // Sacamos el título desde el objeto Actividad de la reserva
+
+            // 5. Añadimos la fila al modelo de la tabla
+            modelo.addRow(fila);
+        }
+    }
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -71,26 +123,16 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jTextFieldMonitor = new javax.swing.JTextField();
         jButtonBuscar = new javax.swing.JButton();
-        jButtonLimpiar = new javax.swing.JButton();
+        jButtonLimpiarActividades = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableActividades = new javax.swing.JTable();
-        ConsultaDeSocios = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
-        campoBusquedaCorreo = new javax.swing.JTextField();
-        checkBoxVip = new javax.swing.JCheckBox();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tablaSocios = new javax.swing.JTable();
         ConsultaDeReservas = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        jTableReservas = new javax.swing.JTable();
+        jSpinnerFecha = new javax.swing.JSpinner();
         GestiónDeActividades = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jButtonGuardarActividad = new javax.swing.JButton();
@@ -117,9 +159,18 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         jButtonImportarImagen = new javax.swing.JButton();
         jButtonAñadirHorario = new javax.swing.JButton();
         jButtonBorrarHorario = new javax.swing.JButton();
+        ConsultaDeSocios = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jTextFieldCorreo = new javax.swing.JTextField();
+        checkBoxVip = new javax.swing.JCheckBox();
+        jButton6 = new javax.swing.JButton();
+        jButtonLimpiarSocios = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTableSocios = new javax.swing.JTable();
         jLabel12 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("JavaFit");
 
         jLabel7.setText("Buscar por Tipo:");
 
@@ -133,8 +184,8 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         jButtonBuscar.setText("Buscar");
         jButtonBuscar.addActionListener(this::jButtonBuscarActionPerformed);
 
-        jButtonLimpiar.setText("Limpiar");
-        jButtonLimpiar.addActionListener(this::jButtonLimpiarActionPerformed);
+        jButtonLimpiarActividades.setText("Limpiar");
+        jButtonLimpiarActividades.addActionListener(this::jButtonLimpiarActividadesActionPerformed);
 
         jTableActividades.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -178,7 +229,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonBuscar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonLimpiar)
+                .addComponent(jButtonLimpiarActividades)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
         );
@@ -192,118 +243,53 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                     .addComponent(jLabel8)
                     .addComponent(jTextFieldMonitor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonBuscar)
-                    .addComponent(jButtonLimpiar))
+                    .addComponent(jButtonLimpiarActividades))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Consulta de Actividades", ConsultaDeActividades);
 
-        jLabel9.setText("Buscar por Nombre:");
-
-        jLabel10.setText("Correo electrónico:");
-
-        checkBoxVip.setText("Socios VIP");
-        checkBoxVip.addActionListener(this::checkBoxVipActionPerformed);
-
-        jButton6.setText("Buscar");
-        jButton6.addActionListener(this::jButton6ActionPerformed);
-
-        jButton7.setText("Limpiar");
-        jButton7.addActionListener(this::jButton7ActionPerformed);
-
-        tablaSocios.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "Nombre", "Correo", "Teléfono", "Dirección", "Tarjeta", "¿Es VIP?"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane3.setViewportView(tablaSocios);
-
-        javax.swing.GroupLayout ConsultaDeSociosLayout = new javax.swing.GroupLayout(ConsultaDeSocios);
-        ConsultaDeSocios.setLayout(ConsultaDeSociosLayout);
-        ConsultaDeSociosLayout.setHorizontalGroup(
-            ConsultaDeSociosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ConsultaDeSociosLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(campoBusquedaCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(checkBoxVip)
-                .addGap(18, 18, 18))
-            .addGroup(ConsultaDeSociosLayout.createSequentialGroup()
-                .addGap(151, 151, 151)
-                .addComponent(jButton6)
-                .addGap(28, 28, 28)
-                .addComponent(jButton7)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jScrollPane3)
-        );
-        ConsultaDeSociosLayout.setVerticalGroup(
-            ConsultaDeSociosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ConsultaDeSociosLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(ConsultaDeSociosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10)
-                    .addComponent(campoBusquedaCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(checkBoxVip))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(ConsultaDeSociosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3))
-        );
-
-        jTabbedPane1.addTab("Consulta de Socios", ConsultaDeSocios);
-
         jLabel11.setText("Consultar desde la fecha:");
 
-        jButton8.setText("Filtrar Reservas");
+        jButton8.setText("Buscar");
         jButton8.addActionListener(this::jButton8ActionPerformed);
 
         jButton9.setText("Ver todas");
+        jButton9.addActionListener(this::jButton9ActionPerformed);
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        jTableReservas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Fecha", "Socio", "Actividad", "Horario", "Coste", "Recibo"
+                "Fecha", "Socio", "Actividad"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane4.setViewportView(jTable3);
+        jTableReservas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableReservasMouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(jTableReservas);
+        if (jTableReservas.getColumnModel().getColumnCount() > 0) {
+            jTableReservas.getColumnModel().getColumn(1).setResizable(false);
+        }
+
+        jSpinnerFecha.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), null, new java.util.Date(), java.util.Calendar.DAY_OF_MONTH));
+        jSpinnerFecha.setToolTipText("");
+        jSpinnerFecha.setEditor(new javax.swing.JSpinner.DateEditor(jSpinnerFecha, "dd/MM/yyyy"));
 
         javax.swing.GroupLayout ConsultaDeReservasLayout = new javax.swing.GroupLayout(ConsultaDeReservas);
         ConsultaDeReservas.setLayout(ConsultaDeReservasLayout);
@@ -313,13 +299,13 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jSpinnerFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jButton9)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 516, Short.MAX_VALUE)
+                .addGap(20, 20, 20))
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 524, Short.MAX_VALUE)
         );
         ConsultaDeReservasLayout.setVerticalGroup(
             ConsultaDeReservasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -327,9 +313,9 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(ConsultaDeReservasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton8)
-                    .addComponent(jButton9))
+                    .addComponent(jButton9)
+                    .addComponent(jSpinnerFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE))
         );
@@ -496,6 +482,82 @@ public class VentanaAdministrador extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Gestión de Actividades", GestiónDeActividades);
 
+        jLabel10.setText("Buscar por correo electrónico:");
+
+        checkBoxVip.setText("Socios VIP");
+
+        jButton6.setText("Buscar");
+        jButton6.addActionListener(this::jButton6ActionPerformed);
+
+        jButtonLimpiarSocios.setText("Limpiar");
+        jButtonLimpiarSocios.addActionListener(this::jButtonLimpiarSociosActionPerformed);
+
+        jTableSocios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Nombre", "Correo", "¿Es VIP?"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTableSocios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableSociosMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(jTableSocios);
+
+        javax.swing.GroupLayout ConsultaDeSociosLayout = new javax.swing.GroupLayout(ConsultaDeSocios);
+        ConsultaDeSocios.setLayout(ConsultaDeSociosLayout);
+        ConsultaDeSociosLayout.setHorizontalGroup(
+            ConsultaDeSociosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 524, Short.MAX_VALUE)
+            .addGroup(ConsultaDeSociosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(ConsultaDeSociosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(ConsultaDeSociosLayout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextFieldCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(checkBoxVip)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(ConsultaDeSociosLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton6)
+                        .addGap(83, 83, 83)
+                        .addComponent(jButtonLimpiarSocios)
+                        .addGap(142, 142, 142))))
+        );
+        ConsultaDeSociosLayout.setVerticalGroup(
+            ConsultaDeSociosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ConsultaDeSociosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(ConsultaDeSociosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(jTextFieldCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(checkBoxVip))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(ConsultaDeSociosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonLimpiarSocios, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3))
+        );
+
+        jTabbedPane1.addTab("Consulta de Socios", ConsultaDeSocios);
+
         jLabel12.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         jLabel12.setText("JavaFit");
 
@@ -530,6 +592,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         
         if (titulo.isEmpty()) {
             javax.swing.JOptionPane.showMessageDialog(this, "El campo 'Título' no puede estar vacío.","Campo vacío", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
         }
 
         // Buscamos la actividad original en el sistema utilizando la lista del Gimnasio
@@ -673,48 +736,34 @@ public class VentanaAdministrador extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonGuardarActividadActionPerformed
 
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
-        // TODO add your handling code here:
-        String tipoBuscado= jComboBoxTipo.getSelectedItem().toString();
-        
-        if(tipoBuscado.equals("Todos")){
-            tipoBuscado= null;
+        // 1. Recogemos los criterios de los componentes de la interfaz
+        String tipoBuscado = jComboBoxTipo.getSelectedItem().toString();
+        String monitorBuscado = jTextFieldMonitor.getText().trim();
+        String dia = null; // Lo dejas como null por ahora, listo por si añades un combo de días más adelante
+
+        // 2. Convertimos a null si el usuario no ha especificado un filtro concreto
+        if (tipoBuscado.equals("Todos")) {
+            tipoBuscado = null;
         }
-        
-        String monitorBuscado= jTextFieldMonitor.getText();
-        
-        if(monitorBuscado.isEmpty()){
-            monitorBuscado= null;
+
+        if (monitorBuscado.isEmpty()) {
+            monitorBuscado = null;
         }
-        
-        String dia= null;
-        
-        ArrayList<Actividad> actividadesFiltradas= Gimnasio.getInstancia().buscarActividades(tipoBuscado, monitorBuscado, dia);
-        
-        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jTableActividades.getModel();
-        modelo.setRowCount(0);
-        
-        for(Actividad a : actividadesFiltradas){
-            Object[] fila= new Object[3];
-            fila[0]= a.getTitulo();
-            fila[1]= a.getTipo();
-            fila[2]= a.getMonitor();
-            
-            modelo.addRow(fila);
-        }
-                    
+
+        // 3. ¡La magia de la reutilización! Llamamos al método pasándole los parámetros
+        cargarTablaActividades(tipoBuscado, monitorBuscado, dia);
+
     }//GEN-LAST:event_jButtonBuscarActionPerformed
 
-    private void jButtonLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarActionPerformed
+    private void jButtonLimpiarActividadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarActividadesActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonLimpiarActionPerformed
-
-    private void checkBoxVipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxVipActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_checkBoxVipActionPerformed
+        jTextFieldMonitor.setText("");
+        jComboBoxTipo.setSelectedItem("Todos");
+    }//GEN-LAST:event_jButtonLimpiarActividadesActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-            String correo = campoBusquedaCorreo.getText().trim();
+            String correo = jTextFieldCorreo.getText().trim();
             if (correo.isEmpty()) 
                 correo = null; // Si está vacío, mandamos null
 
@@ -727,12 +776,44 @@ public class VentanaAdministrador extends javax.swing.JFrame {
             cargarTablaSocios(correo, esVip);
     }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    private void jButtonLimpiarSociosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarSociosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
+        jTextFieldCorreo.setText("");
+        checkBoxVip.setSelected(false);
+        cargarTablaSocios(null, null);
+    }//GEN-LAST:event_jButtonLimpiarSociosActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
+        // 1. Obtenemos la fecha del JSpinner
+        java.util.Date fechaSpinner = (java.util.Date) jSpinnerFecha.getValue();
+
+        // 2. Pasamos de Date a LocalDate usando GregorianCalendar
+        java.util.GregorianCalendar cal = new java.util.GregorianCalendar();
+        cal.setTime(fechaSpinner);
+
+        LocalDate fecha = LocalDate.of(
+            cal.get(java.util.Calendar.YEAR),
+            cal.get(java.util.Calendar.MONTH) + 1, // Se le suma 1 porque en Calendar los meses van de 0 a 11
+            cal.get(java.util.Calendar.DAY_OF_MONTH)
+        );
+
+        // 3. Limpiamos la tabla de reservas
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jTableReservas.getModel();
+        modelo.setRowCount(0);
+
+        // 4. Buscamos en el gimnasio (null por administrador)
+        java.util.ArrayList<Reserva> reservasFiltradas = Gimnasio.getInstancia().buscarReservas(null, fecha);
+
+        // 5. Pintamos los resultados en la tabla
+        for (Reserva res : reservasFiltradas) {
+            Object[] fila = new Object[3];
+            fila[0] = res.getFechaReserva();             
+            fila[1] = res.getCliente().getCorreo();        
+            fila[2] = res.getActividad().getTitulo();    
+            modelo.addRow(fila);
+    }
+    
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButtonImportarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportarImagenActionPerformed
@@ -759,7 +840,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
             String titulo= campoTitulo.getText().trim();
             
             if (titulo.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "El campo 'Título' no puede estar vacío.","Campo vacío", javax.swing.JOptionPane.WARNING_MESSAGE);
+                javax.swing.JOptionPane.showMessageDialog(this, "El campo 'Título' no puede estar vacío.","Campo vacío", javax.swing.JOptionPane.WARNING_MESSAGE);
             }
             
             boolean eliminado= Gimnasio.getInstancia().borrarActividad(titulo);
@@ -882,6 +963,61 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButtonBorrarHorarioActionPerformed
 
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jTableReservasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableReservasMouseClicked
+        // TODO add your handling code here:
+        int fila= jTableReservas.getSelectedRow();
+        
+        if (fila>=0){
+            
+        String tituloActividad = jTableReservas.getValueAt(fila, 0).toString();
+        
+        String correoSocio = jTableReservas.getValueAt(fila, 1).toString();
+        
+        Socio socioSeleccionado = Gimnasio.getInstancia().getSocios().stream()
+                .filter(s -> s.getCorreo().equalsIgnoreCase(correoSocio))
+                .findFirst()
+                .orElse(null);
+        
+        if (socioSeleccionado != null && socioSeleccionado.getReservas() != null) {
+                    Reserva reservaEncontrada = socioSeleccionado.getReservas().stream()
+                            .filter(r -> r.getActividad().getTitulo().equalsIgnoreCase(tituloActividad))
+                            .findFirst()
+                            .orElse(null);
+
+                    if (reservaEncontrada != null) {
+                        VentanaReserva ficha = new VentanaReserva(reservaEncontrada);
+                        ficha.setVisible(true);
+                        ficha.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+                    }
+            }
+        }
+    }//GEN-LAST:event_jTableReservasMouseClicked
+
+    private void jTableSociosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableSociosMouseClicked
+        // TODO add your handling code here:
+        int fila = jTableSocios.getSelectedRow();
+
+        if (fila >= 0) {
+
+            String correoSocio = jTableSocios.getValueAt(fila, 1).toString();
+
+            Socio socioSeleccionado = Gimnasio.getInstancia().getSocios().stream()
+                    .filter(s -> s.getCorreo().equalsIgnoreCase(correoSocio)) 
+                    .findFirst()
+                    .orElse(null);
+
+            if (socioSeleccionado != null) {
+                VentanaSocio ficha = new VentanaSocio(socioSeleccionado);
+                ficha.setVisible(true);
+                ficha.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+            }
+        }
+    }//GEN-LAST:event_jTableSociosMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -904,7 +1040,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new VentanaAdministrador().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new VentanaGestionAdministrador().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -913,7 +1049,6 @@ public class VentanaAdministrador extends javax.swing.JFrame {
     private javax.swing.JPanel ConsultaDeSocios;
     private javax.swing.JPanel GestiónDeActividades;
     private javax.swing.JTextField campoAforo;
-    private javax.swing.JTextField campoBusquedaCorreo;
     private javax.swing.JTextArea campoDescripcion;
     private javax.swing.JTextField campoMonitor;
     private javax.swing.JTextField campoPrecio;
@@ -923,7 +1058,6 @@ public class VentanaAdministrador extends javax.swing.JFrame {
     private javax.swing.JCheckBox checkBoxVip;
     private javax.swing.JComboBox<String> comboTipo;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JButton jButtonAñadirHorario;
@@ -932,7 +1066,8 @@ public class VentanaAdministrador extends javax.swing.JFrame {
     private javax.swing.JButton jButtonBuscar;
     private javax.swing.JButton jButtonGuardarActividad;
     private javax.swing.JButton jButtonImportarImagen;
-    private javax.swing.JButton jButtonLimpiar;
+    private javax.swing.JButton jButtonLimpiarActividades;
+    private javax.swing.JButton jButtonLimpiarSocios;
     private javax.swing.JButton jButtonModificarActividad;
     private javax.swing.JComboBox<String> jComboBoxDia;
     private javax.swing.JComboBox<String> jComboBoxTipo;
@@ -950,18 +1085,17 @@ public class VentanaAdministrador extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JSpinner jSpinnerFecha;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable3;
     private javax.swing.JTable jTableActividades;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JTable jTableReservas;
+    private javax.swing.JTable jTableSocios;
+    private javax.swing.JTextField jTextFieldCorreo;
     private javax.swing.JTextField jTextFieldMonitor;
-    private javax.swing.JTable tablaSocios;
     // End of variables declaration//GEN-END:variables
     private javax.swing.ImageIcon imagenActividad = null;
     private ArrayList<Horario> horarios = new ArrayList<>();

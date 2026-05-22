@@ -149,13 +149,13 @@ if (user != null) {
     
     // Si es un Administrador, abrimos su ventana
     if (user instanceof com.mycompany.javafit.Administrador) {
-        VentanaAdministrador ventanaAdmin = new VentanaAdministrador();
+        VentanaGestionAdministrador ventanaAdmin = new VentanaGestionAdministrador();
         ventanaAdmin.setVisible(true);
         this.dispose();
     } 
     // Si es un Socio, abrimos la suya
     else if (user instanceof com.mycompany.javafit.Socio) {
-        VentanaSocio ventanaSocio = new VentanaSocio();
+        VentanaGestionSocio ventanaSocio = new VentanaGestionSocio();
         ventanaSocio.setVisible(true);
         this.dispose();
     }

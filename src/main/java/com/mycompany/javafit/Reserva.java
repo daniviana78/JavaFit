@@ -15,14 +15,14 @@ public class Reserva implements Serializable {
     
     private Actividad actividad;
     private Socio cliente;
-    private Horario turno;
+    private Horario horario;
     private LocalDate fechaReserva;
     private double importe;
 
     public Reserva(Actividad actividad, Socio cliente, Horario turno, LocalDate fechaReserva) {
         this.actividad = actividad;
         this.cliente = cliente;
-        this.turno = turno;
+        this.horario = turno;
         this.fechaReserva = fechaReserva;
     }
     
@@ -43,12 +43,12 @@ public class Reserva implements Serializable {
         this.cliente = cliente;
     }
    
-    public Horario getTurno() {
-        return turno;
+    public Horario getHorario() {
+        return horario;
     }
 
-    public void setTurno(Horario turno) {
-        this.turno = turno;
+    public void setHorario(Horario horario) {
+        this.horario = horario;
     }
     
     
@@ -70,7 +70,7 @@ public class Reserva implements Serializable {
 
     @Override
     public String toString() {
-        return "Reserva{" + "actividad=" + actividad + ", cliente=" + cliente + ", turno=" + turno + ", fechaReserva=" + fechaReserva + ", importe=" + importe + '}';
+        return "Reserva{" + "actividad=" + actividad + ", cliente=" + cliente + ", turno=" + horario + ", fechaReserva=" + fechaReserva + ", importe=" + importe + '}';
     }
     
 
