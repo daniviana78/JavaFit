@@ -30,12 +30,9 @@ public class Gimnasio implements Serializable {
     private Usuario usuarioLogeado;
     
     public Gimnasio() {
-        //Creamos el administrador por defecto que pide la práctica
+        // Se crea el administrador por defecto
         Administrador adminPorDefecto = new Administrador("admin@javafit.com", "admin");
-        
-        // Lo añadimos a la lista de administradores
         this.administradores.add(adminPorDefecto);
-        
     }
     
     public static Gimnasio getInstancia() {
@@ -241,9 +238,7 @@ public class Gimnasio implements Serializable {
             nuevaReserva.setImporte(calcularImporte(cliente, act));
             reservas.add(nuevaReserva);
             guardarDatos();
-            
-            // generarRecibo(nuevaReserva);
-            
+                        
             return true;
         }
         
@@ -314,7 +309,7 @@ public class Gimnasio implements Serializable {
                 salida.println("\n");
                 salida.println("Cliente: " + r.getCliente());
                 salida.println("\n");
-                salida.println("Turno: " + r.getHorario());
+                salida.println("Turno: " + r.getHorario().getTurno());
                 salida.println("\n");
                 salida.println("Fecha de realización de la reserva: " + r.getFechaReserva());
                 salida.println("---------------------------------------------------------------------------------");

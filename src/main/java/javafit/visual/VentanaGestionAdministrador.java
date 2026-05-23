@@ -23,89 +23,71 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
      */
     public VentanaGestionAdministrador() {
         initComponents();
-        // Llamamos al método con "null, null" para que muestre a TODOS los socios al arrancar
+        // Se cargan todas las tablas completas al principio
         cargarTablaActividades(null, null, null);
         cargarTablaSocios(null, null);
         cargarTablaReservas(null,null);
     }
      
     private void cargarTablaActividades(String filtroTipo, String filtroMonitor, String filtroDia) {
-        // 1. Obtenemos el modelo de tu JTable de actividades
-        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jTableActividades.getModel();
+        
+        javax.swing.table.DefaultTableModel modeloTabla = (javax.swing.table.DefaultTableModel) jTableActividades.getModel(); // Se crea un modelo de tabla a partir de la tabla original
+        modeloTabla.setRowCount(0); // Se vacía la tabla
 
-        // 2. Vaciamos la tabla para que no se dupliquen los datos al buscar varias veces
-        modelo.setRowCount(0);
 
-        // 3. Le pedimos la lista filtrada al "cerebro" del Gimnasio
+        // Se realiza la búsqueda por filtros
         ArrayList<Actividad> lista = Gimnasio.getInstancia().buscarActividades(filtroTipo, filtroMonitor, filtroDia);
 
-        // 4. Recorremos la lista y metemos solo los 3 datos solicitados
         for (Actividad act : lista) {
 
-            // Creamos una "fila" con 3 huecos (uno para Título, otro para Tipo y otro para Monitor)
+            // Se crea una fila con sus respectivas columnas en la fila
             Object[] fila = new Object[3]; 
 
             fila[0] = act.getTitulo();
             fila[1] = act.getTipo();
             fila[2] = act.getMonitor();
 
-            // 5. Añadimos la fila al modelo de la tabla
-            modelo.addRow(fila);
+            modeloTabla.addRow(fila);
         }
     }
     
     private void cargarTablaSocios(String filtroCorreo, Boolean filtroVip) {
-        // Obtenemos el "cerebro" de tu tabla (Asegúrate de que el nombre de tu JTable sea correcto, yo usaré tablaSocios)
-        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jTableSocios.getModel();
+        
+        javax.swing.table.DefaultTableModel modeloTabla = (javax.swing.table.DefaultTableModel) jTableSocios.getModel();
+        modeloTabla.setRowCount(0);
 
-        // Vaciamos la tabla primero (para que no se dupliquen los datos si buscamos varias veces)
-        modelo.setRowCount(0);
-
-        // Le pedimos la lista a la clase de tu compañero
-        // Su método buscarSocios acepta null si queremos ver a todo el mundo
         ArrayList<Socio> lista = Gimnasio.getInstancia().buscarSocios(filtroCorreo, filtroVip);
 
-        // Recorremos la lista y metemos cada socio en la tabla
-        for (com.mycompany.javafit.Socio s : lista) {
+        for (Socio s : lista) {
 
-            // Creamos una "fila" con 6 huecos (uno por cada columna que pusiste en NetBeans)
             Object[] fila = new Object[3]; 
 
-            // Usamos los getters de la clase Socio de tu compañero para rellenar los huecos
             fila[0] = s.getNombre();
             fila[1] = s.getCorreo();
-            fila[2] = s.isSocioVIP() ? "Sí" : "No"; // Si es true pone "Sí", si es false pone "No"
+            fila[2] = s.isSocioVIP() ? "Sí" : "No";
 
-            // Añadimos la fila completa al modelo
-                modelo.addRow(fila);
+                modeloTabla.addRow(fila);
         }
     }
     
     private void cargarTablaReservas(Socio s, LocalDate fecha) {
-        // 1. Obtenemos el modelo de tu JTable de reservas
-        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jTableReservas.getModel();
+        
+        javax.swing.table.DefaultTableModel modeloTabla = (javax.swing.table.DefaultTableModel) jTableReservas.getModel();
+        modeloTabla.setRowCount(0);
 
-        // 2. Vaciamos la tabla para que no se dupliquen los datos al recargar
-        modelo.setRowCount(0);
-
-        // 3. Le pedimos la lista de reservas al Gimnasio (o desde donde las recuperes de forma global)
         ArrayList<Reserva> lista = Gimnasio.getInstancia().buscarReservas(s, fecha); 
 
-        // 4. Recorremos la lista de reservas y metemos los 3 datos que me has pedido
         for (Reserva res : lista) {
 
-            // Creamos una "fila" con 3 huecos (Fecha, Correo Socio y Título Actividad)
             Object[] fila = new Object[3]; 
 
-            fila[0] = res.getFechaReserva();             // O res.getFecha(), según tu atributo
-            fila[1] = res.getCliente().getCorreo();        // Sacamos el correo desde el objeto Socio de la reserva
-            fila[2] = res.getActividad().getTitulo();    // Sacamos el título desde el objeto Actividad de la reserva
-
-            // 5. Añadimos la fila al modelo de la tabla
-            modelo.addRow(fila);
+            fila[0] = res.getFechaReserva();
+            fila[1] = res.getCliente().getCorreo();
+            fila[2] = res.getActividad().getTitulo();
+            
+            modeloTabla.addRow(fila);
         }
     }
-   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -175,7 +157,6 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
         jLabel7.setText("Buscar por Tipo:");
 
         jComboBoxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Yoga", "Musculación", "Cardio", "Natación", "Todos" }));
-        jComboBoxTipo.addActionListener(this::jComboBoxTipoActionPerformed);
 
         jLabel8.setText("Monitor:");
 
@@ -338,7 +319,6 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
         jLabel2.setText("Tipo de Actividad");
 
         comboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Yoga", "Musculación", "Cardio", "Natación" }));
-        comboTipo.addActionListener(this::comboTipoActionPerformed);
 
         jLabel3.setText("Sala");
 
@@ -347,14 +327,12 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
         jLabel5.setText("Horarios");
 
         jComboBoxDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo" }));
-        jComboBoxDia.addActionListener(this::jComboBoxDiaActionPerformed);
 
         jComboBoxTurno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10:00 a 11:00", "11:00 a 12:00", "18:00 a 19:00", "19:00 a 20:00", "20:00 a 21:00" }));
 
         jLabel6.setText("Monitor");
 
         checkBoxEspecial.setText("¿Es actividad especial?");
-        checkBoxEspecial.addActionListener(this::checkBoxEspecialActionPerformed);
 
         campoDescripcion.setColumns(20);
         campoDescripcion.setRows(5);
@@ -591,28 +569,22 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
         String titulo = campoTitulo.getText().trim();
         
         if (titulo.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "El campo 'Título' no puede estar vacío.","Campo vacío", javax.swing.JOptionPane.WARNING_MESSAGE);
+            javax.swing.JOptionPane.showMessageDialog(this, "El campo 'Título' no puede estar vacío.", "Campo vacío", javax.swing.JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        // Buscamos la actividad original en el sistema utilizando la lista del Gimnasio
-        ArrayList<Actividad> listaActividades = 
-                com.mycompany.javafit.Gimnasio.getInstancia().getActividades();
+        ArrayList<Actividad> listaActividades = Gimnasio.getInstancia().getActividades();
         
-        // Localizamos la actividad por su título (ignorando mayúsculas/minúsculas)
         Actividad act = listaActividades.stream()
                 .filter(a -> a.getTitulo().equalsIgnoreCase(titulo))
                 .findFirst()
                 .orElse(null);
 
-        // Si no existe, avisamos al usuario y paramos
         if (act == null) {
-            javax.swing.JOptionPane.showMessageDialog(this, 
-                    "No se ha encontrado ninguna actividad con el título '" + titulo + "'.", "Actividad no encontrada", javax.swing.JOptionPane.ERROR_MESSAGE);
+            javax.swing.JOptionPane.showMessageDialog(this, "No se ha encontrado ninguna actividad con el título '" + titulo + "'.", "Actividad no encontrada", javax.swing.JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // Si existe, recogemos el resto de nuevos datos de la interfaz para aplicar el cambio
         String nuevoTipo = comboTipo.getSelectedItem().toString();
         String nuevoMonitor = campoMonitor.getText().trim();
         String nombreSala = campoSala.getText().trim();
@@ -621,13 +593,12 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
             javax.swing.JOptionPane.showMessageDialog(this, "El monitor y la sala no pueden quedar vacíos.");
             return;
         }
-
+        
+        // Se comprueba que el aforo sea un número
         try {
-            // Validamos que el aforo sea un número correcto
             int nuevoAforo = Integer.parseInt(campoAforo.getText().trim());
-            com.mycompany.javafit.Sala nuevaSala = new com.mycompany.javafit.Sala(nombreSala, nuevoAforo);
+            Sala nuevaSala = new Sala(nombreSala, nuevoAforo);
 
-            // Variables para el caso de que sea una Actividad Especial
             double nuevoPrecio = 0;
             String nuevaDescripcion = "";
 
@@ -636,17 +607,13 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
                 nuevaDescripcion = campoDescripcion.getText().trim();
             }
 
-            // Llamamos al método 'modificarActividad'
-            boolean exito = com.mycompany.javafit.Gimnasio.getInstancia().modificarActividad(
-                    act, titulo, nuevoTipo, nuevaSala, nuevoMonitor, 
-                    this.imagenActividad, nuevoPrecio, nuevaDescripcion
-            );
+            boolean modificacionRealizada = Gimnasio.getInstancia().modificarActividad(act, titulo, nuevoTipo, nuevaSala, nuevoMonitor, this.imagenActividad, nuevoPrecio, nuevaDescripcion);
 
-            // Informamos del resultado y limpiamos la pantalla
-            if (exito) {
+            if (modificacionRealizada) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Actividad '" + titulo + "' modificada con éxito");
                 
-                // Limpiamos los campos del formulario para dejarlo listo
+                // Se limpian los campos de texto
+                
                 campoTitulo.setText("");
                 campoMonitor.setText("");
                 campoSala.setText("");
@@ -656,90 +623,74 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
                 checkBoxEspecial.setSelected(false);
                 this.imagenActividad = null;
                 
-            } else {
+            } 
+            else {
                 javax.swing.JOptionPane.showMessageDialog(this, "Ocurrió un error inesperado al intentar modificar.");
             }
 
         } catch (NumberFormatException e) {
-            javax.swing.JOptionPane.showMessageDialog(this, 
-                    "Error de formato: 'Aforo' y 'Precio' deben ser números.", 
-                    "Error de datos", 
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+            javax.swing.JOptionPane.showMessageDialog(this, "'Aforo' y 'Precio' deben ser números.", "Error de datos", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonModificarActividadActionPerformed
 
-    private void comboTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTipoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_comboTipoActionPerformed
-
-    private void checkBoxEspecialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxEspecialActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_checkBoxEspecialActionPerformed
-
     private void jButtonGuardarActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActividadActionPerformed
         // TODO add your handling code here:
-        // Recogemos los datos de texto
         String titulo = campoTitulo.getText().trim();
         String tipo = comboTipo.getSelectedItem().toString(); 
         String monitor = campoMonitor.getText().trim();
         String nombreSala = campoSala.getText().trim();
 
-    // Comprobación de que no falten datos clave
-    if (titulo.isEmpty() || monitor.isEmpty() || nombreSala.isEmpty()) {
-        javax.swing.JOptionPane.showMessageDialog(this, "El título, monitor y sala son obligatorios.");
-        return;
-    }
-    
-    if (horarios.isEmpty()){
-        javax.swing.JOptionPane.showMessageDialog(this, 
-                    "Debes añadir al menos un horario utilizando el botón 'Añadir horario'.",
-                    "Faltan horarios",
-                    javax.swing.JOptionPane.WARNING_MESSAGE);
+        if (titulo.isEmpty() || monitor.isEmpty() || nombreSala.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "El título, monitor y sala son obligatorios.");
             return;
-    }
-
-
-    try {
-        // Sacamos el número del aforo
-        int aforo = Integer.parseInt(campoAforo.getText().trim());
-
-        // Creamos la sala 
-        Sala sala = new Sala(nombreSala, aforo);
-        
-
-        boolean exito = false;
-
-        // Comprobamos si es Especial o Normal
-        if (checkBoxEspecial.isSelected()) { // Asegúrate de que tu checkbox se llame así
-            double precio = Double.parseDouble(campoPrecio.getText().trim());
-            String descripcion = campoDescripcion.getText().trim();
-
-            exito = Gimnasio.getInstancia().crearActividad(
-                    titulo, tipo, sala, new java.util.ArrayList<>(this.horarios), monitor, this.imagenActividad, precio, descripcion);
-        } else {
-            exito = Gimnasio.getInstancia().crearActividad(
-                    titulo, tipo, sala, new java.util.ArrayList<>(this.horarios), monitor, this.imagenActividad);
+        }
+    
+        if (horarios.isEmpty()){
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                        "Se debe añadir al menos un horario utilizando el botón 'Añadir horario'.",
+                        "Faltan horarios",
+                        javax.swing.JOptionPane.WARNING_MESSAGE);
+                return;
         }
 
-        if (exito) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Actividad '" + titulo + "' creada con éxito");
-            this.horarios.clear();
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "Error: Ya existe una actividad con ese título.");
-        }
 
-    } catch (NumberFormatException e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Deben introducirse números en 'Aforo' y 'Precio'");
-    }
+        try {
+
+            int aforo = Integer.parseInt(campoAforo.getText().trim());
+            Sala sala = new Sala(nombreSala, aforo);
+
+            boolean creacionActividad = false;
+
+            if (checkBoxEspecial.isSelected()) { 
+                double precio = Double.parseDouble(campoPrecio.getText().trim());
+                String descripcion = campoDescripcion.getText().trim();
+
+                creacionActividad = Gimnasio.getInstancia().crearActividad(titulo, tipo, sala, new java.util.ArrayList<>(this.horarios), monitor, this.imagenActividad, precio, descripcion);
+            } 
+            else {
+                creacionActividad = Gimnasio.getInstancia().crearActividad(titulo, tipo, sala, new java.util.ArrayList<>(this.horarios), monitor, this.imagenActividad);
+            }
+
+            if (creacionActividad) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Actividad '" + titulo + "' creada con éxito");
+                this.horarios.clear();
+            } 
+            else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Error: Ya existe una actividad con ese título.");
+            }
+
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "'Aforo' y 'Precio' deben ser números.", "Error de datos", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    
     }//GEN-LAST:event_jButtonGuardarActividadActionPerformed
 
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
-        // 1. Recogemos los criterios de los componentes de la interfaz
+        // TODO add your handling code here:
         String tipoBuscado = jComboBoxTipo.getSelectedItem().toString();
         String monitorBuscado = jTextFieldMonitor.getText().trim();
-        String dia = null; // Lo dejas como null por ahora, listo por si añades un combo de días más adelante
+        String dia = null;
 
-        // 2. Convertimos a null si el usuario no ha especificado un filtro concreto
         if (tipoBuscado.equals("Todos")) {
             tipoBuscado = null;
         }
@@ -747,8 +698,7 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
         if (monitorBuscado.isEmpty()) {
             monitorBuscado = null;
         }
-
-        // 3. ¡La magia de la reutilización! Llamamos al método pasándole los parámetros
+        
         cargarTablaActividades(tipoBuscado, monitorBuscado, dia);
 
     }//GEN-LAST:event_jButtonBuscarActionPerformed
@@ -900,14 +850,6 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldMonitorActionPerformed
 
-    private void jComboBoxTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxTipoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBoxTipoActionPerformed
-
-    private void jComboBoxDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxDiaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBoxDiaActionPerformed
-
     private void jButtonAñadirHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAñadirHorarioActionPerformed
         // TODO add your handling code here:
         String dia = jComboBoxDia.getSelectedItem().toString();
@@ -965,36 +907,6 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton9ActionPerformed
 
-    private void jTableReservasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableReservasMouseClicked
-        // TODO add your handling code here:
-        int fila= jTableReservas.getSelectedRow();
-        
-        if (fila>=0){
-            
-        String tituloActividad = jTableReservas.getValueAt(fila, 0).toString();
-        
-        String correoSocio = jTableReservas.getValueAt(fila, 1).toString();
-        
-        Socio socioSeleccionado = Gimnasio.getInstancia().getSocios().stream()
-                .filter(s -> s.getCorreo().equalsIgnoreCase(correoSocio))
-                .findFirst()
-                .orElse(null);
-        
-        if (socioSeleccionado != null && socioSeleccionado.getReservas() != null) {
-                    Reserva reservaEncontrada = socioSeleccionado.getReservas().stream()
-                            .filter(r -> r.getActividad().getTitulo().equalsIgnoreCase(tituloActividad))
-                            .findFirst()
-                            .orElse(null);
-
-                    if (reservaEncontrada != null) {
-                        VentanaReserva ficha = new VentanaReserva(reservaEncontrada);
-                        ficha.setVisible(true);
-                        ficha.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-                    }
-            }
-        }
-    }//GEN-LAST:event_jTableReservasMouseClicked
-
     private void jTableSociosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableSociosMouseClicked
         // TODO add your handling code here:
         int fila = jTableSocios.getSelectedRow();
@@ -1015,6 +927,29 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jTableSociosMouseClicked
+
+    private void jTableReservasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableReservasMouseClicked
+        // TODO add your handling code here:
+        int fila= jTableReservas.getSelectedRow();
+        
+        if (fila>=0){
+            
+            String correoCliente = jTableReservas.getValueAt(fila, 1).toString();
+            String tituloActividad = jTableReservas.getValueAt(fila, 2).toString();
+
+
+            Reserva reservaEncontrada = Gimnasio.getInstancia().getReservas().stream()
+                    .filter(r -> r.getCliente().getCorreo().equalsIgnoreCase(correoCliente) && r.getActividad().getTitulo().equalsIgnoreCase(tituloActividad))
+                    .findFirst()
+                    .orElse(null);
+
+            if (reservaEncontrada != null) {
+                            VentanaReserva ficha = new VentanaReserva(reservaEncontrada);
+                            ficha.setVisible(true);
+                            ficha.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+            }
+        }
+    }//GEN-LAST:event_jTableReservasMouseClicked
 
     /**
      * @param args the command line arguments

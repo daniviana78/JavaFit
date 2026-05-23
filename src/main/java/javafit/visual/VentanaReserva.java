@@ -26,29 +26,24 @@ public class VentanaReserva extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         
         if (res != null) {
-            // Rellenamos los datos directos de la Actividad asociada a la reserva
             if (res.getActividad() != null) {
                 jTextFieldActividad.setText(res.getActividad().getTitulo());
             }
             
-            // Rellenamos los datos directos del Socio asociado a la reserva
             if (res.getCliente() != null) {
                 jTextFieldSocio.setText(res.getCliente().getNombre());
             }
             
-            // Extraemos los datos del Horario (Día y Turno)
             if (res.getHorario() != null) {
-                jTextFieldDia.setText(res.getHorario().getDia());   // Día
-                jTextFieldTurno.setText(res.getHorario().getTurno());   // Turno
+                jTextFieldDia.setText(res.getHorario().getDia());   
+                jTextFieldTurno.setText(res.getHorario().getTurno());   
             }
             
-            // Formateamos y volcamos la fecha de la reserva
             if (res.getFechaReserva() != null) {
                 DateTimeFormatter formateador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                 jTextFieldFechaReserva.setText(res.getFechaReserva().format(formateador));
             }
             
-            // Calculamos el importe evaluando si es una actividad especial o normal
             if (res.getActividad() instanceof ActividadEspecial) {
                 ActividadEspecial esp = (ActividadEspecial) res.getActividad();
                 jTextFieldImporte.setText(esp.getPrecio() + " €");
@@ -69,6 +64,7 @@ public class VentanaReserva extends javax.swing.JFrame {
 
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
         campoSala = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jTextFieldSocio = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -86,18 +82,20 @@ public class VentanaReserva extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
 
         campoSala.setEditable(false);
         campoSala.addActionListener(this::campoSalaActionPerformed);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        jLabel11.setText("JavaFit");
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("JavaFit");
 
         jTextFieldSocio.setEditable(false);
-        jTextFieldSocio.addActionListener(this::jTextFieldSocioActionPerformed);
 
         jTextFieldTurno.setEditable(false);
-        jTextFieldTurno.addActionListener(this::jTextFieldTurnoActionPerformed);
 
         jLabel6.setText("Fecha de la reserva");
 
@@ -106,7 +104,6 @@ public class VentanaReserva extends javax.swing.JFrame {
         jLabel2.setText("Actividad");
 
         jTextFieldActividad.setEditable(false);
-        jTextFieldActividad.addActionListener(this::jTextFieldActividadActionPerformed);
 
         jLabel3.setText("Socio");
 
@@ -115,7 +112,6 @@ public class VentanaReserva extends javax.swing.JFrame {
         jLabel8.setText("Turno");
 
         jTextFieldDia.setEditable(false);
-        jTextFieldDia.addActionListener(this::jTextFieldDiaActionPerformed);
 
         jLabel9.setText("Importe");
 
@@ -130,6 +126,9 @@ public class VentanaReserva extends javax.swing.JFrame {
         jButton2.setText("Ver");
         jButton2.addActionListener(this::jButton2ActionPerformed);
 
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        jLabel12.setText("JavaFit");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -137,48 +136,53 @@ public class VentanaReserva extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(330, 330, 330)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(132, 132, 132)
                         .addComponent(jLabel1)
                         .addGap(41, 41, 41)
-                        .addComponent(jLabel10))
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel12))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldActividad, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(23, 23, 23)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jTextFieldSocio))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel7)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jTextFieldDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(33, 33, 33)
-                                        .addComponent(jLabel8)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextFieldTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jTextFieldFechaReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextFieldImporte, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1)
-                            .addComponent(jButton2))))
-                .addContainerGap(32, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(330, 330, 330)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(37, 37, 37)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jTextFieldActividad, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addGap(23, 23, 23)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel3)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jTextFieldSocio))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel7)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(jTextFieldDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(33, 33, 33)
+                                                .addComponent(jLabel8)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jTextFieldTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel6)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jTextFieldFechaReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jTextFieldImporte, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton1)
+                                    .addComponent(jButton2))))
+                        .addGap(0, 26, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -189,7 +193,10 @@ public class VentanaReserva extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(17, 17, 17)
-                        .addComponent(jLabel10)))
+                        .addComponent(jLabel10))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel12)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -226,22 +233,6 @@ public class VentanaReserva extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_campoSalaActionPerformed
 
-    private void jTextFieldSocioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldSocioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldSocioActionPerformed
-
-    private void jTextFieldTurnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldTurnoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldTurnoActionPerformed
-
-    private void jTextFieldActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldActividadActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldActividadActionPerformed
-
-    private void jTextFieldDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDiaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldDiaActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         if (this.res != null && this.res.getActividad() != null) {
@@ -266,6 +257,8 @@ public class VentanaReserva extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

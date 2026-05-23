@@ -8,6 +8,9 @@ package javafit.visual;
  *
  * @author Usuario
  */
+
+import com.mycompany.javafit.*;
+
 public class VentanaRegistro extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaRegistro.class.getName());
@@ -28,6 +31,7 @@ public class VentanaRegistro extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        choice1 = new java.awt.Choice();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -42,6 +46,7 @@ public class VentanaRegistro extends javax.swing.JFrame {
         campoTarjeta = new javax.swing.JTextField();
         campoClave = new javax.swing.JPasswordField();
         botonCompletarRegistro = new javax.swing.JButton();
+        jCheckBoxSocioVIP = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("JavaFit");
@@ -66,47 +71,55 @@ public class VentanaRegistro extends javax.swing.JFrame {
         botonCompletarRegistro.setText("Completar Registro");
         botonCompletarRegistro.addActionListener(this::botonCompletarRegistroActionPerformed);
 
+        jCheckBoxSocioVIP.setText("¿Quieres ser VIP?");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jLabel1))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(campoCorreo))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(campoTelefono))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(campoDireccion))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(campoTarjeta))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(campoClave))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(campoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 15, Short.MAX_VALUE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(campoCorreo))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(campoTelefono))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(campoDireccion))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(campoTarjeta))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel7)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(campoClave))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(campoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 15, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(132, 132, 132)
+                        .addComponent(botonCompletarRegistro)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(130, 130, 130)
-                .addComponent(botonCompletarRegistro)
+                .addGap(141, 141, 141)
+                .addComponent(jCheckBoxSocioVIP)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -139,8 +152,10 @@ public class VentanaRegistro extends javax.swing.JFrame {
                     .addComponent(jLabel7)
                     .addComponent(campoClave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addComponent(jCheckBoxSocioVIP)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addComponent(botonCompletarRegistro)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addGap(29, 29, 29))
         );
 
         pack();
@@ -148,34 +163,30 @@ public class VentanaRegistro extends javax.swing.JFrame {
 
     private void botonCompletarRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCompletarRegistroActionPerformed
         // TODO add your handling code here:
-        // 1. Recogemos todos los textos de tus campos visuales
-String nombre = campoNombre.getText().trim();
-String correo = campoCorreo.getText().trim();
-String clave = new String(campoClave.getPassword());
-String telefono = campoTelefono.getText().trim();
-String direccion = campoDireccion.getText().trim();
-String tarjeta = campoTarjeta.getText().trim();
+        String nombre = campoNombre.getText().trim();
+        String correo = campoCorreo.getText().trim();
+        String clave = new String(campoClave.getPassword());
+        String telefono = campoTelefono.getText().trim();
+        String direccion = campoDireccion.getText().trim();
+        String tarjeta = campoTarjeta.getText().trim();
+        boolean socioVIP = jCheckBoxSocioVIP.isSelected();
 
-// Comprobamos que no haya dejado campos vacíos (validación básica)
-if (nombre.isEmpty() || correo.isEmpty() || clave.isEmpty()) {
-    javax.swing.JOptionPane.showMessageDialog(this, "Por favor, rellena al menos nombre, correo y clave.");
-    return; // Paramos la ejecución aquí
-}
+        if (nombre.isEmpty() || correo.isEmpty() || clave.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, rellena al menos nombre, correo y clave.");
+            return; 
+        }
 
-// 2. Creamos el objeto Socio (Asumiendo que tu compañero creó un constructor completo)
-// Si esta línea te da error en rojo, fíjate en qué orden pide los datos el constructor de la clase Socio de tu compañero.
-com.mycompany.javafit.Socio nuevoSocio = new com.mycompany.javafit.Socio(correo, clave, nombre, telefono, direccion, tarjeta, false);
+        Socio nuevoSocio = new com.mycompany.javafit.Socio(correo, clave, nombre, telefono, direccion, tarjeta, socioVIP);
 
-// 3. Intentamos registrarlo usando el método de tu compañero
-boolean exito = com.mycompany.javafit.Gimnasio.getInstancia().registrarSocio(nuevoSocio);
+        boolean exito = Gimnasio.getInstancia().registrarSocio(nuevoSocio);
 
-// 4. Comprobamos el resultado
-if (exito) {
-    javax.swing.JOptionPane.showMessageDialog(this, "¡Registro completado con éxito! Ya puedes iniciar sesión.");
-    this.dispose(); // Cerramos la ventana de registro
-} else {
-    javax.swing.JOptionPane.showMessageDialog(this, "Error: Ya existe un socio con ese correo.");
-}
+        if (exito) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Registro completado con éxito.");
+            this.dispose();
+        } 
+        else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error: Ya existe un socio con ese correo.");
+        }
         
     }//GEN-LAST:event_botonCompletarRegistroActionPerformed
 
@@ -216,6 +227,8 @@ if (exito) {
     private javax.swing.JTextField campoNombre;
     private javax.swing.JTextField campoTarjeta;
     private javax.swing.JTextField campoTelefono;
+    private java.awt.Choice choice1;
+    private javax.swing.JCheckBox jCheckBoxSocioVIP;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

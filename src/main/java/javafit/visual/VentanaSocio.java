@@ -24,20 +24,17 @@ public class VentanaSocio extends javax.swing.JFrame implements javax.swing.even
         // Evitamos que el evento se dispare dos veces (al presionar y al soltar)
         if (!e.getValueIsAdjusting()) {
 
-            // 1. Capturamos el nombre de la actividad que el usuario ha seleccionado
             String actividadSeleccionada = jListReservas.getSelectedValue();
 
             if (actividadSeleccionada != null && this.socio != null && this.socio.getReservas() != null) {
 
-                // 2. Buscamos en el ArrayList del socio cuál es la Reserva que pertenece a esa actividad
                 Reserva reservaEncontrada = null;
                 for (Reserva r : this.socio.getReservas()) {
                     if (r.getActividad().getTitulo().equals(actividadSeleccionada)) {
                         reservaEncontrada = r;
-                        break; // Ya la encontramos, paramos el bucle
+                        break;
                     }
                 }
-                // 3. Si la encontramos, abrimos su ventana pasándole la reserva real con todos sus datos
                 if (reservaEncontrada != null) {
                     VentanaReserva vr = new VentanaReserva(reservaEncontrada);
                     vr.setVisible(true);
@@ -53,37 +50,28 @@ public class VentanaSocio extends javax.swing.JFrame implements javax.swing.even
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         
         if (this.socio != null) {
-            // 1. Rellenamos los campos de texto del Socio
             jTextFieldNombre.setText(this.socio.getNombre());
             jTextFieldTelefono.setText(this.socio.getTelefono());
             jTextFieldDireccion.setText(this.socio.getDireccion());
             jTextFieldTarjetaCredito.setText(this.socio.getTarjetaCredito());
             
-            // 2. Controlamos el estado del CheckBox VIP
             jCheckBoxSocioVIP.setSelected(this.socio.isSocioVIP());
-            // Lo dejamos deshabilitado para que solo sea de lectura/visualización
             jCheckBoxSocioVIP.setEnabled(false); 
             
-            // --- RELLENAR EL JLIST CON LOS NOMBRES DE LAS ACTIVIDADES ---
             if (this.socio.getReservas() != null) {
 
-                // 1. Creamos un array de Strings del mismo tamaño que las reservas del socio
                 int tamano = this.socio.getReservas().size();
                 String[] nombres_actividades = new String[tamano];
 
-                // 2. Llenamos el array guardando solo el nombre de la actividad de cada reserva
                 for (int i = 0; i < tamano; i++) {
                     Reserva r = this.socio.getReservas().get(i);
                     nombres_actividades[i] = r.getActividad().getTitulo(); // O r.getNombreActividad(), según tu clase
                 }
 
-                // 3. Le pasamos el array de textos directamente al JList de NetBeans
                 jListReservas.setListData(nombres_actividades);
 
-                // 4. Configuramos para que solo se pueda seleccionar de uno en uno
                 jListReservas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
-                // 5. Le enlazamos el escuchador de eventos a esta ventana
                 jListReservas.addListSelectionListener(this);
             }
         }
@@ -110,8 +98,9 @@ public class VentanaSocio extends javax.swing.JFrame implements javax.swing.even
         jLabel8 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListReservas = new javax.swing.JList<>();
+        jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("JavaFit");
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
@@ -126,27 +115,21 @@ public class VentanaSocio extends javax.swing.JFrame implements javax.swing.even
         jTextFieldTarjetaCredito.setEditable(false);
 
         jTextFieldDireccion.setEditable(false);
-        jTextFieldDireccion.addActionListener(this::jTextFieldDireccionActionPerformed);
 
         jLabel2.setText("Nombre");
 
         jTextFieldNombre.setEditable(false);
-        jTextFieldNombre.addActionListener(this::jTextFieldNombreActionPerformed);
 
         jTextFieldTelefono.setEditable(false);
-        jTextFieldTelefono.addActionListener(this::jTextFieldTelefonoActionPerformed);
 
         jCheckBoxSocioVIP.setText("¿Es VIP?");
-        jCheckBoxSocioVIP.addActionListener(this::jCheckBoxSocioVIPActionPerformed);
 
         jLabel8.setText("Tarjeta de crédito");
 
-        jListReservas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jListReservasMouseClicked(evt);
-            }
-        });
         jScrollPane1.setViewportView(jListReservas);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        jLabel1.setText("JavaFit");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -160,19 +143,14 @@ public class VentanaSocio extends javax.swing.JFrame implements javax.swing.even
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTextFieldDireccion))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(156, 156, 156)
-                                .addComponent(jLabel10))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel2))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextFieldTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
-                                    .addComponent(jTextFieldNombre))))
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextFieldTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
+                            .addComponent(jTextFieldNombre))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(16, 16, 16)
@@ -190,14 +168,24 @@ public class VentanaSocio extends javax.swing.JFrame implements javax.swing.even
                                 .addComponent(jCheckBoxSocioVIP)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)))
-                .addGap(43, 43, 43))
+                        .addGap(64, 64, 64))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(156, 156, 156)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                        .addComponent(jLabel1)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jLabel10))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -227,29 +215,10 @@ public class VentanaSocio extends javax.swing.JFrame implements javax.swing.even
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextFieldDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDireccionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldDireccionActionPerformed
-
-    private void jTextFieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNombreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldNombreActionPerformed
-
-    private void jTextFieldTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldTelefonoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldTelefonoActionPerformed
-
-    private void jCheckBoxSocioVIPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxSocioVIPActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBoxSocioVIPActionPerformed
-
-    private void jListReservasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListReservasMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jListReservasMouseClicked
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox jCheckBoxSocioVIP;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
