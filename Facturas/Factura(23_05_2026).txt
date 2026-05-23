@@ -1,0 +1,18 @@
+-------------------------------- Factura de la Reserva --------------------------------
+
+
+Actividad: Actividad{titulo=crossfit, tipo=Musculación, sala=Horario{nombre=3, aforo=24}, horarios=[Horario{dia=Viernes, turno=19:00 a 20:00}], monitor=Daniel Viana, imagen=null}
+
+
+Cliente: Socio{nombre=dani, telefono=2, direccion=1, tarjetaCredito=2, socioVIP=false}
+
+
+Turno: Horario{dia=Viernes, turno=Mañana}
+
+
+Fecha de realización de la reserva: 2026-05-23
+---------------------------------------------------------------------------------
+IMPORTE: 0.0
+
+
+-------------------------------------------------------------------------------

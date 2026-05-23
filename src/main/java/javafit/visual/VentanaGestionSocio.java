@@ -610,16 +610,31 @@ if (socioActual != null) {
             // Guardamos automáticamente para que la reserva persista al cerrar
             com.mycompany.javafit.Gimnasio.getInstancia().guardarDatos();
             
-            javax.swing.JOptionPane.showMessageDialog(this, "¡Reserva confirmada para: " + tituloClase + "!");
+            // =========================================================================
+            // 📄 NUEVO: GENERAR EL RECIBO/FACTURA EN TEXTO
+            // =========================================================================
+            try {
+                // 1. Conseguimos la lista de reservas
+                java.util.ArrayList<com.mycompany.javafit.Reserva> listaRes = com.mycompany.javafit.Gimnasio.getInstancia().getReservas();
+                if (listaRes != null && !listaRes.isEmpty()) {
+                    // 2. Cogemos la última reserva (la que acabamos de hacer)
+                    com.mycompany.javafit.Reserva ultimaReserva = listaRes.get(listaRes.size() - 1);
+                    
+                    // 3. Llamamos al método de Dani para generar el archivo .txt
+                    com.mycompany.javafit.Gimnasio.getInstancia().generaFactura(ultimaReserva);
+                }
+            } catch (java.io.IOException e) {
+                System.out.println("No se pudo generar el archivo de la factura: " + e.getMessage());
+            }
+            // =========================================================================
+            
+            javax.swing.JOptionPane.showMessageDialog(this, "¡Reserva confirmada para: " + tituloClase + "!\nSe ha generado tu recibo en la carpeta Facturas.");
             cargarTablaMisReservas(); 
         } else {
             javax.swing.JOptionPane.showMessageDialog(this, "No se ha podido reservar (quizás está llena).");
-        }
-    } else {
-        javax.swing.JOptionPane.showMessageDialog(this, "Error del sistema al procesar la reserva.");
-    }                                            
+        }                                            
     }//GEN-LAST:event_botonReservarActionPerformed
-
+    }
     private void tablaActividadesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaActividadesMouseClicked
         // TODO add your handling code here:
         // 1. Obtenemos la fila en la que el usuario ha hecho clic
