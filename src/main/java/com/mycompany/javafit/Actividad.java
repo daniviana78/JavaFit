@@ -14,16 +14,40 @@ import java.util.ArrayList;
 import java.util.Objects;
 import javax.swing.ImageIcon;
 
+/**
+ * Clase que representa una actividad deportiva del gimnasio JavaFit.
+ * Almacena los datos básicos de la actividad, la sala donde se imparte,
+ * su planificación de horarios y el monitor encargado.
+ * * @author Daniel Viana y Adrián Fernández
+ * @version 1.0
+ */
+
 
 public class Actividad implements Serializable {
     
+    /** Título de la actividad. */
     private String titulo;
+    /** Tipo de la actividad. */
     private String tipo;
+    /** Sala en la que se imparte la actividad. */
     private Sala sala;
+    /** Listado que almacena los horarios asignados a la actividad. */
     private ArrayList<Horario> horarios= new ArrayList<>();
+    /** Nombre del monitor que imparte la actividad. */    
     private String monitor;
+    /** Imagen representativa de la actividad. */
     private ImageIcon imagen;
-
+    
+    
+    /**
+     * Constructor para inicializar todos los atributos de la actividad.
+     * @param titulo El título identificativo de la actividad.
+     * @param tipo El tipo de la actividad.
+     * @param sala La sala donde se realiza.
+     * @param horarios Lista con los horarios de la actividad.
+     * @param monitor El monitor encargado.
+     * @param imagen La imagen descriptiva de la actividad.
+     */
     public Actividad(String titulo, String tipo, Sala sala, ArrayList horarios, String monitor, ImageIcon imagen) {
         this.titulo = titulo;
         this.tipo = tipo;
@@ -33,34 +57,58 @@ public class Actividad implements Serializable {
         this.horarios = horarios;
     }
     
-
+    /**
+     * Obtiene el título de la actividad.
+     * @return El título actual.
+     */
     public String getTitulo() {
         return titulo;
     }
 
+    /**
+     * Establece el título de la actividad.
+     * @param titulo El nuevo título a asignar.
+     */
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
     
-    
+    /**
+     * Obtiene el tipo de la actividad.
+     * @return El tipo de actividad.
+     */
     public String getTipo() {
         return tipo;
     }
-
+    
+    /**
+     * Establece el tipo o categoría de la actividad.
+     * @param tipo El nuevo tipo a asignar.
+     */
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
     
-    
+    /**
+     * Obtiene la sala donde se realiza la actividad.
+     * @return La sala asociada.
+     */
     public Sala getSala() {
         return sala;
     }
 
+    /**
+     * Establece la sala donde se imparte la actividad.
+     * @param sala La nueva sala a asignar.
+     */
     public void setSala(Sala sala) {
         this.sala = sala;
     }
     
-    
+    /**
+     * Obtiene la imagen representativa de la actividad.
+     * @return El objeto ImageIcon correspondiente.
+     */
     public ImageIcon getImagen() {
         return imagen;
     }
@@ -68,25 +116,45 @@ public class Actividad implements Serializable {
     public void setImagen(ImageIcon imagen) {
         this.imagen = imagen;
     }
-    
+        
+    /**
+     * Obtiene el nombre del monitor que imparte la actividad.
+     * @return El nombre del monitor.
+     */
     public String getMonitor() {
         return monitor;
     }
-
+    
+    /**
+     * Establece el monitor para la actividad.
+     * @param monitor El nombre del nuevo monitor.
+     */
     public void setMonitor(String monitor) {
         this.monitor = monitor;
     }
 
+    /**
+     * Obtiene la lista de horarios programados.
+     * @return Un ArrayList con los horarios.
+     */
     public ArrayList<Horario> getHorarios() {
         return horarios;
     }
-
+    
+    /**
+     * Establece la lista de horarios programados.
+     * @param horarios El nuevo ArrayList de horarios.
+     */
     public void setHorarios(ArrayList<Horario> horarios) {
         this.horarios = horarios;
     }
     
     
-    
+    /**
+     * Compara si esta actividad es igual a otro objeto basándose en el título.
+     * @param obj El objeto a comparar.
+     * @return true si los títulos coinciden; false en caso contrario.
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -104,10 +172,14 @@ public class Actividad implements Serializable {
         }
         return true;
     }
-
+    
+    /**
+     * Devuelve una cadena de texto con la información detallada de la actividad.
+     * @return Cadena formateada con el estado de los atributos.
+     */
     @Override
     public String toString() {
-        return "Actividad{" + "titulo=" + titulo + ", tipo=" + tipo + ", sala=" + sala + ", horarios=" + horarios + ", monitor=" + monitor + ", imagen=" + imagen + '}';
+        return "Actividad{" + "titulo= " + titulo + ", tipo= " + tipo + ", sala= " + sala + ", horarios= " + horarios + ", monitor= " + monitor + ", imagen= " + imagen + '}';
     }
  
 }
