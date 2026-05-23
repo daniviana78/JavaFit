@@ -64,26 +64,37 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
     }
 }
     private void cargarTablaActividades(String tipoFiltro, String monitorFiltro, String diaFiltro) {
-    // 1. Obtenemos el modelo de tu tabla
-    javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tablaActividades.getModel();
     
-    // 2. Vaciamos la tabla para que no se dupliquen los datos
+    javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tablaActividades.getModel();
     modelo.setRowCount(0);
     
-    // 3. Pedimos la lista de actividades al gimnasio
-    ArrayList<Actividad> listaActividades = Gimnasio.getInstancia().buscarActividades(tipoFiltro, monitorFiltro, diaFiltro);
-
+    java.util.ArrayList<com.mycompany.javafit.Actividad> listaActividades = com.mycompany.javafit.Gimnasio.getInstancia().getActividades();
     
     if (listaActividades != null) {
         for (com.mycompany.javafit.Actividad act : listaActividades) {
             
-            // --- NUEVA LÓGICA DE FILTRADO SÓLO POR TIPO Y MONITOR ---
+            // 1. Comprobamos el Tipo
             boolean coincideTipo = tipoFiltro.equals("Todos") || act.getTipo().equalsIgnoreCase(tipoFiltro);
+            
+            // 2. Comprobamos el Monitor
             boolean coincideMonitor = monitorFiltro.isEmpty() || act.getMonitor().toLowerCase().contains(monitorFiltro.toLowerCase());
             
-            // Si cumple con los dos filtros, lo añadimos a la tabla
-            if (coincideTipo && coincideMonitor) {
-                // Ahora el array es de tamaño 3 porque quitamos el día
+            // 3. Comprobamos el Día (Buscamos dentro de sus horarios)
+            boolean coincideDia = false;
+            if (diaFiltro.equals("Todos") || diaFiltro.isEmpty()) {
+                coincideDia = true; // Si no filtra por día o pone "Todos", lo damos por bueno
+            } else if (act.getHorarios() != null) {
+                // Recorremos los horarios de la actividad para ver si alguno cuadra con el día buscado
+                for (com.mycompany.javafit.Horario h : act.getHorarios()) {
+                    if (h.getDia().equalsIgnoreCase(diaFiltro)) {
+                        coincideDia = true;
+                        break; // Si encontramos una coincidencia, dejamos de buscar en esta actividad
+                    }
+                }
+            }
+            
+            // Si cumple con los TRES filtros a la vez, se añade a la tabla
+            if (coincideTipo && coincideMonitor && coincideDia) {
                 Object[] fila = new Object[3]; 
                 fila[0] = act.getTitulo();
                 fila[1] = act.getTipo();
@@ -138,7 +149,7 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
         tablaActividades = new javax.swing.JTable();
         botonReservar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jComboBoxDia = new javax.swing.JComboBox<>();
+        campoDia = new javax.swing.JComboBox<>();
         MisReservas = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -217,7 +228,7 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
 
         jLabel4.setText("Monitor:");
 
-        jComboBoxDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo", "Todos" }));
+        campoDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo", "Todos" }));
 
         javax.swing.GroupLayout BusquedaYReservaLayout = new javax.swing.GroupLayout(BusquedaYReserva);
         BusquedaYReserva.setLayout(BusquedaYReservaLayout);
@@ -245,7 +256,7 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabelDia)
                                 .addGap(12, 12, 12)
-                                .addComponent(jComboBoxDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(campoDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(8, 8, 8)))))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BusquedaYReservaLayout.createSequentialGroup()
@@ -263,7 +274,7 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
                     .addComponent(jLabelDia)
                     .addComponent(campoMonitor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
-                    .addComponent(jComboBoxDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campoDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(BusquedaYReservaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -294,6 +305,11 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
             }
         });
         jScrollPane2.setViewportView(jTable2);
@@ -456,18 +472,22 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        String tipoElegido = campoTipo.getSelectedItem().toString();
-        String monitorEscrito = campoMonitor.getText().trim();
-        String diaEscrito = jComboBoxDia.getSelectedItem().toString();
-        cargarTablaActividades(tipoElegido, monitorEscrito, diaEscrito);
+        // Asegúrate de que los nombres de los componentes (comboTipo, campoMonitor, comboDia) coinciden con los de tu diseño
+    String tipoElegido = campoTipo.getSelectedItem().toString(); 
+    String monitorEscrito = campoMonitor.getText().trim();
+    
+    // Leemos el día que ha elegido en el desplegable (cambia comboDia por jComboBox2 o como se llame el tuyo)
+    String diaElegido = campoDia.getSelectedItem().toString(); 
+
+    // Llamamos a la tabla pasándole los TRES filtros
+    cargarTablaActividades(tipoElegido, monitorEscrito, diaElegido);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         campoTipo.setSelectedIndex(0); // Vuelve al primer elemento ("Todos" o "Yoga")
         campoMonitor.setText("");
-        jComboBoxDia.setSelectedIndex(8);
+        campoDia.setSelectedIndex(8);
         // Volvemos a cargar todo
         cargarTablaActividades("Todos", "","Todos");
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -684,6 +704,7 @@ if (socioActual != null) {
                 // Es especial, abrimos la ventana VIP
                 javafit.visual.VentanaActividadEspecial ficha = new javafit.visual.VentanaActividadEspecial((com.mycompany.javafit.ActividadEspecial) actSeleccionada);
                 ficha.setVisible(true);
+                ficha.setLocationRelativeTo(null);
                 // Esto asegura que al cerrar la ficha NO se cierre todo el programa, solo esa ventanita
                 ficha.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
                 
@@ -691,6 +712,7 @@ if (socioActual != null) {
                 // Es normal, abrimos la ficha estándar
                 javafit.visual.VentanaActividad ficha = new javafit.visual.VentanaActividad(actSeleccionada);
                 ficha.setVisible(true);
+                ficha.setLocationRelativeTo(null);
                 ficha.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
             }
         }
@@ -700,6 +722,46 @@ if (socioActual != null) {
     private void campoTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTipoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoTipoActionPerformed
+
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        // TODO add your handling code here:
+        // 1. Obtenemos la fila en la que el usuario ha hecho clic
+    // (Asegúrate de cambiar 'jTable2' por el nombre de tu tabla de reservas si es distinto)
+    int filaSeleccionada = jTable2.getSelectedRow();
+
+    if (filaSeleccionada >= 0) {
+        
+        // 2. Sacamos el título de la actividad (recordemos que en esta tabla está en la columna 1)
+        String titulo = jTable2.getValueAt(filaSeleccionada, 1).toString();
+
+        // 3. Buscamos la actividad completa en el sistema
+        com.mycompany.javafit.Actividad actSeleccionada = null;
+        java.util.ArrayList<com.mycompany.javafit.Actividad> lista = com.mycompany.javafit.Gimnasio.getInstancia().getActividades();
+        
+        for (com.mycompany.javafit.Actividad act : lista) {
+            if (act.getTitulo().equals(titulo)) {
+                actSeleccionada = act;
+                break;
+            }
+        }
+
+        // 4. Si la encontramos, abrimos la ventana de detalles
+        if (actSeleccionada != null) {
+            
+            // Comprobamos si es una actividad especial o normal para abrir la ventana correcta
+            if (actSeleccionada instanceof com.mycompany.javafit.ActividadEspecial) {
+                // Como son vecinas en la misma carpeta, la llamamos por su nombre directamente:
+                VentanaActividadEspecial ventana = new VentanaActividadEspecial((com.mycompany.javafit.ActividadEspecial) actSeleccionada);
+                ventana.setVisible(true);
+                ventana.setLocationRelativeTo(null); // Para que salga centrada en la pantalla
+            } else {
+                VentanaActividad ventana = new VentanaActividad(actSeleccionada);
+                ventana.setVisible(true);
+                ventana.setLocationRelativeTo(null); // Para que salga centrada
+            }
+        }
+    }
+    }//GEN-LAST:event_jTable2MouseClicked
 
     /**
      * @param args the command line arguments
@@ -734,6 +796,7 @@ if (socioActual != null) {
     private javax.swing.JButton botonReservar;
     private javax.swing.JPasswordField campoClave;
     private javax.swing.JTextField campoCorreo;
+    private javax.swing.JComboBox<String> campoDia;
     private javax.swing.JTextField campoDireccion;
     private javax.swing.JTextField campoEstado;
     private javax.swing.JTextField campoMonitor;
@@ -745,7 +808,6 @@ if (socioActual != null) {
     private javax.swing.JButton cancelarReserva;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBoxDia;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
