@@ -63,47 +63,26 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
     // 1. Obtenemos el modelo de tu tabla
     javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tablaActividades.getModel();
     
-    // 2. Vaciamos la tabla para que no se acumulen los datos al buscar varias veces
+    // 2. Vaciamos la tabla para que no se dupliquen los datos
     modelo.setRowCount(0);
     
     // 3. Pedimos la lista de actividades al gimnasio
-    // (Asumo que tu compañero creó un método llamado getActividades. Si se llama distinto, cámbialo)
     java.util.ArrayList<com.mycompany.javafit.Actividad> listaActividades = com.mycompany.javafit.Gimnasio.getInstancia().getActividades();
     
     if (listaActividades != null) {
-        // 4. Recorremos todas las actividades que existen
         for (com.mycompany.javafit.Actividad act : listaActividades) {
             
-            // --- LÓGICA DE FILTRADO ---
-            // Comprobamos si el tipo coincide (o si el usuario eligió "Todos")
+            // --- NUEVA LÓGICA DE FILTRADO SÓLO POR TIPO Y MONITOR ---
             boolean coincideTipo = tipoFiltro.equals("Todos") || act.getTipo().equalsIgnoreCase(tipoFiltro);
-            
-            // Comprobamos si el nombre del monitor contiene lo que el usuario escribió
             boolean coincideMonitor = monitorFiltro.isEmpty() || act.getMonitor().toLowerCase().contains(monitorFiltro.toLowerCase());
             
-            // Si cumple los filtros, la añadimos a la tabla
+            // Si cumple con los dos filtros, lo añadimos a la tabla
             if (coincideTipo && coincideMonitor) {
-                Object[] fila = new Object[4];
+                // Ahora el array es de tamaño 3 porque quitamos el día
+                Object[] fila = new Object[3]; 
                 fila[0] = act.getTitulo();
                 fila[1] = act.getTipo();
                 fila[2] = act.getMonitor();
-                
-                // --- CÓDIGO PARA SACAR LOS DÍAS ---
-                String diasTexto = "";
-                // 1. Comprobamos si la actividad tiene horarios guardados
-                if (act.getHorarios() != null && !act.getHorarios().isEmpty()) {
-                    // 2. Si tiene, los recorremos todos
-                    for (com.mycompany.javafit.Horario h : act.getHorarios()) {
-                        diasTexto += h.getDia() + " "; // Sumamos los días separados por un espacio
-                    }
-                } else {
-                    // Si la lista está vacía, ponemos un texto de aviso
-                    diasTexto = "Sin horarios"; 
-                }
-                
-                // 3. Lo metemos en la columna de la tabla (y le quitamos los espacios sobrantes de los lados)
-                fila[3] = diasTexto.trim(); 
-                // ----------------------------------------
                 
                 modelo.addRow(fila);
             }
@@ -147,8 +126,6 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
         campoTipo = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         campoMonitor = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        campoDia = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -187,14 +164,11 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
         jLabel2.setText("Tipo:");
 
         campoTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Yoga", "Musculación", "Cardio", "Natación", "Todos" }));
+        campoTipo.addActionListener(this::campoTipoActionPerformed);
 
         jLabel3.setText("Monitor:");
 
-        jLabel4.setText("Día:");
-
-        campoDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo" }));
-
-        jButton1.setText("Buscar Actividades");
+        jButton1.setText("Buscar ");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
         jButton2.setText("Limpiar");
@@ -202,17 +176,17 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
 
         tablaActividades.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Título", "Tipo", "Monitor", "Dia"
+                "Título", "Tipo", "Monitor"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -228,7 +202,6 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tablaActividades);
         if (tablaActividades.getColumnModel().getColumnCount() > 0) {
             tablaActividades.getColumnModel().getColumn(2).setResizable(false);
-            tablaActividades.getColumnModel().getColumn(3).setResizable(false);
         }
 
         botonReservar.setText("Reservar Clase Seleccionada");
@@ -241,28 +214,20 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
             .addGroup(BusquedaYReservaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(BusquedaYReservaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(BusquedaYReservaLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addContainerGap())
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE)
                     .addGroup(BusquedaYReservaLayout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(BusquedaYReservaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(BusquedaYReservaLayout.createSequentialGroup()
-                                .addComponent(campoTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(52, 52, 52)
-                                .addComponent(jLabel3)
-                                .addGap(18, 18, 18)
-                                .addComponent(campoMonitor, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(45, 45, 45)
-                                .addComponent(jLabel4))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BusquedaYReservaLayout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addGap(45, 45, 45)
-                                .addComponent(jButton2)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(campoDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(19, 19, 19))))
+                        .addComponent(campoTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(campoMonitor)
+                        .addGap(30, 30, 30)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2)))
+                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BusquedaYReservaLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(botonReservar)
@@ -277,14 +242,10 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
                     .addComponent(campoTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(campoMonitor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(campoDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(BusquedaYReservaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(botonReservar)
                 .addContainerGap())
@@ -442,7 +403,7 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
                     .addComponent(campoEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(botonGuardarCambios, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Mi Perfil", MiPerfil);
@@ -580,7 +541,7 @@ if (socioActual != null) {
     }//GEN-LAST:event_botonGuardarCambiosActionPerformed
 
     private void botonReservarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonReservarActionPerformed
-                                            
+                                             
     // 1. Averiguamos qué fila de la tabla ha seleccionado el usuario
     int filaSeleccionada = tablaActividades.getSelectedRow();
 
@@ -608,25 +569,28 @@ if (socioActual != null) {
 
     if (actividadElegida != null && socioActual != null) {
         
-        // 5. Sacamos el día del desplegable (cambia 'comboDia' por 'jComboBox2' si te sale rojo)
-        String diaElegido = campoDia.getSelectedItem().toString(); 
-
+        // 5. SOLUCIÓN AL DÍA: Si borramos el desplegable, cogemos el primer día de la actividad
+        String diaElegido = "Lunes"; // Por defecto
+        if (actividadElegida.getHorarios() != null && !actividadElegida.getHorarios().isEmpty()) {
+             diaElegido = actividadElegida.getHorarios().get(0).getDia();
+        }
         
         // 6. Creamos el objeto Horario envolviendo el día
         com.mycompany.javafit.Horario turnoObjeto = new com.mycompany.javafit.Horario(diaElegido, "Mañana"); 
+        
         boolean yaExisteReserva = false;
         java.util.ArrayList<com.mycompany.javafit.Reserva> listaReservasSistema = com.mycompany.javafit.Gimnasio.getInstancia().getReservas();
         
         if (listaReservasSistema != null) {
             for (com.mycompany.javafit.Reserva res : listaReservasSistema) {
-                // Comprobamos si coincide todo: mismo cliente, misma actividad y mismo turno/día
+                // ¡AHORA SÍ! Usamos getHorario() para sacar el objeto, y a ese objeto le pedimos el Día y el Turno
                 if (res.getCliente() != null && res.getCliente().getCorreo().equals(socioActual.getCorreo()) &&
                     res.getActividad() != null && res.getActividad().getTitulo().equalsIgnoreCase(actividadElegida.getTitulo()) &&
                     res.getHorario() != null && res.getHorario().getDia().equalsIgnoreCase(turnoObjeto.getDia()) &&
                     res.getHorario().getTurno().equalsIgnoreCase(turnoObjeto.getTurno())) {
                     
                     yaExisteReserva = true;
-                    break; // Ya lo encontramos, no hace falta seguir buscando
+                    break; // Ya lo encontramos, paramos de buscar
                 }
             }
         }
@@ -638,12 +602,14 @@ if (socioActual != null) {
                 "Reserva Duplicada", javax.swing.JOptionPane.WARNING_MESSAGE);
             return; // Detiene la ejecución del método aquí mismo
         }
-        // =========================================================================
 
-        // 7. Si pasa el control, llamamos al método oficial de tu compañero para reservar
+        // 7. Si pasa el control, llamamos al método oficial para reservar
         boolean exito = com.mycompany.javafit.Gimnasio.getInstancia().reservar(actividadElegida, socioActual, turnoObjeto);
         
         if (exito) {
+            // Guardamos automáticamente para que la reserva persista al cerrar
+            com.mycompany.javafit.Gimnasio.getInstancia().guardarDatos();
+            
             javax.swing.JOptionPane.showMessageDialog(this, "¡Reserva confirmada para: " + tituloClase + "!");
             cargarTablaMisReservas(); 
         } else {
@@ -651,7 +617,7 @@ if (socioActual != null) {
         }
     } else {
         javax.swing.JOptionPane.showMessageDialog(this, "Error del sistema al procesar la reserva.");
-    }
+    }                                            
     }//GEN-LAST:event_botonReservarActionPerformed
 
     private void tablaActividadesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaActividadesMouseClicked
@@ -690,6 +656,10 @@ if (socioActual != null) {
     }
     }//GEN-LAST:event_tablaActividadesMouseClicked
 
+    private void campoTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTipoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoTipoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -723,7 +693,6 @@ if (socioActual != null) {
     private javax.swing.JButton botonReservar;
     private javax.swing.JPasswordField campoClave;
     private javax.swing.JTextField campoCorreo;
-    private javax.swing.JComboBox<String> campoDia;
     private javax.swing.JTextField campoDireccion;
     private javax.swing.JTextField campoEstado;
     private javax.swing.JTextField campoMonitor;
@@ -740,7 +709,6 @@ if (socioActual != null) {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
