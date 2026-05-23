@@ -5,6 +5,8 @@
 package javafit.visual;
 
 /**
+ * Clase que representa la ventana de detalles de una reserva en el sistema JavaFit.
+ * Muestra información como la actividad, el socio, horario, fecha e importe.
  *
  * @author Dani
  */
@@ -16,7 +18,11 @@ public class VentanaReserva extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaReserva.class.getName());
     private Reserva res;
     /**
-     * Creates new form VentanaReserva
+     * Creates new form VentanaReserva.
+     * Inicializa los componentes de la interfaz y muestra los detalles
+     * de la reserva proporcionada.
+     * 
+     * @param res Objeto de tipo Reserva cuyos datos se van a visualizar.
      */
     public VentanaReserva(Reserva res) {
         initComponents();
@@ -228,11 +234,20 @@ public class VentanaReserva extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Maneja el evento de acción en el campo de texto de la sala.
+     * 
+     * @param evt Evento de acción disparado por el campo de texto.
+     */
     private void campoSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoSalaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoSalaActionPerformed
-
+    /**
+     * Maneja el evento de clic en el botón para ver los detalles de la actividad.
+     * Abre la ventana correspondiente a la actividad vinculada con la reserva.
+     * 
+     * @param evt Evento de acción disparado por el botón.
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         if (this.res != null && this.res.getActividad() != null) {
@@ -240,7 +255,12 @@ public class VentanaReserva extends javax.swing.JFrame {
             va.setVisible(true);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    /**
+     * Maneja el evento de clic en el botón para ver los detalles del socio.
+     * Abre la ventana correspondiente al socio vinculado con la reserva.
+     * 
+     * @param evt Evento de acción disparado por el botón.
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         if (this.res != null && this.res.getCliente() != null) {

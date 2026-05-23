@@ -5,6 +5,8 @@
 package javafit.visual;
 
 /**
+ * Clase que representa la ventana de gestión principal para el administrador.
+ * Permite la consulta y gestión de actividades, socios y reservas.
  *
  * @author Usuario
  */
@@ -19,7 +21,9 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaGestionAdministrador.class.getName());
 
     /**
-     * Creates new form VentanaAdministrador
+     * Creates new form VentanaAdministrador.
+     * Inicializa los componentes de la interfaz y carga los datos iniciales
+     * en las tablas de actividades, socios y reservas.
      */
     public VentanaGestionAdministrador() {
         initComponents();
@@ -28,7 +32,13 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
         cargarTablaSocios(null, null);
         cargarTablaReservas(null,null);
     }
-     
+     /**
+     * Carga y filtra los datos de las actividades en la tabla correspondiente.
+     * 
+     * @param filtroTipo Tipo de actividad por el cual filtrar (o null para mostrar todos).
+     * @param filtroMonitor Nombre del monitor por el cual filtrar (o null para no filtrar).
+     * @param filtroDia Día específico para filtrar las actividades (o null para no filtrar).
+     */
     private void cargarTablaActividades(String filtroTipo, String filtroMonitor, String filtroDia) {
         
         javax.swing.table.DefaultTableModel modeloTabla = (javax.swing.table.DefaultTableModel) jTableActividades.getModel(); // Se crea un modelo de tabla a partir de la tabla original
@@ -50,7 +60,12 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
             modeloTabla.addRow(fila);
         }
     }
-    
+    /**
+     * Carga y filtra los datos de los socios en la tabla correspondiente.
+     * 
+     * @param filtroCorreo Correo electrónico del socio para filtrar la búsqueda (o null).
+     * @param filtroVip Valor booleano para filtrar solo socios VIP (o null para no aplicar este filtro).
+     */ 
     private void cargarTablaSocios(String filtroCorreo, Boolean filtroVip) {
         
         javax.swing.table.DefaultTableModel modeloTabla = (javax.swing.table.DefaultTableModel) jTableSocios.getModel();
@@ -69,7 +84,12 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
                 modeloTabla.addRow(fila);
         }
     }
-    
+    /**
+     * Carga y filtra las reservas en la tabla correspondiente.
+     * 
+     * @param s Objeto Socio para filtrar las reservas de un cliente específico (o null).
+     * @param fecha Fecha de la reserva para filtrar (o null).
+     */
     private void cargarTablaReservas(Socio s, LocalDate fecha) {
         
         javax.swing.table.DefaultTableModel modeloTabla = (javax.swing.table.DefaultTableModel) jTableReservas.getModel();
@@ -563,7 +583,11 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Maneja el evento del botón para modificar una actividad existente.
+     * 
+     * @param evt Evento de acción disparado por el botón.
+     */
     private void jButtonModificarActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarActividadActionPerformed
         // TODO add your handling code here:
         String titulo = campoTitulo.getText().trim();
@@ -632,7 +656,11 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
             javax.swing.JOptionPane.showMessageDialog(this, "'Aforo' y 'Precio' deben ser números.", "Error de datos", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonModificarActividadActionPerformed
-
+    /**
+     * Maneja el evento del botón para guardar una nueva actividad.
+     * 
+     * @param evt Evento de acción disparado por el botón.
+     */
     private void jButtonGuardarActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActividadActionPerformed
         // TODO add your handling code here:
         String titulo = campoTitulo.getText().trim();
@@ -684,7 +712,11 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
         }
     
     }//GEN-LAST:event_jButtonGuardarActividadActionPerformed
-
+    /**
+     * Maneja el evento del botón para buscar actividades según los filtros especificados.
+     * 
+     * @param evt Evento de acción disparado por el botón.
+     */
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
         // TODO add your handling code here:
         String tipoBuscado = jComboBoxTipo.getSelectedItem().toString();
@@ -702,13 +734,21 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
         cargarTablaActividades(tipoBuscado, monitorBuscado, dia);
 
     }//GEN-LAST:event_jButtonBuscarActionPerformed
-
+    /**
+     * Maneja el evento del botón para limpiar los filtros de búsqueda de actividades.
+     * 
+     * @param evt Evento de acción disparado por el botón.
+     */
     private void jButtonLimpiarActividadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarActividadesActionPerformed
         // TODO add your handling code here:
         jTextFieldMonitor.setText("");
         jComboBoxTipo.setSelectedItem("Todos");
     }//GEN-LAST:event_jButtonLimpiarActividadesActionPerformed
-
+    /**
+     * Maneja el evento del botón para buscar socios según los filtros especificados.
+     * 
+     * @param evt Evento de acción disparado por el botón.
+     */
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
             String correo = jTextFieldCorreo.getText().trim();
@@ -723,14 +763,22 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
             // Recargamos la tabla con esos filtros
             cargarTablaSocios(correo, esVip);
     }//GEN-LAST:event_jButton6ActionPerformed
-
+    /**
+     * Maneja el evento del botón para limpiar los filtros de búsqueda de socios.
+     * 
+     * @param evt Evento de acción disparado por el botón.
+     */
     private void jButtonLimpiarSociosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarSociosActionPerformed
         // TODO add your handling code here:
         jTextFieldCorreo.setText("");
         checkBoxVip.setSelected(false);
         cargarTablaSocios(null, null);
     }//GEN-LAST:event_jButtonLimpiarSociosActionPerformed
-
+    /**
+     * Maneja el evento del botón para buscar reservas según la fecha especificada.
+     * 
+     * @param evt Evento de acción disparado por el botón.
+     */
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
         // 1. Obtenemos la fecha del JSpinner
@@ -763,7 +811,11 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
     }
     
     }//GEN-LAST:event_jButton8ActionPerformed
-
+    /**
+     * Maneja el evento del botón para importar una imagen para una actividad.
+     * 
+     * @param evt Evento de acción disparado por el botón.
+     */
     private void jButtonImportarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportarImagenActionPerformed
         // TODO add your handling code here:
         
@@ -782,7 +834,11 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
         
         }
     }//GEN-LAST:event_jButtonImportarImagenActionPerformed
-
+    /**
+     * Maneja el evento del botón para eliminar una actividad existente.
+     * 
+     * @param evt Evento de acción disparado por el botón.
+     */
     private void jButtonBorrarActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarActividadActionPerformed
         // TODO add your handling code here:
             String titulo= campoTitulo.getText().trim();
@@ -809,11 +865,19 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
             }
         
     }//GEN-LAST:event_jButtonBorrarActividadActionPerformed
-
+    /**
+     * Maneja el evento de acción del campo de texto del título.
+     * 
+     * @param evt Evento de acción disparado por el campo de texto.
+     */
     private void campoTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTituloActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoTituloActionPerformed
-
+    /**
+     * Maneja el evento de clic del ratón sobre la tabla de actividades para mostrar sus detalles.
+     * 
+     * @param evt Evento de ratón disparado por la tabla.
+     */
     private void jTableActividadesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableActividadesMouseClicked
         // TODO add your handling code here:
         int fila= jTableActividades.getSelectedRow();
@@ -845,11 +909,19 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
                 }
             }
     }//GEN-LAST:event_jTableActividadesMouseClicked
-
+    /**
+     * Maneja el evento de acción del campo de texto del monitor.
+     * 
+     * @param evt Evento de acción disparado por el campo de texto.
+     */
     private void jTextFieldMonitorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldMonitorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldMonitorActionPerformed
-
+    /**
+     * Maneja el evento del botón para añadir un nuevo horario a la actividad en creación o modificación.
+     * 
+     * @param evt Evento de acción disparado por el botón.
+     */
     private void jButtonAñadirHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAñadirHorarioActionPerformed
         // TODO add your handling code here:
         String dia = jComboBoxDia.getSelectedItem().toString();
@@ -873,7 +945,11 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
                 "Horario guardado: " + dia + " de " + turno + ".\nTotal de turnos acumulados: " + horarios.size());
         
     }//GEN-LAST:event_jButtonAñadirHorarioActionPerformed
-
+    /**
+     * Maneja el evento del botón para borrar un horario de la actividad en creación o modificación.
+     * 
+     * @param evt Evento de acción disparado por el botón.
+     */
     private void jButtonBorrarHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarHorarioActionPerformed
         // TODO add your handling code here:
         String dia = jComboBoxDia.getSelectedItem().toString();
@@ -902,11 +978,19 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jButtonBorrarHorarioActionPerformed
-
+    /**
+     * Maneja el evento del botón para ver todas las reservas sin filtrar.
+     * 
+     * @param evt Evento de acción disparado por el botón.
+     */
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton9ActionPerformed
-
+    /**
+     * Maneja el evento de clic del ratón sobre la tabla de socios para mostrar su ficha.
+     * 
+     * @param evt Evento de ratón disparado por la tabla.
+     */
     private void jTableSociosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableSociosMouseClicked
         // TODO add your handling code here:
         int fila = jTableSocios.getSelectedRow();
@@ -927,7 +1011,11 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jTableSociosMouseClicked
-
+    /**
+     * Maneja el evento de clic del ratón sobre la tabla de reservas para mostrar su detalle.
+     * 
+     * @param evt Evento de ratón disparado por la tabla.
+     */
     private void jTableReservasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableReservasMouseClicked
         // TODO add your handling code here:
         int fila= jTableReservas.getSelectedRow();

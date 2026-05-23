@@ -5,6 +5,8 @@
 package javafit.visual;
 
 /**
+ * Clase que representa la interfaz gráfica para visualizar los detalles
+ * de una Actividad Especial en el sistema JavaFit.
  *
  * @author Dani
  */
@@ -18,6 +20,8 @@ public class VentanaActividadEspecial extends javax.swing.JFrame {
 
     /**
      * Creates new form VentanaActividad
+     * 
+     * @param act Objeto de tipo ActividadEspecial que contiene los datos a mostrar en la ventana.
      */
     public VentanaActividadEspecial(ActividadEspecial act) {
         initComponents();
@@ -264,23 +268,43 @@ public class VentanaActividadEspecial extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Maneja el evento de acción del campo de texto de título.
+     * 
+     * @param evt Evento de acción disparado por el componente.
+     */
     private void campoTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTituloActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoTituloActionPerformed
-
+    /**
+     * Maneja el evento de acción del campo de texto de tipo de actividad.
+     * 
+     * @param evt Evento de acción disparado por el componente.
+     */
     private void campoTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTipoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoTipoActionPerformed
-
+    /**
+     * Maneja el evento de acción del campo de texto de la sala.
+     * 
+     * @param evt Evento de acción disparado por el componente.
+     */
     private void campoSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoSalaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoSalaActionPerformed
-
+    /**
+     * Maneja el evento de acción del campo de texto del aforo.
+     * 
+     * @param evt Evento de acción disparado por el componente.
+     */
     private void campoAforoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoAforoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoAforoActionPerformed
-
+    /**
+     * Maneja el evento de redimensionamiento del componente que contiene la imagen.
+     * 
+     * @param evt Evento de componente disparado al cambiar el tamaño.
+     */
     private void jLabelImagenComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jLabelImagenComponentResized
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabelImagenComponentResized

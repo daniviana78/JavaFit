@@ -5,7 +5,8 @@
 package javafit.visual;
 
 /**
- *
+ *Ventana gráfica que muestra los detalles completos de una actividad del gimnasio.
+ * Muestra información como el título, tipo, monitor, sala y horarios asociados.
  * @author Dani
  */
 
@@ -13,11 +14,14 @@ import com.mycompany.javafit.*;
 import java.util.ArrayList;
 
 public class VentanaActividad extends javax.swing.JFrame {
-    
+    /** Logger de la clase utilizado para el registro de eventos y depuración. */
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaActividad.class.getName());
 
     /**
-     * Creates new form VentanaActividad
+     * Creates new form VentanaActividad.
+     * Constructor que inicializa los componentes de la interfaz y rellena 
+     * los campos visuales con la información de la actividad especificada.
+     * * @param act El objeto Actividad que contiene los datos que se van a visualizar.
      */
     public VentanaActividad(Actividad act) {
         initComponents();
@@ -40,7 +44,7 @@ public class VentanaActividad extends javax.swing.JFrame {
                 modelo.addRow(fila);
             }
             
-            // Extraemos los datos de la Sala asociada (comprobando que no sea nula)
+            
             if (act.getSala() != null) {
                 campoSala.setText(act.getSala().getNombre());
                 campoAforo.setText(String.valueOf(act.getSala().getAforo())); // Convertimos el int a String
@@ -49,10 +53,10 @@ public class VentanaActividad extends javax.swing.JFrame {
                 campoAforo.setText("0");
             }
             
-            // Cargamos y dibujamos la imagen en el JLabel
+            
             if (act.getImagen() != null) {
                 jLabelImagen.setIcon(act.getImagen());
-                jLabelImagen.setText(""); // Borramos el texto por defecto de NetBeans
+                jLabelImagen.setText(""); 
             } else {
                 jLabelImagen.setIcon(null);
                 jLabelImagen.setText("Sin imagen disponible");
@@ -292,19 +296,31 @@ public class VentanaActividad extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Manejador del evento de acción para el campo de texto del título.
+     * * @param evt El evento de acción generado por la interfaz.
+     */
     private void campoTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTituloActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoTituloActionPerformed
-
+    /**
+     * Manejador del evento de acción para el campo de texto del tipo de actividad.
+     * * @param evt El evento de acción generado por la interfaz.
+     */
     private void campoTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTipoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoTipoActionPerformed
-
+    /**
+     * Manejador del evento de acción para el campo de texto de la sala.
+     * * @param evt El evento de acción generado por la interfaz.
+     */
     private void campoSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoSalaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoSalaActionPerformed
-
+    /**
+     * Manejador del evento de acción para el campo de texto del aforo.
+     * * @param evt El evento de acción generado por la interfaz.
+     */
     private void campoAforoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoAforoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoAforoActionPerformed

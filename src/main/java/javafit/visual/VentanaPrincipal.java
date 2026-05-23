@@ -5,6 +5,8 @@
 package javafit.visual;
 
 /**
+ * Clase que representa la ventana principal de inicio de sesión de la aplicación JavaFit.
+ * Permite a los usuarios autenticarse en el sistema o acceder a la ventana de registro.
  *
  * @author Usuario
  */
@@ -16,7 +18,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName());
 
     /**
-     * Creates new form VentanaPrincipal
+     * Creates new form VentanaPrincipal.
+     * Inicializa los componentes de la interfaz gráfica de la ventana de login.
      */
     public VentanaPrincipal() {
         initComponents();
@@ -119,33 +122,54 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Maneja el evento de cierre de la ventana.
+     * Guarda los datos del gimnasio de manera persistente antes de salir.
+     * 
+     * @param evt Evento de ventana disparado al cerrarse.
+     */
     private void formWindowClosing(java.awt.event.WindowEvent evt) {                                   
         // TODO add your handling code here:
         Gimnasio.getInstancia().guardarDatos();
     }                                  
-    
+    /**
+     * Maneja el evento de clic en el botón de registro.
+     * Abre la ventana para registrar un nuevo socio en el sistema.
+     * 
+     * @param evt Evento de acción disparado por el botón.
+     */
     private void jButtonRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegistrarseActionPerformed
         // TODO add your handling code here:
         VentanaRegistro ventanaReg = new VentanaRegistro();
         ventanaReg.setVisible(true);
     }//GEN-LAST:event_jButtonRegistrarseActionPerformed
-
+    /**
+     * Maneja el evento de acción del campo de texto del correo electrónico.
+     * 
+     * @param evt Evento de acción disparado por el campo de texto.
+     */
     private void campoCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoCorreoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoCorreoActionPerformed
-
+    /**
+     * Maneja el evento de clic en el botón de iniciar sesión.
+     * Verifica las credenciales introducidas. Si son correctas, abre la
+     * ventana de gestión correspondiente al rol del usuario (Socio o Administrador).
+     * Si son incorrectas, muestra un mensaje de error.
+     * 
+     * @param evt Evento de acción disparado por el botón.
+     */
     private void jButtonIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIniciarSesionActionPerformed
         // TODO add your handling code here:
         // 1. Recogemos los datos
-String correo = campoCorreo.getText().trim();
-String clave = new String(campoClave.getPassword());
+    String correo = campoCorreo.getText().trim();
+    String clave = new String(campoClave.getPassword());
 
-// 2. Le preguntamos a la clase Gimnasio de tu compañero si el usuario existe
-com.mycompany.javafit.Usuario user = com.mycompany.javafit.Gimnasio.getInstancia().login(correo, clave);
+    // 2. Le preguntamos a la clase Gimnasio de tu compañero si el usuario existe
+    com.mycompany.javafit.Usuario user = com.mycompany.javafit.Gimnasio.getInstancia().login(correo, clave);
 
-// 3. Comprobamos la respuesta
-if (user != null) {
+    // 3. Comprobamos la respuesta
+    if (user != null) {
     
     // Si es un Administrador, abrimos su ventana
     if (user instanceof com.mycompany.javafit.Administrador) {
@@ -170,12 +194,20 @@ if (user != null) {
         
  
     }//GEN-LAST:event_jButtonIniciarSesionActionPerformed
-
+    /**
+     * Maneja el evento de acción del campo de contraseña.
+     * 
+     * @param evt Evento de acción disparado por el campo de contraseña.
+     */
     private void campoClaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoClaveActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoClaveActionPerformed
 
     /**
+     * Método principal que inicia la aplicación JavaFit.
+     * Configura el aspecto visual (Look and Feel) de la interfaz gráfica y
+     * muestra la ventana principal de inicio de sesión.
+     * 
      * @param args the command line arguments
      */
     public static void main(String args[]) {

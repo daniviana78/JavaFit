@@ -5,6 +5,10 @@
 package javafit.visual;
 
 /**
+ * Clase que representa la ventana de detalles de un Socio en el sistema JavaFit.
+ * Permite visualizar la información de contacto, si es VIP, y una lista
+ * de sus reservas. Implementa ListSelectionListener para reaccionar a la
+ * selección de una reserva y mostrar sus detalles.
  *
  * @author Dani
  */
@@ -19,6 +23,13 @@ public class VentanaSocio extends javax.swing.JFrame implements javax.swing.even
      * Creates new form VentanaSocio
      */
     
+    /**
+     * Responde al evento de selección en la lista de reservas.
+     * Busca la reserva seleccionada en la lista del socio y abre
+     * la VentanaReserva correspondiente para mostrar sus detalles.
+     * 
+     * @param e El evento de selección de la lista.
+     */
     @Override
     public void valueChanged(javax.swing.event.ListSelectionEvent e) {
         // Evitamos que el evento se dispare dos veces (al presionar y al soltar)
@@ -42,7 +53,13 @@ public class VentanaSocio extends javax.swing.JFrame implements javax.swing.even
             }
         }
     }
-    
+    /**
+     * Constructor de la ventana.
+     * Inicializa los componentes, establece los datos del socio proporcionado
+     * en los campos de texto y rellena la lista de sus reservas.
+     * 
+     * @param socio Objeto Socio cuyos datos se van a visualizar.
+     */
     public VentanaSocio(Socio socio) {
         initComponents();
         this.socio = socio;

@@ -9,6 +9,8 @@ import com.mycompany.javafit.Gimnasio;
 import java.util.ArrayList;
 
 /**
+ * Clase que representa la ventana principal de gestión para los socios.
+ * Permite visualizar el perfil, consultar/reservar actividades y gestionar reservas.
  *
  * @author Usuario
  */
@@ -18,7 +20,9 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaGestionSocio.class.getName());
 
     /**
-     * Creates new form VentanaSocio
+     * Creates new form VentanaSocio.
+     * Inicializa los componentes, carga los datos del perfil del socio
+     * y rellena las tablas de actividades y reservas.
      */
     public VentanaGestionSocio() {
         initComponents();
@@ -26,6 +30,11 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
         cargarTablaActividades("Todos", "", "Todos");
         cargarTablaMisReservas();
     }
+    /**
+     * Carga en la tabla correspondiente las reservas asociadas al socio actual.
+     * Filtra la lista global de reservas del gimnasio para mostrar únicamente
+     * las del usuario logeado.
+     */
     private void cargarTablaMisReservas() {
     // 1. Obtenemos el modelo de tu tabla de reservas (cambia jTable2 por el nombre de tu tabla si fuese necesario)
     javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jTable2.getModel();
@@ -63,6 +72,13 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
         }
     }
 }
+    /**
+     * Carga y filtra la tabla de actividades disponibles según los criterios especificados.
+     * 
+     * @param tipoFiltro Tipo de actividad a filtrar (ej. "Yoga", "Todos").
+     * @param monitorFiltro Nombre del monitor a buscar (coincidencia parcial).
+     * @param diaFiltro Día de la semana en que se imparte la actividad (ej. "Lunes", "Todos").
+     */
     private void cargarTablaActividades(String tipoFiltro, String monitorFiltro, String diaFiltro) {
     
     javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tablaActividades.getModel();
@@ -105,6 +121,10 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
         }
     }
 }
+    /**
+     * Carga los datos del socio logeado en los campos de texto correspondientes
+     * a la pestaña de "Mi Perfil".
+     */
     private void cargarDatosPerfil() {
         com.mycompany.javafit.Socio socioActual = (com.mycompany.javafit.Socio) com.mycompany.javafit.Gimnasio.getInstancia().getUsuarioLogeado();
         
@@ -470,7 +490,13 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    /**
+     * Maneja el evento de clic en el botón de búsqueda de actividades.
+     * Aplica los filtros de tipo, monitor y día seleccionados en la interfaz.
+     *
+     * @param evt Evento de acción disparado por el botón.
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // Asegúrate de que los nombres de los componentes (comboTipo, campoMonitor, comboDia) coinciden con los de tu diseño
     String tipoElegido = campoTipo.getSelectedItem().toString(); 
@@ -482,7 +508,12 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
     // Llamamos a la tabla pasándole los TRES filtros
     cargarTablaActividades(tipoElegido, monitorEscrito, diaElegido);
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    /**
+     * Maneja el evento de clic en el botón para limpiar los filtros de actividades.
+     * Restablece los campos de búsqueda y recarga todas las actividades.
+     *
+     * @param evt Evento de acción disparado por el botón.
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         campoTipo.setSelectedIndex(0); // Vuelve al primer elemento ("Todos" o "Yoga")
@@ -491,7 +522,12 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
         // Volvemos a cargar todo
         cargarTablaActividades("Todos", "","Todos");
     }//GEN-LAST:event_jButton2ActionPerformed
-
+    /**
+     * Maneja el evento de clic en el botón para cancelar una reserva.
+     * Solicita confirmación al usuario y elimina la reserva seleccionada en la tabla.
+     *
+     * @param evt Evento de acción disparado por el botón.
+     */
     private void cancelarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarReservaActionPerformed
         // TODO add your handling code here:                                                   
     // 1. Comprobamos si el usuario ha seleccionado alguna fila de la tabla de reservas
@@ -554,11 +590,20 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
         }
     }
     }//GEN-LAST:event_cancelarReservaActionPerformed
-
+    /**
+     * Maneja el evento de acción en el campo de texto de correo.
+     *
+     * @param evt Evento de acción disparado por el campo de texto.
+     */
     private void campoCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoCorreoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoCorreoActionPerformed
-
+    /**
+     * Maneja el evento de clic en el botón para guardar cambios en el perfil.
+     * Actualiza los datos del socio activo con la información introducida en los campos.
+     *
+     * @param evt Evento de acción disparado por el botón.
+     */
     private void botonGuardarCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarCambiosActionPerformed
         // TODO add your handling code here:
         // 1. Obtenemos el socio que está usando la aplicación ahora mismo
@@ -585,7 +630,13 @@ if (socioActual != null) {
     javax.swing.JOptionPane.showMessageDialog(this, "Error: No se ha podido identificar al usuario.");
 }
     }//GEN-LAST:event_botonGuardarCambiosActionPerformed
-
+    /**
+     * Maneja el evento de clic en el botón para reservar una actividad.
+     * Verifica la selección, comprueba si ya existe la reserva, y la efectúa
+     * generando un recibo si es exitosa.
+     *
+     * @param evt Evento de acción disparado por el botón.
+     */
     private void botonReservarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonReservarActionPerformed
                                              
     // 1. Averiguamos qué fila de la tabla ha seleccionado el usuario
@@ -681,6 +732,12 @@ if (socioActual != null) {
         }                                            
     }//GEN-LAST:event_botonReservarActionPerformed
     }
+    /**
+     * Maneja el evento de clic con el ratón en la tabla de actividades.
+     * Abre la ventana de detalles de la actividad seleccionada.
+     *
+     * @param evt Evento de ratón disparado por la tabla.
+     */
     private void tablaActividadesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaActividadesMouseClicked
         // TODO add your handling code here:
         // 1. Obtenemos la fila en la que el usuario ha hecho clic
@@ -718,11 +775,20 @@ if (socioActual != null) {
         }
     }
     }//GEN-LAST:event_tablaActividadesMouseClicked
-
+    /**
+     * Maneja el evento de selección en el menú desplegable de tipos de actividad.
+     *
+     * @param evt Evento de acción disparado por el ComboBox.
+     */
     private void campoTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTipoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoTipoActionPerformed
-
+    /**
+     * Maneja el evento de clic con el ratón en la tabla de reservas.
+     * Abre la ventana de detalles de la actividad vinculada a la reserva seleccionada.
+     *
+     * @param evt Evento de ratón disparado por la tabla.
+     */
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
         // TODO add your handling code here:
         // 1. Obtenemos la fila en la que el usuario ha hecho clic

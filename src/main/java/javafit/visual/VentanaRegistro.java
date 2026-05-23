@@ -5,6 +5,8 @@
 package javafit.visual;
 
 /**
+ * Clase que representa la ventana de registro de nuevos socios en la aplicación JavaFit.
+ * Permite capturar los datos necesarios para crear un perfil de usuario.
  *
  * @author Usuario
  */
@@ -16,7 +18,8 @@ public class VentanaRegistro extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaRegistro.class.getName());
 
     /**
-     * Creates new form VentanaRegistro
+     * Creates new form VentanaRegistro.
+     * Inicializa los componentes de la interfaz de usuario para el registro.
      */
     public VentanaRegistro() {
         initComponents();
@@ -160,7 +163,13 @@ public class VentanaRegistro extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Maneja el evento de clic en el botón para completar el registro.
+     * Recoge los datos introducidos, valida los campos obligatorios y,
+     * si son correctos, intenta registrar al nuevo socio en el sistema.
+     * 
+     * @param evt Evento de acción disparado por el botón.
+     */
     private void botonCompletarRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCompletarRegistroActionPerformed
         // TODO add your handling code here:
         String nombre = campoNombre.getText().trim();
@@ -189,12 +198,20 @@ public class VentanaRegistro extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_botonCompletarRegistroActionPerformed
-
+    /**
+     * Maneja el evento de acción en el campo de texto de la tarjeta de crédito.
+     * 
+     * @param evt Evento de acción disparado por el campo de texto.
+     */
     private void campoTarjetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTarjetaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoTarjetaActionPerformed
 
     /**
+     * Método principal que inicia la ventana de registro.
+     * Configura el aspecto visual (Look and Feel) de la interfaz gráfica y
+     * la hace visible.
+     * 
      * @param args the command line arguments
      */
     public static void main(String args[]) {
