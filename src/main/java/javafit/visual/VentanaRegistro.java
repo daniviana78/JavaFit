@@ -69,8 +69,6 @@ public class VentanaRegistro extends javax.swing.JFrame {
 
         jLabel7.setText("Contraseña:");
 
-        campoTarjeta.addActionListener(this::campoTarjetaActionPerformed);
-
         botonCompletarRegistro.setText("Completar Registro");
         botonCompletarRegistro.addActionListener(this::botonCompletarRegistroActionPerformed);
 
@@ -198,14 +196,6 @@ public class VentanaRegistro extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_botonCompletarRegistroActionPerformed
-    /**
-     * Maneja el evento de acción en el campo de texto de la tarjeta de crédito.
-     * 
-     * @param evt Evento de acción disparado por el campo de texto.
-     */
-    private void campoTarjetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTarjetaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoTarjetaActionPerformed
 
     /**
      * Método principal que inicia la ventana de registro.

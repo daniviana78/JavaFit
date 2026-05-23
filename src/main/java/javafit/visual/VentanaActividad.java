@@ -178,18 +178,14 @@ public class VentanaActividad extends javax.swing.JFrame {
         jLabel5.setText("Horarios");
 
         campoTitulo.setEditable(false);
-        campoTitulo.addActionListener(this::campoTituloActionPerformed);
 
         campoSala.setEditable(false);
-        campoSala.addActionListener(this::campoSalaActionPerformed);
 
         campoTipo.setEditable(false);
-        campoTipo.addActionListener(this::campoTipoActionPerformed);
 
         jLabel4.setText("Aforo");
 
         campoAforo.setEditable(false);
-        campoAforo.addActionListener(this::campoAforoActionPerformed);
 
         jLabel6.setText("Monitor");
 
@@ -296,34 +292,6 @@ public class VentanaActividad extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    /**
-     * Manejador del evento de acción para el campo de texto del título.
-     * * @param evt El evento de acción generado por la interfaz.
-     */
-    private void campoTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTituloActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoTituloActionPerformed
-    /**
-     * Manejador del evento de acción para el campo de texto del tipo de actividad.
-     * * @param evt El evento de acción generado por la interfaz.
-     */
-    private void campoTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTipoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoTipoActionPerformed
-    /**
-     * Manejador del evento de acción para el campo de texto de la sala.
-     * * @param evt El evento de acción generado por la interfaz.
-     */
-    private void campoSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoSalaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoSalaActionPerformed
-    /**
-     * Manejador del evento de acción para el campo de texto del aforo.
-     * * @param evt El evento de acción generado por la interfaz.
-     */
-    private void campoAforoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoAforoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoAforoActionPerformed
 
     /**
      * @param args the command line arguments

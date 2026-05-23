@@ -115,9 +115,6 @@
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="campoCorreo">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="campoCorreoActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
@@ -138,9 +135,6 @@
       </Events>
     </Component>
     <Component class="javax.swing.JPasswordField" name="campoClave">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="campoClaveActionPerformed"/>
-      </Events>
     </Component>
   </SubComponents>
 </Form>

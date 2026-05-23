@@ -180,8 +180,6 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
 
         jLabel8.setText("Monitor:");
 
-        jTextFieldMonitor.addActionListener(this::jTextFieldMonitorActionPerformed);
-
         jButtonBuscar.setText("Buscar");
         jButtonBuscar.addActionListener(this::jButtonBuscarActionPerformed);
 
@@ -257,7 +255,6 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
         jButton8.addActionListener(this::jButton8ActionPerformed);
 
         jButton9.setText("Ver todas");
-        jButton9.addActionListener(this::jButton9ActionPerformed);
 
         jTableReservas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -334,8 +331,6 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
         jButtonBorrarActividad.setText("Eliminar");
         jButtonBorrarActividad.addActionListener(this::jButtonBorrarActividadActionPerformed);
 
-        campoTitulo.addActionListener(this::campoTituloActionPerformed);
-
         jLabel2.setText("Tipo de Actividad");
 
         comboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Yoga", "Musculación", "Cardio", "Natación" }));
@@ -380,7 +375,7 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
                 .addGroup(GestiónDeActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(GestiónDeActividadesLayout.createSequentialGroup()
                         .addComponent(jButtonGuardarActividad, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 143, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButtonModificarActividad)
                         .addGap(101, 101, 101)
                         .addComponent(jButtonBorrarActividad, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -865,15 +860,8 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
             }
         
     }//GEN-LAST:event_jButtonBorrarActividadActionPerformed
-    /**
-     * Maneja el evento de acción del campo de texto del título.
-     * 
-     * @param evt Evento de acción disparado por el campo de texto.
-     */
-    private void campoTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTituloActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoTituloActionPerformed
-    /**
+
+   /**
      * Maneja el evento de clic del ratón sobre la tabla de actividades para mostrar sus detalles.
      * 
      * @param evt Evento de ratón disparado por la tabla.
@@ -909,15 +897,8 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
                 }
             }
     }//GEN-LAST:event_jTableActividadesMouseClicked
-    /**
-     * Maneja el evento de acción del campo de texto del monitor.
-     * 
-     * @param evt Evento de acción disparado por el campo de texto.
-     */
-    private void jTextFieldMonitorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldMonitorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldMonitorActionPerformed
-    /**
+
+   /**
      * Maneja el evento del botón para añadir un nuevo horario a la actividad en creación o modificación.
      * 
      * @param evt Evento de acción disparado por el botón.
@@ -978,15 +959,8 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jButtonBorrarHorarioActionPerformed
-    /**
-     * Maneja el evento del botón para ver todas las reservas sin filtrar.
-     * 
-     * @param evt Evento de acción disparado por el botón.
-     */
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton9ActionPerformed
-    /**
+
+   /**
      * Maneja el evento de clic del ratón sobre la tabla de socios para mostrar su ficha.
      * 
      * @param evt Evento de ratón disparado por la tabla.

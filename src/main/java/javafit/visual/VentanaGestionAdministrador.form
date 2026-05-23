@@ -129,9 +129,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextFieldMonitor">
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldMonitorActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jButtonBuscar">
               <Properties>
@@ -256,9 +253,6 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Ver todas"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton9ActionPerformed"/>
-              </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane4">
               <AuxValues>
@@ -487,9 +481,6 @@
               </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="campoTitulo">
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="campoTituloActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel2">
               <Properties>

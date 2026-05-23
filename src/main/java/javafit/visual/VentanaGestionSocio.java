@@ -203,7 +203,6 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
         jLabel2.setText("Tipo:");
 
         campoTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Yoga", "Musculación", "Cardio", "Natación", "Todos" }));
-        campoTipo.addActionListener(this::campoTipoActionPerformed);
 
         jLabelDia.setText("Dia:");
 
@@ -365,8 +364,6 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
         jLabel5.setText("Nombre:");
 
         jLabel6.setText("Correo:");
-
-        campoCorreo.addActionListener(this::campoCorreoActionPerformed);
 
         jLabel7.setText("Teléfono:");
 
@@ -590,15 +587,8 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
         }
     }
     }//GEN-LAST:event_cancelarReservaActionPerformed
-    /**
-     * Maneja el evento de acción en el campo de texto de correo.
-     *
-     * @param evt Evento de acción disparado por el campo de texto.
-     */
-    private void campoCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoCorreoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoCorreoActionPerformed
-    /**
+
+   /**
      * Maneja el evento de clic en el botón para guardar cambios en el perfil.
      * Actualiza los datos del socio activo con la información introducida en los campos.
      *
@@ -775,15 +765,8 @@ if (socioActual != null) {
         }
     }
     }//GEN-LAST:event_tablaActividadesMouseClicked
-    /**
-     * Maneja el evento de selección en el menú desplegable de tipos de actividad.
-     *
-     * @param evt Evento de acción disparado por el ComboBox.
-     */
-    private void campoTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTipoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoTipoActionPerformed
-    /**
+
+   /**
      * Maneja el evento de clic con el ratón en la tabla de reservas.
      * Abre la ventana de detalles de la actividad vinculada a la reserva seleccionada.
      *

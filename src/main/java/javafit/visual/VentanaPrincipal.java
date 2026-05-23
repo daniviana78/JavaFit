@@ -55,16 +55,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jButtonRegistrarse.setText("¿No eres socio? Regístrate");
         jButtonRegistrarse.addActionListener(this::jButtonRegistrarseActionPerformed);
 
-        campoCorreo.addActionListener(this::campoCorreoActionPerformed);
-
         jLabel3.setText("Introduzca su correo electrónico:");
 
         jLabelClave.setText("Introduzca su clave:");
 
         jButtonIniciarSesion.setText("Iniciar sesión");
         jButtonIniciarSesion.addActionListener(this::jButtonIniciarSesionActionPerformed);
-
-        campoClave.addActionListener(this::campoClaveActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -143,15 +139,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         VentanaRegistro ventanaReg = new VentanaRegistro();
         ventanaReg.setVisible(true);
     }//GEN-LAST:event_jButtonRegistrarseActionPerformed
-    /**
-     * Maneja el evento de acción del campo de texto del correo electrónico.
-     * 
-     * @param evt Evento de acción disparado por el campo de texto.
-     */
-    private void campoCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoCorreoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoCorreoActionPerformed
-    /**
+
+   /**
      * Maneja el evento de clic en el botón de iniciar sesión.
      * Verifica las credenciales introducidas. Si son correctas, abre la
      * ventana de gestión correspondiente al rol del usuario (Socio o Administrador).
@@ -194,14 +183,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         
  
     }//GEN-LAST:event_jButtonIniciarSesionActionPerformed
-    /**
-     * Maneja el evento de acción del campo de contraseña.
-     * 
-     * @param evt Evento de acción disparado por el campo de contraseña.
-     */
-    private void campoClaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoClaveActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoClaveActionPerformed
 
     /**
      * Método principal que inicia la aplicación JavaFit.

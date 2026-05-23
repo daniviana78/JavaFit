@@ -91,7 +91,6 @@ public class VentanaReserva extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
 
         campoSala.setEditable(false);
-        campoSala.addActionListener(this::campoSalaActionPerformed);
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         jLabel11.setText("JavaFit");
@@ -234,15 +233,8 @@ public class VentanaReserva extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    /**
-     * Maneja el evento de acción en el campo de texto de la sala.
-     * 
-     * @param evt Evento de acción disparado por el campo de texto.
-     */
-    private void campoSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoSalaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoSalaActionPerformed
-    /**
+
+   /**
      * Maneja el evento de clic en el botón para ver los detalles de la actividad.
      * Abre la ventana correspondiente a la actividad vinculada con la reserva.
      * 

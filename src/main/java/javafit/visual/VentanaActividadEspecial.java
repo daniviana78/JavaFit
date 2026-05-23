@@ -111,28 +111,18 @@ public class VentanaActividadEspecial extends javax.swing.JFrame {
         jLabel5.setText("Horarios");
 
         campoTitulo.setEditable(false);
-        campoTitulo.addActionListener(this::campoTituloActionPerformed);
 
         campoSala.setEditable(false);
-        campoSala.addActionListener(this::campoSalaActionPerformed);
 
         campoTipo.setEditable(false);
-        campoTipo.addActionListener(this::campoTipoActionPerformed);
 
         jLabel4.setText("Aforo");
 
         campoAforo.setEditable(false);
-        campoAforo.addActionListener(this::campoAforoActionPerformed);
 
         jLabel6.setText("Monitor");
 
         campoMonitor.setEditable(false);
-
-        jLabelImagen.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentResized(java.awt.event.ComponentEvent evt) {
-                jLabelImagenComponentResized(evt);
-            }
-        });
 
         jLabel14.setText("Descripción:");
 
@@ -268,46 +258,6 @@ public class VentanaActividadEspecial extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    /**
-     * Maneja el evento de acción del campo de texto de título.
-     * 
-     * @param evt Evento de acción disparado por el componente.
-     */
-    private void campoTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTituloActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoTituloActionPerformed
-    /**
-     * Maneja el evento de acción del campo de texto de tipo de actividad.
-     * 
-     * @param evt Evento de acción disparado por el componente.
-     */
-    private void campoTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTipoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoTipoActionPerformed
-    /**
-     * Maneja el evento de acción del campo de texto de la sala.
-     * 
-     * @param evt Evento de acción disparado por el componente.
-     */
-    private void campoSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoSalaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoSalaActionPerformed
-    /**
-     * Maneja el evento de acción del campo de texto del aforo.
-     * 
-     * @param evt Evento de acción disparado por el componente.
-     */
-    private void campoAforoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoAforoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoAforoActionPerformed
-    /**
-     * Maneja el evento de redimensionamiento del componente que contiene la imagen.
-     * 
-     * @param evt Evento de componente disparado al cambiar el tamaño.
-     */
-    private void jLabelImagenComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jLabelImagenComponentResized
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabelImagenComponentResized
 
     /**
      * @param args the command line arguments
