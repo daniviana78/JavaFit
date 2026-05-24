@@ -11,7 +11,7 @@ package javafit.visual;
  * @author Usuario
  */
 
-import com.mycompany.javafit.Gimnasio;
+import com.mycompany.javafit.*;
 
 public class VentanaPrincipal extends javax.swing.JFrame {
     
@@ -124,8 +124,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      * 
      * @param evt Evento de ventana disparado al cerrarse.
      */
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {                                   
-        // TODO add your handling code here:
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {
+        
         Gimnasio.getInstancia().guardarDatos();
     }                                  
     /**
@@ -135,7 +135,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      * @param evt Evento de acción disparado por el botón.
      */
     private void jButtonRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegistrarseActionPerformed
-        // TODO add your handling code here:
         VentanaRegistro ventanaReg = new VentanaRegistro();
         ventanaReg.setVisible(true);
     }//GEN-LAST:event_jButtonRegistrarseActionPerformed
@@ -149,37 +148,28 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      * @param evt Evento de acción disparado por el botón.
      */
     private void jButtonIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIniciarSesionActionPerformed
-        // TODO add your handling code here:
-        // 1. Recogemos los datos
-    String correo = campoCorreo.getText().trim();
-    String clave = new String(campoClave.getPassword());
+        String correo = campoCorreo.getText().trim();
+        String clave = new String(campoClave.getPassword());
 
-    // 2. Le preguntamos a la clase Gimnasio de tu compañero si el usuario existe
-    com.mycompany.javafit.Usuario user = com.mycompany.javafit.Gimnasio.getInstancia().login(correo, clave);
+        Usuario user = Gimnasio.getInstancia().login(correo, clave);
 
-    // 3. Comprobamos la respuesta
-    if (user != null) {
-    
-    // Si es un Administrador, abrimos su ventana
-    if (user instanceof com.mycompany.javafit.Administrador) {
-        VentanaGestionAdministrador ventanaAdmin = new VentanaGestionAdministrador();
-        ventanaAdmin.setVisible(true);
-        this.dispose();
-    } 
-    // Si es un Socio, abrimos la suya
-    else if (user instanceof com.mycompany.javafit.Socio) {
-        VentanaGestionSocio ventanaSocio = new VentanaGestionSocio();
-        ventanaSocio.setVisible(true);
-        this.dispose();
-    }
-    
-} else {
-    // Si devuelve null, los datos están mal
-    javax.swing.JOptionPane.showMessageDialog(this, 
-        "Correo o contraseña incorrectos.", 
-        "Error", 
-        javax.swing.JOptionPane.ERROR_MESSAGE);
-}
+        if (user != null) {
+
+            if (user instanceof Administrador) {
+                VentanaGestionAdministrador ventanaAdmin = new VentanaGestionAdministrador();
+                ventanaAdmin.setVisible(true);
+                this.dispose();
+            } 
+            else if (user instanceof Socio) {
+                VentanaGestionSocio ventanaSocio = new VentanaGestionSocio();
+                ventanaSocio.setVisible(true);
+                this.dispose();
+            }
+
+        } 
+        else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Correo o contraseña incorrectos.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
         
  
     }//GEN-LAST:event_jButtonIniciarSesionActionPerformed

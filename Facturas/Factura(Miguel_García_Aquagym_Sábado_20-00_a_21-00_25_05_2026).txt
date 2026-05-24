@@ -1,0 +1,18 @@
+-------------------------------- Factura de la Reserva --------------------------------
+
+
+Actividad: titulo= Aquagym, tipo= Natación, sala= Sala{nombre= Sala D2, aforo= 35}, horarios= [dia= Lunes, turno= 18:00 a 19:00, dia= Lunes, turno= 20:00 a 21:00, dia= Miércoles, turno= 18:00 a 19:00, dia= Miércoles, turno= 20:00 a 21:00, dia= Jueves, turno= 10:00 a 11:00, dia= Jueves, turno= 11:00 a 12:00, dia= Sábado, turno= 18:00 a 19:00, dia= Sábado, turno= 20:00 a 21:00, dia= Domingo, turno= 10:00 a 11:00, dia= Domingo, turno= 11:00 a 12:00], monitor= Carla Aparicio, imagen= C:\Users\User\Desktop\aquagym.jpg}, precio= 20.0, descripcion= Gimnasia aeróbica dentro del agua que aprovecha la resistencia del líquido para tonificar sin impacto.}
+
+
+Cliente: correo= miguel67@javafit.com, clave= puleva22nombre= Miguel García, telefono= 634569045, direccion= Avenida de Joan, 42, tarjetaCredito= 3782 822456 71003, socioVIP= true, cuota= 80.0
+
+
+Horario: dia= Sábado, turno= 20:00 a 21:00
+
+
+Fecha de realización de la reserva: 2026-05-25
+---------------------------------------------------------------------------------
+IMPORTE: 18.0
+
+
+-------------------------------------------------------------------------------

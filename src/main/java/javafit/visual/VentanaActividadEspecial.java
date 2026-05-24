@@ -16,8 +16,6 @@ import java.util.ArrayList;
 
 public class VentanaActividadEspecial extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaActividadEspecial.class.getName());
-
     /**
      * Creates new form VentanaActividad
      * 
@@ -26,7 +24,7 @@ public class VentanaActividadEspecial extends javax.swing.JFrame {
     public VentanaActividadEspecial(ActividadEspecial act) {
         initComponents();
         if (act != null) {
-            // Rellenamos los datos directos de la Actividad
+            
             campoTitulo.setText(act.getTitulo()); 
             campoTipo.setText(act.getTipo());
             campoMonitor.setText(act.getMonitor());
@@ -46,7 +44,6 @@ public class VentanaActividadEspecial extends javax.swing.JFrame {
                 modelo.addRow(fila);
             }
 
-            // Extraemos los datos de la Sala asociada (comprobando que no sea nula)
             if (act.getSala() != null) {
                 campoSala.setText(act.getSala().getNombre());
                 campoAforo.setText(String.valueOf(act.getSala().getAforo())); // Convertimos el int a String
@@ -56,10 +53,9 @@ public class VentanaActividadEspecial extends javax.swing.JFrame {
                 campoAforo.setText("0");
             }
             
-            // Cargamos y dibujamos la imagen en el JLabel
             if (act.getImagen() != null) {
                 jLabelImagen.setIcon(act.getImagen());
-                jLabelImagen.setText(""); // Borramos el texto por defecto de NetBeans
+                jLabelImagen.setText("");
             } 
             else {
                 jLabelImagen.setIcon(null);
@@ -258,11 +254,6 @@ public class VentanaActividadEspecial extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    /**
-     * @param args the command line arguments
-     */
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField campoAforo;

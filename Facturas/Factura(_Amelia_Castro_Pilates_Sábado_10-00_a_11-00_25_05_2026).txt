@@ -1,0 +1,18 @@
+-------------------------------- Factura de la Reserva --------------------------------
+
+
+Actividad: titulo= Pilates, tipo= Yoga, sala= Sala{nombre= Sala A1, aforo= 20}, horarios= [dia= Lunes, turno= 10:00 a 11:00, dia= Martes, turno= 10:00 a 11:00, dia= Miércoles, turno= 18:00 a 19:00, dia= Miércoles, turno= 19:00 a 20:00, dia= Sábado, turno= 10:00 a 11:00, dia= Viernes, turno= 11:00 a 12:00, dia= Jueves, turno= 19:00 a 20:00], monitor= Diego Montenegro, imagen= C:\Users\User\Desktop\yoga.jpg}
+
+
+Cliente: correo= ameliacastro@javafit.com, clave= 020807nombre= Amelia Castro, telefono= 67821590, direccion= Calle Calerito, 10, tarjetaCredito= 4532 7182 9381 0472, socioVIP= true, cuota= 80.0
+
+
+Horario: dia= Sábado, turno= 10:00 a 11:00
+
+
+Fecha de realización de la reserva: 2026-05-25
+---------------------------------------------------------------------------------
+IMPORTE: 0.0
+
+
+-------------------------------------------------------------------------------

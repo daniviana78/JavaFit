@@ -255,6 +255,7 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
         jButton8.addActionListener(this::jButton8ActionPerformed);
 
         jButton9.setText("Ver todas");
+        jButton9.addActionListener(this::jButton9ActionPerformed);
 
         jTableReservas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -543,10 +544,10 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
                     .addComponent(checkBoxVip))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(ConsultaDeSociosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonLimpiarSocios, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonLimpiarSocios)
+                    .addComponent(jButton6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Consulta de Socios", ConsultaDeSocios);
@@ -738,6 +739,8 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
         // TODO add your handling code here:
         jTextFieldMonitor.setText("");
         jComboBoxTipo.setSelectedItem("Todos");
+        cargarTablaActividades(null, null, null);
+
     }//GEN-LAST:event_jButtonLimpiarActividadesActionPerformed
     /**
      * Maneja el evento del botón para buscar socios según los filtros especificados.
@@ -789,14 +792,11 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
             cal.get(java.util.Calendar.DAY_OF_MONTH)
         );
 
-        // 3. Limpiamos la tabla de reservas
         javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jTableReservas.getModel();
         modelo.setRowCount(0);
 
-        // 4. Buscamos en el gimnasio (null por administrador)
         java.util.ArrayList<Reserva> reservasFiltradas = Gimnasio.getInstancia().buscarReservas(null, fecha);
 
-        // 5. Pintamos los resultados en la tabla
         for (Reserva res : reservasFiltradas) {
             Object[] fila = new Object[3];
             fila[0] = res.getFechaReserva();             
@@ -812,20 +812,18 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
      * @param evt Evento de acción disparado por el botón.
      */
     private void jButtonImportarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportarImagenActionPerformed
-        // TODO add your handling code here:
-        
-    javax.swing.JFileChooser selector = new javax.swing.JFileChooser();
-    
-    javax.swing.filechooser.FileNameExtensionFilter filtro = 
-            new javax.swing.filechooser.FileNameExtensionFilter("Imágenes (JPG, PNG)", "jpg", "jpeg", "png");
-    selector.setFileFilter(filtro);
-    
-    int resultado = selector.showOpenDialog(this);
-    
-    if (resultado == javax.swing.JFileChooser.APPROVE_OPTION) {
-        java.io.File archivoImagen = selector.getSelectedFile();
-        
-        this.imagenActividad = new ImageIcon(archivoImagen.getAbsolutePath());
+
+        javax.swing.JFileChooser selector = new javax.swing.JFileChooser();
+
+        javax.swing.filechooser.FileNameExtensionFilter filtro = new javax.swing.filechooser.FileNameExtensionFilter("Imágenes (JPG, PNG)", "jpg", "jpeg", "png");
+        selector.setFileFilter(filtro);
+
+        int resultado = selector.showOpenDialog(this);
+
+        if (resultado == javax.swing.JFileChooser.APPROVE_OPTION) {
+            java.io.File archivoImagen = selector.getSelectedFile();
+
+            this.imagenActividad = new ImageIcon(archivoImagen.getAbsolutePath());
         
         }
     }//GEN-LAST:event_jButtonImportarImagenActionPerformed
@@ -836,28 +834,28 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
      */
     private void jButtonBorrarActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarActividadActionPerformed
         // TODO add your handling code here:
-            String titulo= campoTitulo.getText().trim();
+        String titulo= campoTitulo.getText().trim();
             
-            if (titulo.isEmpty()) {
-                javax.swing.JOptionPane.showMessageDialog(this, "El campo 'Título' no puede estar vacío.","Campo vacío", javax.swing.JOptionPane.WARNING_MESSAGE);
-            }
+        if (titulo.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "El campo 'Título' no puede estar vacío.","Campo vacío", javax.swing.JOptionPane.WARNING_MESSAGE);
+        }
             
-            boolean eliminado= Gimnasio.getInstancia().borrarActividad(titulo);
+        boolean eliminado= Gimnasio.getInstancia().borrarActividad(titulo);
             
-            if (eliminado==true){
-                javax.swing.JOptionPane.showMessageDialog(this, "Actividad eliminada correctamente.");
+        if (eliminado==true){
+            javax.swing.JOptionPane.showMessageDialog(this, "Actividad eliminada correctamente.");
                 
-                campoTitulo.setText("");
-                campoMonitor.setText("");
-                campoSala.setText("");
-                campoAforo.setText("");
-                campoPrecio.setText("");
-                campoDescripcion.setText("");
-                this.imagenActividad = null;
-            }
-            else {
-                javax.swing.JOptionPane.showMessageDialog(this, "No se ha encontrado ninguna actividad con ese título.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-            }
+            campoTitulo.setText("");
+            campoMonitor.setText("");
+            campoSala.setText("");
+            campoAforo.setText("");
+            campoPrecio.setText("");
+            campoDescripcion.setText("");
+            this.imagenActividad = null;
+        }
+        else {
+            javax.swing.JOptionPane.showMessageDialog(this, "No se ha encontrado ninguna actividad con ese título.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
         
     }//GEN-LAST:event_jButtonBorrarActividadActionPerformed
 
@@ -867,7 +865,7 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
      * @param evt Evento de ratón disparado por la tabla.
      */
     private void jTableActividadesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableActividadesMouseClicked
-        // TODO add your handling code here:
+        
         int fila= jTableActividades.getSelectedRow();
         
         if (fila>=0){
@@ -912,9 +910,7 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
         
         for (Horario h : horarios) {
             if (h.getDia().equalsIgnoreCase(dia) && h.getTurno().equalsIgnoreCase(turno)) {
-                javax.swing.JOptionPane.showMessageDialog(this, 
-                        "Este horario (" + dia + " - " + turno + ") ya ha sido añadido a la lista actual.",
-                        "Horario duplicado", 
+                javax.swing.JOptionPane.showMessageDialog(this, "Este horario (" + dia + " - " + turno + ") ya ha sido añadido a la lista actual.", "Horario duplicado", 
                         javax.swing.JOptionPane.WARNING_MESSAGE);
                 return; 
             }
@@ -932,7 +928,7 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
      * @param evt Evento de acción disparado por el botón.
      */
     private void jButtonBorrarHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarHorarioActionPerformed
-        // TODO add your handling code here:
+
         String dia = jComboBoxDia.getSelectedItem().toString();
         String turno = jComboBoxTurno.getSelectedItem().toString();
         
@@ -966,7 +962,7 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
      * @param evt Evento de ratón disparado por la tabla.
      */
     private void jTableSociosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableSociosMouseClicked
-        // TODO add your handling code here:
+
         int fila = jTableSocios.getSelectedRow();
 
         if (fila >= 0) {
@@ -991,52 +987,33 @@ public class VentanaGestionAdministrador extends javax.swing.JFrame {
      * @param evt Evento de ratón disparado por la tabla.
      */
     private void jTableReservasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableReservasMouseClicked
-        // TODO add your handling code here:
-        int fila= jTableReservas.getSelectedRow();
-        
-        if (fila>=0){
-            
-            String correoCliente = jTableReservas.getValueAt(fila, 1).toString();
-            String tituloActividad = jTableReservas.getValueAt(fila, 2).toString();
+        int fila = jTableReservas.getSelectedRow();
 
+        if (fila >= 0) {
+            // No hace falta filtrar por fecha, con correo y titulo es suficiente
+            String correoSocio = jTableReservas.getValueAt(fila, 1).toString().trim(); 
+            String tituloActividad = jTableReservas.getValueAt(fila, 2).toString().trim();
 
             Reserva reservaEncontrada = Gimnasio.getInstancia().getReservas().stream()
-                    .filter(r -> r.getCliente().getCorreo().equalsIgnoreCase(correoCliente) && r.getActividad().getTitulo().equalsIgnoreCase(tituloActividad))
+                    .filter(r -> r != null && r.getCliente() != null && r.getCliente().getCorreo().equalsIgnoreCase(correoSocio) && r.getActividad() != null && r.getActividad().getTitulo().equalsIgnoreCase(tituloActividad))
                     .findFirst()
                     .orElse(null);
 
             if (reservaEncontrada != null) {
-                            VentanaReserva ficha = new VentanaReserva(reservaEncontrada);
-                            ficha.setVisible(true);
-                            ficha.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+                VentanaReserva ficha = new VentanaReserva(reservaEncontrada);
+                ficha.setLocationRelativeTo(null); 
+                ficha.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+                ficha.setVisible(true);
+
             }
         }
     }//GEN-LAST:event_jTableReservasMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        cargarTablaReservas(null, null);
+        
+    }//GEN-LAST:event_jButton9ActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new VentanaGestionAdministrador().setVisible(true));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ConsultaDeActividades;

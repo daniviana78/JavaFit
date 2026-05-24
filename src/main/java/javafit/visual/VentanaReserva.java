@@ -14,9 +14,6 @@ import com.mycompany.javafit.*;
 import java.time.format.DateTimeFormatter;
 
 public class VentanaReserva extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaReserva.class.getName());
-    private Reserva res;
     /**
      * Creates new form VentanaReserva.
      * Inicializa los componentes de la interfaz y muestra los detalles
@@ -24,9 +21,12 @@ public class VentanaReserva extends javax.swing.JFrame {
      * 
      * @param res Objeto de tipo Reserva cuyos datos se van a visualizar.
      */
+    
+    private Reserva res;
+
     public VentanaReserva(Reserva res) {
         initComponents();
-        
+
         this.res = res;
         
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -86,8 +86,6 @@ public class VentanaReserva extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jTextFieldImporte = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
 
         campoSala.setEditable(false);
@@ -125,12 +123,6 @@ public class VentanaReserva extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel10.setText("RESERVA");
 
-        jButton1.setText("Ver");
-        jButton1.addActionListener(this::jButton1ActionPerformed);
-
-        jButton2.setText("Ver");
-        jButton2.addActionListener(this::jButton2ActionPerformed);
-
         jLabel12.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         jLabel12.setText("JavaFit");
 
@@ -140,13 +132,6 @@ public class VentanaReserva extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(132, 132, 132)
-                        .addComponent(jLabel1)
-                        .addGap(41, 41, 41)
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel12))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -181,12 +166,15 @@ public class VentanaReserva extends javax.swing.JFrame {
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jTextFieldImporte, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton1)
-                                    .addComponent(jButton2))))
-                        .addGap(0, 26, Short.MAX_VALUE)))
+                                                .addComponent(jTextFieldImporte, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                        .addGap(0, 42, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(132, 132, 132)
+                        .addComponent(jLabel1)
+                        .addGap(41, 41, 41)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel12)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -205,14 +193,12 @@ public class VentanaReserva extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextFieldActividad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(jTextFieldActividad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextFieldSocio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
-                .addGap(20, 20, 20)
+                    .addComponent(jTextFieldSocio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(jLabel8)
@@ -228,45 +214,16 @@ public class VentanaReserva extends javax.swing.JFrame {
                     .addComponent(jTextFieldImporte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(38, 38, 38)
                 .addComponent(jLabel4)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-   /**
-     * Maneja el evento de clic en el botón para ver los detalles de la actividad.
-     * Abre la ventana correspondiente a la actividad vinculada con la reserva.
-     * 
-     * @param evt Evento de acción disparado por el botón.
-     */
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        if (this.res != null && this.res.getActividad() != null) {
-            VentanaActividad va = new VentanaActividad(this.res.getActividad());
-            va.setVisible(true);
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
-    /**
-     * Maneja el evento de clic en el botón para ver los detalles del socio.
-     * Abre la ventana correspondiente al socio vinculado con la reserva.
-     * 
-     * @param evt Evento de acción disparado por el botón.
-     */
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        if (this.res != null && this.res.getCliente() != null) {
-            VentanaSocio vs = new VentanaSocio(this.res.getCliente());
-            vs.setVisible(true);
-        }
-    }//GEN-LAST:event_jButton2ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField campoSala;
     private javax.swing.Box.Filler filler1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -286,3 +243,4 @@ public class VentanaReserva extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldTurno;
     // End of variables declaration//GEN-END:variables
 }
+

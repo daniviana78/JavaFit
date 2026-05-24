@@ -179,7 +179,7 @@ public class Actividad implements Serializable {
      */
     @Override
     public String toString() {
-        return "Actividad{" + "titulo= " + titulo + ", tipo= " + tipo + ", sala= " + sala + ", horarios= " + horarios + ", monitor= " + monitor + ", imagen= " + imagen + '}';
+        return "titulo= " + titulo + ", tipo= " + tipo + ", sala= " + sala + ", horarios= " + horarios + ", monitor= " + monitor + ", imagen= " + imagen + '}';
     }
  
 }

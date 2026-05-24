@@ -14,19 +14,19 @@ import com.mycompany.javafit.*;
 import java.util.ArrayList;
 
 public class VentanaActividad extends javax.swing.JFrame {
-    /** Logger de la clase utilizado para el registro de eventos y depuración. */
+    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaActividad.class.getName());
 
     /**
      * Creates new form VentanaActividad.
      * Constructor que inicializa los componentes de la interfaz y rellena 
      * los campos visuales con la información de la actividad especificada.
-     * * @param act El objeto Actividad que contiene los datos que se van a visualizar.
+     * @param act El objeto Actividad que contiene los datos que se van a visualizar.
      */
     public VentanaActividad(Actividad act) {
         initComponents();
         if (act != null) {
-            // Rellenamos los datos directos de la Actividad
+            
             campoTitulo.setText(act.getTitulo()); 
             campoTipo.setText(act.getTipo());
             campoMonitor.setText(act.getMonitor());
@@ -47,7 +47,7 @@ public class VentanaActividad extends javax.swing.JFrame {
             
             if (act.getSala() != null) {
                 campoSala.setText(act.getSala().getNombre());
-                campoAforo.setText(String.valueOf(act.getSala().getAforo())); // Convertimos el int a String
+                campoAforo.setText(String.valueOf(act.getSala().getAforo()));
             } else {
                 campoSala.setText("Sin sala");
                 campoAforo.setText("0");

@@ -169,7 +169,7 @@ public class VentanaRegistro extends javax.swing.JFrame {
      * @param evt Evento de acción disparado por el botón.
      */
     private void botonCompletarRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCompletarRegistroActionPerformed
-        // TODO add your handling code here:
+        
         String nombre = campoNombre.getText().trim();
         String correo = campoCorreo.getText().trim();
         String clave = new String(campoClave.getPassword());
@@ -179,7 +179,7 @@ public class VentanaRegistro extends javax.swing.JFrame {
         boolean socioVIP = jCheckBoxSocioVIP.isSelected();
 
         if (nombre.isEmpty() || correo.isEmpty() || clave.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, rellena al menos nombre, correo y clave.");
+            javax.swing.JOptionPane.showMessageDialog(this, "Rellena al menos nombre, correo y clave.");
             return; 
         }
 
@@ -197,34 +197,6 @@ public class VentanaRegistro extends javax.swing.JFrame {
         
     }//GEN-LAST:event_botonCompletarRegistroActionPerformed
 
-    /**
-     * Método principal que inicia la ventana de registro.
-     * Configura el aspecto visual (Look and Feel) de la interfaz gráfica y
-     * la hace visible.
-     * 
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new VentanaRegistro().setVisible(true));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonCompletarRegistro;

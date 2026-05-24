@@ -33,6 +33,9 @@ public class Socio extends Usuario implements Serializable {
     private boolean socioVIP;
     /** Listado dinámico (ArrayList) que almacena las reservas efectuadas por el socio. */
     private ArrayList<Reserva> reservas;
+    /** El importe de la cuota mensual asociada al socio.*/
+    private double cuota;
+ 
     
 
     /**
@@ -53,7 +56,12 @@ public class Socio extends Usuario implements Serializable {
         this.tarjetaCredito = tarjetaCredito;
         this.socioVIP = socioVIP;
         this.reservas = new ArrayList();
-
+        if(isSocioVIP()==true){
+            this.cuota = 80.0;
+        }
+        else{
+            this.cuota = 50.0;
+        }
     }
     
 
@@ -155,14 +163,22 @@ public class Socio extends Usuario implements Serializable {
         this.reservas = reservas;
     }
     
+    /**
+     * Obtiene el importe de la cuota mensual del socio.
+     * * @return El valor numérico de la cuota.
+     */
+    public double getCuota() {
+        return cuota;
+    }
 
+    
     /**
      * Devuelve una cadena de texto con la información personal y el tipo de suscripción del socio.
      * * @return Cadena formateada con el estado de los atributos.
      */
     @Override
     public String toString() {
-        return "Socio{ correo= " + super.getCorreo() + ", clave= " + super.getClave() + "nombre= " + nombre + ", telefono= " + telefono + ", direccion= " + direccion + ", tarjetaCredito= " + tarjetaCredito + ", socioVIP= " + socioVIP + '}';
+        return "correo= " + super.getCorreo() + ", clave= " + super.getClave() + "nombre= " + nombre + ", telefono= " + telefono + ", direccion= " + direccion + ", tarjetaCredito= " + tarjetaCredito + ", socioVIP= " + socioVIP + ", cuota= " + cuota;
     }
 
     

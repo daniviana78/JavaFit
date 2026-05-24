@@ -253,6 +253,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Ver todas"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton9ActionPerformed"/>
+              </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane4">
               <AuxValues>
@@ -666,11 +669,11 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jButtonLimpiarSocios" min="-2" pref="11" max="-2" attributes="0"/>
-                          <Component id="jButton6" min="-2" pref="11" max="-2" attributes="0"/>
+                          <Component id="jButtonLimpiarSocios" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButton6" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane3" max="32767" attributes="0"/>
+                      <Component id="jScrollPane3" pref="415" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

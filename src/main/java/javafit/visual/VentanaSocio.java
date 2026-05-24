@@ -13,7 +13,6 @@ package javafit.visual;
  * @author Dani
  */
 import com.mycompany.javafit.*;
-import javax.swing.JList;
 
 public class VentanaSocio extends javax.swing.JFrame implements javax.swing.event.ListSelectionListener {
     
@@ -32,22 +31,16 @@ public class VentanaSocio extends javax.swing.JFrame implements javax.swing.even
      */
     @Override
     public void valueChanged(javax.swing.event.ListSelectionEvent e) {
-        // Evitamos que el evento se dispare dos veces (al presionar y al soltar)
         if (!e.getValueIsAdjusting()) {
+            int indiceSeleccionado = jListReservas.getSelectedIndex();
 
-            String actividadSeleccionada = jListReservas.getSelectedValue();
+            if (indiceSeleccionado >= 0 && this.socio != null && this.socio.getReservas() != null) {
+                
+                Reserva reservaEncontrada = this.socio.getReservas().get(indiceSeleccionado);
 
-            if (actividadSeleccionada != null && this.socio != null && this.socio.getReservas() != null) {
-
-                Reserva reservaEncontrada = null;
-                for (Reserva r : this.socio.getReservas()) {
-                    if (r.getActividad().getTitulo().equals(actividadSeleccionada)) {
-                        reservaEncontrada = r;
-                        break;
-                    }
-                }
                 if (reservaEncontrada != null) {
                     VentanaReserva vr = new VentanaReserva(reservaEncontrada);
+                    vr.setLocationRelativeTo(null); // Para que salga centrada
                     vr.setVisible(true);
                 }
             }
@@ -71,24 +64,22 @@ public class VentanaSocio extends javax.swing.JFrame implements javax.swing.even
             jTextFieldTelefono.setText(this.socio.getTelefono());
             jTextFieldDireccion.setText(this.socio.getDireccion());
             jTextFieldTarjetaCredito.setText(this.socio.getTarjetaCredito());
+            jTextFieldCuota.setText(String.valueOf(this.socio.getCuota()));
             
             jCheckBoxSocioVIP.setSelected(this.socio.isSocioVIP());
             jCheckBoxSocioVIP.setEnabled(false); 
             
             if (this.socio.getReservas() != null) {
-
-                int tamano = this.socio.getReservas().size();
-                String[] nombres_actividades = new String[tamano];
-
-                for (int i = 0; i < tamano; i++) {
-                    Reserva r = this.socio.getReservas().get(i);
-                    nombres_actividades[i] = r.getActividad().getTitulo(); // O r.getNombreActividad(), según tu clase
+                javax.swing.DefaultListModel<String> modeloLista = new javax.swing.DefaultListModel<>();
+            
+                for (Reserva r : this.socio.getReservas()) {
+                    String tituloActividadReservada = r.getActividad().getTitulo();
+                    modeloLista.addElement(tituloActividadReservada);
                 }
 
-                jListReservas.setListData(nombres_actividades);
+                jListReservas.setModel(modeloLista);
 
                 jListReservas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-
                 jListReservas.addListSelectionListener(this);
             }
         }
@@ -116,6 +107,8 @@ public class VentanaSocio extends javax.swing.JFrame implements javax.swing.even
         jScrollPane1 = new javax.swing.JScrollPane();
         jListReservas = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
+        jTextFieldCuota = new javax.swing.JTextField();
+        jLabelCuota = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("JavaFit");
@@ -148,6 +141,8 @@ public class VentanaSocio extends javax.swing.JFrame implements javax.swing.even
         jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         jLabel1.setText("JavaFit");
 
+        jLabelCuota.setText("Cuota");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -170,27 +165,28 @@ public class VentanaSocio extends javax.swing.JFrame implements javax.swing.even
                             .addComponent(jTextFieldNombre))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextFieldTarjetaCredito))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(74, 74, 74)
-                                .addComponent(jCheckBoxSocioVIP)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(64, 64, 64))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(156, 156, 156)
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
-                        .addComponent(jLabel1)))
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(jCheckBoxSocioVIP)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabelCuota)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTextFieldCuota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(33, 33, 33)
+                                .addComponent(jLabel6)
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jTextFieldTarjetaCredito))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -219,14 +215,17 @@ public class VentanaSocio extends javax.swing.JFrame implements javax.swing.even
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldTarjetaCredito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
-                .addGap(30, 30, 30)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(35, 35, 35)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextFieldCuota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabelCuota))
+                        .addGap(32, 32, 32)
                         .addComponent(jCheckBoxSocioVIP))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(82, Short.MAX_VALUE))
         );
 
         pack();
@@ -242,8 +241,10 @@ public class VentanaSocio extends javax.swing.JFrame implements javax.swing.even
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabelCuota;
     private javax.swing.JList<String> jListReservas;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextFieldCuota;
     private javax.swing.JTextField jTextFieldDireccion;
     private javax.swing.JTextField jTextFieldNombre;
     private javax.swing.JTextField jTextFieldTarjetaCredito;

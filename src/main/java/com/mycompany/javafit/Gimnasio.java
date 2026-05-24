@@ -46,7 +46,6 @@ public class Gimnasio implements Serializable {
      * Registra automáticamente las credenciales del administrador por defecto.
      */
     public Gimnasio() {
-        // Se crea el administrador por defecto
         Administrador adminPorDefecto = new Administrador("admin@javafit.com", "admin");
         this.administradores.add(adminPorDefecto);
     }
@@ -366,21 +365,22 @@ public class Gimnasio implements Serializable {
      * Procesa la solicitud de reserva para una sesión deportiva controlando los límites de aforo.
      * @param act La actividad objeto de la reserva.
      * @param cliente El socio que solicita la plaza.
-     * @param turno El horario específico en el que se asistirá.
+     * @param horario El horario específico en el que se asistirá.
      * @return true si la reserva se consolidó con éxito; false si se superó el aforo permitido.
      */
-    public boolean reservar(Actividad act, Socio cliente, Horario turno){
+    public boolean reservar(Actividad act, Socio cliente, Horario horario){
         
         LocalDate fechaReserva= LocalDate.now();
         
         long reservasActuales= reservas.stream()
-                .filter(r -> r.getActividad().equals(act) && r.getHorario().equals(turno))
+                .filter(r -> r.getActividad().equals(act) && r.getHorario().equals(horario))
                 .count();
         
         if (reservasActuales < act.getSala().getAforo()) {
-            Reserva nuevaReserva = new Reserva(act, cliente, turno, fechaReserva);
+            Reserva nuevaReserva = new Reserva(act, cliente, horario, fechaReserva);
             nuevaReserva.setImporte(calcularImporte(cliente, act));
             reservas.add(nuevaReserva);
+            cliente.getReservas().add(nuevaReserva);
             guardarDatos();
                         
             return true;
@@ -463,8 +463,12 @@ public class Gimnasio implements Serializable {
      */
     public void generaFactura(Reserva r) throws IOException {
         DateTimeFormatter formatoCorto = DateTimeFormatter.ofPattern("dd/MM/yyyy");        
-        String fn = r.getFechaReserva().format(formatoCorto);        
-        String rutaFicheroFactura = "./Facturas/Factura(" + fn.replace('/', '_') + ").txt";
+        String fn = r.getFechaReserva().format(formatoCorto);
+        String nombreSocio = r.getCliente().getNombre().trim().replace(" ", "_");;
+        String tituloActividad = r.getActividad().getTitulo().trim().replace(" ", "_");;
+        String diaActividad  = r.getHorario().getDia().trim().replace(" ", "_");;
+        String turnoActividad  = r.getHorario().getTurno().trim().replace(" ", "_").replace(":", "-");
+        String rutaFicheroFactura = "./Facturas/Factura(" + nombreSocio + '_' + tituloActividad + '_' + diaActividad + '_' + turnoActividad + '_' + fn.replace('/', '_') + ").txt";
         double importe = r.getImporte();
         try {
             File dirFacturas = new File("./Facturas");
@@ -481,7 +485,7 @@ public class Gimnasio implements Serializable {
                 salida.println("\n");
                 salida.println("Cliente: " + r.getCliente());
                 salida.println("\n");
-                salida.println("Turno: " + r.getHorario().getTurno());
+                salida.println("Horario: " + r.getHorario());
                 salida.println("\n");
                 salida.println("Fecha de realización de la reserva: " + r.getFechaReserva());
                 salida.println("---------------------------------------------------------------------------------");
@@ -492,7 +496,7 @@ public class Gimnasio implements Serializable {
         } catch (IOException ioe) {
             System.out.println("Error de IO: " + ioe.getMessage());
         }
-    }//fin generaFactura
+    }
     
     
     /**

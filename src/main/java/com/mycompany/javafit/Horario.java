@@ -68,15 +68,13 @@ public class Horario implements Serializable{
         this.turno = turno;
     }
     
-    
-
     /**
      * Devuelve una cadena de texto con la información detallada del horario.
      * @return Cadena formateada con el estado de los atributos.
      */
     @Override
     public String toString() {
-        return "Horario{" + "dia=" + dia + ", turno=" + turno + '}';
+        return "dia= " + dia + ", turno= " + turno;
     }
     
 }
