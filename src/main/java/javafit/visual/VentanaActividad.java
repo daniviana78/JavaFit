@@ -14,9 +14,6 @@ import com.mycompany.javafit.*;
 import java.util.ArrayList;
 
 public class VentanaActividad extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaActividad.class.getName());
-
     /**
      * Creates new form VentanaActividad.
      * Constructor que inicializa los componentes de la interfaz y rellena 

@@ -17,9 +17,6 @@ import java.util.ArrayList;
 import java.time.LocalDate;
 
 public class VentanaGestionAdministrador extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaGestionAdministrador.class.getName());
-
     /**
      * Creates new form VentanaAdministrador.
      * Inicializa los componentes de la interfaz y carga los datos iniciales

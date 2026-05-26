@@ -14,6 +14,12 @@ import com.mycompany.javafit.*;
 import java.time.format.DateTimeFormatter;
 
 public class VentanaReserva extends javax.swing.JFrame {
+    
+    /**
+     * Instancia de la reserva actual que se está visualizando en la interfaz gráfica.
+     */
+    private Reserva res;
+
     /**
      * Creates new form VentanaReserva.
      * Inicializa los componentes de la interfaz y muestra los detalles
@@ -22,7 +28,6 @@ public class VentanaReserva extends javax.swing.JFrame {
      * @param res Objeto de tipo Reserva cuyos datos se van a visualizar.
      */
     
-    private Reserva res;
 
     public VentanaReserva(Reserva res) {
         initComponents();

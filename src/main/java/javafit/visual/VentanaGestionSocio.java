@@ -17,9 +17,6 @@ import java.util.ArrayList;
 
 
 public class VentanaGestionSocio extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaGestionSocio.class.getName());
-
     /**
      * Creates new form VentanaSocio.
      * Inicializa los componentes, carga los datos del perfil del socio
@@ -493,7 +490,7 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
         
         campoTipo.setSelectedIndex(4);
         campoMonitor.setText("");
-        campoDia.setSelectedIndex(8);
+        campoDia.setSelectedIndex(7);
         
         cargarTablaActividades("Todos", "","Todos");
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -512,7 +509,6 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
                 return;
             }
 
-            // CORRECCIÓN DE ÍNDICES: Alineado con la estructura real de tu JTable
             String tituloActividad = jTable2.getValueAt(filaSeleccionada, 1).toString().trim();
             String diaClase = jTable2.getValueAt(filaSeleccionada, 2).toString().trim();
             String turnoClase = jTable2.getValueAt(filaSeleccionada, 3).toString().trim();

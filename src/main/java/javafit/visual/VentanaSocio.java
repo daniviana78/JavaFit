@@ -16,13 +16,14 @@ import com.mycompany.javafit.*;
 
 public class VentanaSocio extends javax.swing.JFrame implements javax.swing.event.ListSelectionListener {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaSocio.class.getName());
-    private Socio socio;
     /**
-     * Creates new form VentanaSocio
+     * Instancia del socio del gimnasio cuyos datos personales, de facturación 
+     * y registros de reservas activas se están visualizando en este formulario.
      */
+    private Socio socio;
     
     /**
+     * Creates new form VentanaSocio
      * Responde al evento de selección en la lista de reservas.
      * Busca la reserva seleccionada en la lista del socio y abre
      * la VentanaReserva correspondiente para mostrar sus detalles.
