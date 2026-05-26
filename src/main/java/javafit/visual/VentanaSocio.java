@@ -4,6 +4,8 @@
  */
 package javafit.visual;
 
+import com.mycompany.javafit.*;
+
 /**
  * Clase que representa la ventana de detalles de un Socio en el sistema JavaFit.
  * Permite visualizar la información de contacto, si es VIP, y una lista
@@ -12,7 +14,6 @@ package javafit.visual;
  *
  * @author Dani
  */
-import com.mycompany.javafit.*;
 
 public class VentanaSocio extends javax.swing.JFrame implements javax.swing.event.ListSelectionListener {
     

@@ -4,6 +4,8 @@
  */
 package javafit.visual;
 
+import com.mycompany.javafit.*;
+import java.util.ArrayList;
 
 /**
  * Clase que representa la ventana principal de gestión para los socios.
@@ -11,10 +13,6 @@ package javafit.visual;
  *
  * @author Usuario
  */
-
-import com.mycompany.javafit.*;
-import java.util.ArrayList;
-
 
 public class VentanaGestionSocio extends javax.swing.JFrame {
     /**

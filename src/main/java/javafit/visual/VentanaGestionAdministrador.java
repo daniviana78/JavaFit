@@ -4,17 +4,17 @@
  */
 package javafit.visual;
 
+import com.mycompany.javafit.*;
+import javax.swing.*;
+import java.util.ArrayList;
+import java.time.LocalDate;
+
 /**
  * Clase que representa la ventana de gestión principal para el administrador.
  * Permite la consulta y gestión de actividades, socios y reservas.
  *
  * @author Usuario
  */
-
-import com.mycompany.javafit.*;
-import javax.swing.*;
-import java.util.ArrayList;
-import java.time.LocalDate;
 
 public class VentanaGestionAdministrador extends javax.swing.JFrame {
     /**

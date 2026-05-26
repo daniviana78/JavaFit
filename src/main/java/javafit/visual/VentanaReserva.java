@@ -4,14 +4,15 @@
  */
 package javafit.visual;
 
+import com.mycompany.javafit.*;
+import java.time.format.DateTimeFormatter;
+
 /**
  * Clase que representa la ventana de detalles de una reserva en el sistema JavaFit.
  * Muestra información como la actividad, el socio, horario, fecha e importe.
  *
  * @author Dani
  */
-import com.mycompany.javafit.*;
-import java.time.format.DateTimeFormatter;
 
 public class VentanaReserva extends javax.swing.JFrame {
     

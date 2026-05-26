@@ -4,14 +4,14 @@
  */
 package javafit.visual;
 
+import com.mycompany.javafit.*;
+
 /**
  * Clase que representa la ventana de registro de nuevos socios en la aplicación JavaFit.
  * Permite capturar los datos necesarios para crear un perfil de usuario.
  *
  * @author Usuario
  */
-
-import com.mycompany.javafit.*;
 
 public class VentanaRegistro extends javax.swing.JFrame {
     

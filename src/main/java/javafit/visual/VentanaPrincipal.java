@@ -4,14 +4,15 @@
  */
 package javafit.visual;
 
+
+import com.mycompany.javafit.*;
+
 /**
  * Clase que representa la ventana principal de inicio de sesión de la aplicación JavaFit.
  * Permite a los usuarios autenticarse en el sistema o acceder a la ventana de registro.
  *
  * @author Usuario
  */
-
-import com.mycompany.javafit.*;
 
 public class VentanaPrincipal extends javax.swing.JFrame {
     

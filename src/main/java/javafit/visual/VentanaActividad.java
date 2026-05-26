@@ -4,14 +4,14 @@
  */
 package javafit.visual;
 
+import com.mycompany.javafit.*;
+import java.util.ArrayList;
+
 /**
  *Ventana gráfica que muestra los detalles completos de una actividad del gimnasio.
  * Muestra información como el título, tipo, monitor, sala y horarios asociados.
  * @author Dani
  */
-
-import com.mycompany.javafit.*;
-import java.util.ArrayList;
 
 public class VentanaActividad extends javax.swing.JFrame {
     /**

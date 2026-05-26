@@ -4,15 +4,15 @@
  */
 package javafit.visual;
 
+import com.mycompany.javafit.*;
+import java.util.ArrayList;
+
 /**
  * Clase que representa la interfaz gráfica para visualizar los detalles
  * de una Actividad Especial en el sistema JavaFit.
  *
  * @author Dani
  */
-
-import com.mycompany.javafit.*;
-import java.util.ArrayList;
 
 public class VentanaActividadEspecial extends javax.swing.JFrame {
     
