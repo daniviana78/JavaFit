@@ -165,7 +165,7 @@ public class Socio extends Usuario implements Serializable {
     
     /**
      * Obtiene el importe de la cuota mensual del socio.
-     * * @return El valor numérico de la cuota.
+     * @return El valor numérico de la cuota.
      */
     public double getCuota() {
         return cuota;
@@ -178,7 +178,7 @@ public class Socio extends Usuario implements Serializable {
      */
     @Override
     public String toString() {
-        return "correo= " + super.getCorreo() + ", clave= " + super.getClave() + "nombre= " + nombre + ", telefono= " + telefono + ", direccion= " + direccion + ", tarjetaCredito= " + tarjetaCredito + ", socioVIP= " + socioVIP + ", cuota= " + cuota;
+        return "correo= " + super.getCorreo() + ", clave= " + super.getClave() + ", nombre= " + nombre + ", telefono= " + telefono + ", direccion= " + direccion + ", tarjetaCredito= " + tarjetaCredito + ", socioVIP= " + socioVIP + ", cuota= " + cuota;
     }
 
     

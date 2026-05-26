@@ -112,7 +112,12 @@ public class Actividad implements Serializable {
     public ImageIcon getImagen() {
         return imagen;
     }
-
+    
+    /**
+     * Asigna o actualiza la imagen representativa de la actividad.
+     *
+     * @param imagen El objeto {@link ImageIcon} con la nueva imagen de la actividad.
+     */
     public void setImagen(ImageIcon imagen) {
         this.imagen = imagen;
     }
