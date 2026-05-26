@@ -15,8 +15,6 @@ import com.mycompany.javafit.*;
 
 public class VentanaRegistro extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaRegistro.class.getName());
-
     /**
      * Creates new form VentanaRegistro.
      * Inicializa los componentes de la interfaz de usuario para el registro.
