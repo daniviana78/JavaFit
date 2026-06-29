@@ -37,7 +37,10 @@ public class Actividad implements Serializable {
     private String monitor;
     /** Imagen representativa de la actividad. */
     private ImageIcon imagen;
-    
+    /** Lista que almacena las valoraciones que han sido dadas a la actividad. */
+    private ArrayList<Valoracion> valoraciones = new ArrayList<>();
+    /** Nota media de la actividad. */
+    private double media;
     
     /**
      * Constructor para inicializar todos los atributos de la actividad.
@@ -55,6 +58,9 @@ public class Actividad implements Serializable {
         this.monitor = monitor;
         this.imagen = imagen;
         this.horarios = horarios;
+        this.valoraciones = new ArrayList<>();
+        this.media = 0.0;
+        
     }
     
     /**
@@ -154,6 +160,35 @@ public class Actividad implements Serializable {
         this.horarios = horarios;
     }
     
+    public double getMedia() {
+        return media;
+    }
+
+    public void setMedia(double media) {
+        this.media = media;
+    }
+    
+    public void registrarValoracion(Valoracion v) {
+        if (v != null && v.getCalificacion() >= 1 && v.getCalificacion() <= 5) {
+            this.valoraciones.add(v);
+        }
+    }
+    
+    public void calcularNotaMedia() {
+        double media = 0.0;
+
+        if (!valoraciones.isEmpty()) {
+            int suma = 0;
+
+            for (int i = 0; i < valoraciones.size(); i++) {
+                suma += valoraciones.get(i).getCalificacion();
+            }
+
+            media = (double) suma / valoraciones.size();
+        }
+
+        this.setMedia(media);
+    }
     
     /**
      * Compara si esta actividad es igual a otro objeto basándose en el título.

@@ -136,6 +136,7 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
         jPasswordField1 = new javax.swing.JPasswordField();
         jScrollBar1 = new javax.swing.JScrollBar();
         campoMonitor1 = new javax.swing.JTextField();
+        jButton3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         BusquedaYReserva = new javax.swing.JPanel();
@@ -154,6 +155,10 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         cancelarReserva = new javax.swing.JButton();
+        jComboBoxNotas = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        jButtonValorar = new javax.swing.JButton();
+        jTextFieldComentario = new javax.swing.JTextField();
         MiPerfil = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         campoNombre = new javax.swing.JTextField();
@@ -172,6 +177,8 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
         jCheckBoxSocioVIP = new javax.swing.JCheckBox();
 
         jPasswordField1.setText("jPasswordField1");
+
+        jButton3.setText("jButton3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("JavaFit");
@@ -235,7 +242,7 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
             .addGroup(BusquedaYReservaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(BusquedaYReservaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
                     .addGroup(BusquedaYReservaLayout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -279,7 +286,7 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
                     .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
                 .addComponent(botonReservar)
                 .addContainerGap())
         );
@@ -315,27 +322,53 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
         cancelarReserva.setText("Cancelar Reserva");
         cancelarReserva.addActionListener(this::cancelarReservaActionPerformed);
 
+        jComboBoxNotas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5" }));
+        jComboBoxNotas.addActionListener(this::jComboBoxNotasActionPerformed);
+
+        jLabel3.setText("Valorar actividad seleccionada:");
+
+        jButtonValorar.setText("Enviar valoración");
+        jButtonValorar.addActionListener(this::jButtonValorarActionPerformed);
+
         javax.swing.GroupLayout MisReservasLayout = new javax.swing.GroupLayout(MisReservas);
         MisReservas.setLayout(MisReservasLayout);
         MisReservasLayout.setHorizontalGroup(
             MisReservasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MisReservasLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MisReservasLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(53, 53, 53)
                 .addComponent(cancelarReserva)
-                .addGap(189, 189, 189))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(MisReservasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(MisReservasLayout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(jComboBoxNotas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldComentario))
+                .addGap(38, 38, 38))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MisReservasLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonValorar)
+                .addGap(105, 105, 105))
         );
         MisReservasLayout.setVerticalGroup(
             MisReservasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MisReservasLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cancelarReserva)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(MisReservasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cancelarReserva)
+                    .addComponent(jComboBoxNotas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextFieldComentario, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButtonValorar)
+                .addContainerGap(11, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Mis Reservas", MisReservas);
@@ -401,7 +434,7 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
                     .addGroup(MiPerfilLayout.createSequentialGroup()
                         .addGap(167, 167, 167)
                         .addComponent(botonGuardarCambios, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(121, Short.MAX_VALUE))
+                .addContainerGap(126, Short.MAX_VALUE))
         );
         MiPerfilLayout.setVerticalGroup(
             MiPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -436,7 +469,7 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
                 .addComponent(jLabel12)
                 .addGap(18, 18, 18)
                 .addComponent(botonGuardarCambios, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(90, Short.MAX_VALUE))
+                .addContainerGap(182, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Mi Perfil", MiPerfil);
@@ -721,6 +754,37 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jTable2MouseClicked
 
+    private void jComboBoxNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxNotasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxNotasActionPerformed
+
+    private void jButtonValorarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValorarActionPerformed
+        // TODO add your handling code here:
+        int filaSeleccionada = jTable2.getSelectedRow();
+
+        if (filaSeleccionada >= 0){
+            String tituloActividad = jTable2.getValueAt(filaSeleccionada, 1).toString().trim();
+
+            Actividad actividadBuscada = Gimnasio.getInstancia().getActividades().stream()
+                    .filter(act -> act.getTitulo().equalsIgnoreCase(tituloActividad))
+                    .findFirst()
+                    .orElse(null);
+
+            if (actividadBuscada != null){
+                int nota = (int) jComboBoxNotas.getSelectedItem();
+                String comentario = jTextFieldComentario.getText().trim();
+
+                Valoracion nuevaValoracion = new Valoracion(nota, comentario);
+
+                actividadBuscada.registrarValoracion(nuevaValoracion);
+                actividadBuscada.calcularNotaMedia();
+
+                Gimnasio.getInstancia().guardarDatos();
+            }
+        }
+
+    }//GEN-LAST:event_jButtonValorarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel BusquedaYReserva;
     private javax.swing.JPanel MiPerfil;
@@ -740,11 +804,15 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
     private javax.swing.JButton cancelarReserva;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButtonValorar;
     private javax.swing.JCheckBox jCheckBoxSocioVIP;
+    private javax.swing.JComboBox<String> jComboBoxNotas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -758,6 +826,7 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable2;
+    private javax.swing.JTextField jTextFieldComentario;
     private javax.swing.JTable tablaActividades;
     // End of variables declaration//GEN-END:variables
 }
