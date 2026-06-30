@@ -3,12 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.javafit;
-
+import java.io.Serializable;
 /**
  *
  * @author Dani
  */
-public class Valoracion {
+public class Valoracion implements Serializable {
     
     private int calificacion;
     private String comentario;

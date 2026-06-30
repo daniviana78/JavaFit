@@ -805,7 +805,7 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
                     .orElse(null);
 
             if (actividadBuscada != null){
-                int nota = (int) jComboBoxNotas.getSelectedItem();
+                int nota = Integer.parseInt(jComboBoxNotas.getSelectedItem().toString());;
                 String comentario = jTextFieldComentario.getText().trim();
 
                 Valoracion nuevaValoracion = new Valoracion(nota, comentario);
@@ -814,9 +814,13 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
                 actividadBuscada.calcularNotaMedia();
 
                 Gimnasio.getInstancia().guardarDatos();
+                
+                javax.swing.JOptionPane.showMessageDialog(this, "¡Gracias! Tu valoración se ha guardado correctamente.");
+                jTextFieldComentario.setText(""); 
             }
+        }else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, selecciona una reserva de la tabla para valorarla.", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
         }
-
     }//GEN-LAST:event_jButtonValorarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

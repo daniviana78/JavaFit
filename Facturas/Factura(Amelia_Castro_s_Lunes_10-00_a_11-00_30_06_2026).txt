@@ -1,0 +1,18 @@
+-------------------------------- Factura de la Reserva --------------------------------
+
+
+Actividad: titulo= s, tipo= Yoga, sala= Sala{nombre= s, aforo= 2}, horarios= [dia= Lunes, turno= 10:00 a 11:00], monitor= dani, imagen= null}
+
+
+Cliente: correo= ameliacastro@javafit.com, clave= Amelia, nombre= Amelia Castro, telefono= 67821590, direccion= Calle Calerito, 10, tarjetaCredito= 4532 7182 9381 0472, socioVIP= true, cuota= 80.0
+
+
+Horario: dia= Lunes, turno= 10:00 a 11:00
+
+
+Fecha de realización de la reserva: 2026-06-30
+---------------------------------------------------------------------------------
+IMPORTE: 0.0
+
+
+-------------------------------------------------------------------------------

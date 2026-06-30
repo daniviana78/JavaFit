@@ -1,0 +1,18 @@
+-------------------------------- Factura de la Reserva --------------------------------
+
+
+Actividad: titulo= s, tipo= Yoga, sala= Sala{nombre= s, aforo= 2}, horarios= [dia= Lunes, turno= 10:00 a 11:00], monitor= dani, imagen= null}
+
+
+Cliente: correo= ivan12@javafit.com, clave= Ivan, nombre= Iván Martínez, telefono= 628221621, direccion= Calle Francisco Jurado, 17, tarjetaCredito= 5412 7512 3456 7890, socioVIP= false, cuota= 50.0
+
+
+Horario: dia= Lunes, turno= 10:00 a 11:00
+
+
+Fecha de realización de la reserva: 2026-06-30
+---------------------------------------------------------------------------------
+IMPORTE: 0.0
+
+
+-------------------------------------------------------------------------------

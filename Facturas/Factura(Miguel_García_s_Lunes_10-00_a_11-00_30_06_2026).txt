@@ -1,0 +1,18 @@
+-------------------------------- Factura de la Reserva --------------------------------
+
+
+Actividad: titulo= s, tipo= Yoga, sala= Sala{nombre= s, aforo= 2}, horarios= [dia= Lunes, turno= 10:00 a 11:00], monitor= dani, imagen= null}
+
+
+Cliente: correo= miguelgarcia@javafit.com, clave= Miguel, nombre= Miguel García, telefono= 634569045, direccion= Avenida de Joan, 42, tarjetaCredito= 3782 8224 5671 0032, socioVIP= true, cuota= 80.0
+
+
+Horario: dia= Lunes, turno= 10:00 a 11:00
+
+
+Fecha de realización de la reserva: 2026-06-30
+---------------------------------------------------------------------------------
+IMPORTE: 0.0
+
+
+-------------------------------------------------------------------------------
