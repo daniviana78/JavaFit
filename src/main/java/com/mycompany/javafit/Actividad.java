@@ -41,6 +41,11 @@ public class Actividad implements Serializable {
     private ArrayList<Valoracion> valoraciones = new ArrayList<>();
     /** Nota media de la actividad. */
     private double media;
+    /** Lista de espera para los socios VIP */
+    private ArrayList<Socio> listaEsperaVip;
+    /** Lista de espera para los socios Básicos */
+    private ArrayList<Socio> listaEsperaBasica;
+    
     
     /**
      * Constructor para inicializar todos los atributos de la actividad.
@@ -60,6 +65,8 @@ public class Actividad implements Serializable {
         this.horarios = horarios;
         this.valoraciones = new ArrayList<>();
         this.media = 0.0;
+        this.listaEsperaVip = new ArrayList<>();
+        this.listaEsperaBasica = new ArrayList<>();
         
     }
     
@@ -189,7 +196,36 @@ public class Actividad implements Serializable {
 
         this.setMedia(media);
     }
-    
+    /**
+     * Añade un socio a la lista de espera correspondiente según su tipo.
+     * @param socio El socio que quiere apuntarse a la lista de espera.
+     */
+    public void apuntarListaEspera(Socio socio) {
+        if (socio.isSocioVIP()) {
+            this.listaEsperaVip.add(socio);
+        } else {
+            this.listaEsperaBasica.add(socio);
+        }
+    }
+
+    /**
+     * Obtiene y elimina de la lista de espera al siguiente socio con mayor prioridad.
+     * @return El socio al que le toca la plaza, o null si no hay nadie esperando.
+     */
+    public Socio obtenerSiguienteDeLista() {
+        // 1. Miramos PRIMERO si hay alguien en la lista VIP
+        if (!listaEsperaVip.isEmpty()) {
+            // Sacamos al primero de los VIPs
+            return listaEsperaVip.remove(0); 
+        } 
+        // 2. Si la lista VIP está vacía, pasamos a la de los normales
+        else if (!listaEsperaBasica.isEmpty()) {
+            // Sacamos al primero de los Básicos
+            return listaEsperaBasica.remove(0);
+        }
+        // 3. Si ambas están vacías, no hay nadie esperando
+        return null;
+    }
     /**
      * Compara si esta actividad es igual a otro objeto basándose en el título.
      * @param obj El objeto a comparar.
