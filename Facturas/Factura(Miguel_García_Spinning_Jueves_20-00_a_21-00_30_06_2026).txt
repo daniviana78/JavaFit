@@ -1,0 +1,18 @@
+-------------------------------- Factura de la Reserva --------------------------------
+
+
+Actividad: titulo= Spinning, tipo= Cardio, sala= Sala{nombre= Sala A2, aforo= 20}, horarios= [dia= Lunes, turno= 10:00 a 11:00, dia= Lunes, turno= 18:00 a 19:00, dia= Martes, turno= 11:00 a 12:00, dia= Martes, turno= 19:00 a 20:00, dia= Jueves, turno= 11:00 a 12:00, dia= Jueves, turno= 20:00 a 21:00, dia= Sábado, turno= 18:00 a 19:00, dia= Sábado, turno= 19:00 a 20:00], monitor= Juan Pérez, imagen= C:\Users\Usuario\Desktop\activiadades javafit\Spinning imagen.jpeg}, precio= 20.0, descripcion= Clase grupal sobre bicicleta estática siguiendo el ritmo de la música con cambios de resistencia.}
+
+
+Cliente: correo= miguelgarcia@javafit.com, clave= Miguel, nombre= Miguel García, telefono= 634569045, direccion= Avenida de Joan, 42, tarjetaCredito= 3782 8224 5671 0032, socioVIP= true, cuota= 80.0
+
+
+Horario: dia= Jueves, turno= 20:00 a 21:00
+
+
+Fecha de realización de la reserva: 2026-06-30
+---------------------------------------------------------------------------------
+IMPORTE: 18.0
+
+
+-------------------------------------------------------------------------------

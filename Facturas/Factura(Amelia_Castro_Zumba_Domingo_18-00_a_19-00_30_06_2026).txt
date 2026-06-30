@@ -1,13 +1,13 @@
 -------------------------------- Factura de la Reserva --------------------------------
 
 
-Actividad: titulo= s, tipo= Yoga, sala= Sala{nombre= s, aforo= 1}, horarios= [dia= Lunes, turno= 10:00 a 11:00], monitor= dani, imagen= null}
+Actividad: titulo= Zumba, tipo= Cardio, sala= Sala{nombre= Sala B2, aforo= 30}, horarios= [dia= Lunes, turno= 10:00 a 11:00, dia= Martes, turno= 10:00 a 11:00, dia= Martes, turno= 18:00 a 19:00, dia= Miércoles, turno= 10:00 a 11:00, dia= Jueves, turno= 19:00 a 20:00, dia= Jueves, turno= 20:00 a 21:00, dia= Domingo, turno= 18:00 a 19:00], monitor= Saray Fernández, imagen= C:\Users\Usuario\Desktop\activiadades javafit\Zumba imagen.jpeg}
 
 
 Cliente: correo= ameliacastro@javafit.com, clave= Amelia, nombre= Amelia Castro, telefono= 67821590, direccion= Calle Calerito, 10, tarjetaCredito= 4532 7182 9381 0472, socioVIP= true, cuota= 80.0
 
 
-Horario: dia= Lunes, turno= 10:00 a 11:00
+Horario: dia= Domingo, turno= 18:00 a 19:00
 
 
 Fecha de realización de la reserva: 2026-06-30
