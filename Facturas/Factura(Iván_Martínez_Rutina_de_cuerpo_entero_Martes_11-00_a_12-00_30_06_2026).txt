@@ -1,0 +1,18 @@
+-------------------------------- Factura de la Reserva --------------------------------
+
+
+Actividad: titulo= Rutina de cuerpo entero, tipo= Musculación, sala= Sala{nombre= Sala C1, aforo= 15}, horarios= [dia= Lunes, turno= 10:00 a 11:00, dia= Lunes, turno= 19:00 a 20:00, dia= Martes, turno= 11:00 a 12:00, dia= Jueves, turno= 10:00 a 11:00, dia= Viernes, turno= 18:00 a 19:00, dia= Sábado, turno= 10:00 a 11:00, dia= Sábado, turno= 18:00 a 19:00], monitor= Cristian Caballero, imagen= C:\Users\Usuario\Desktop\activiadades javafit\Rutina de cuerpo entero imagen.jpeg}, precio= 15.0, descripcion= Entrenamiento en sala enfocado en trabajar todos los grupos musculares principales del cuerpo.}
+
+
+Cliente: correo= ivan12@javafit.com, clave= Ivan, nombre= Iván Martínez, telefono= 628221621, direccion= Calle Francisco Jurado, 17, tarjetaCredito= 5412 7512 3456 7890, socioVIP= false, cuota= 50.0
+
+
+Horario: dia= Martes, turno= 11:00 a 12:00
+
+
+Fecha de realización de la reserva: 2026-06-30
+---------------------------------------------------------------------------------
+IMPORTE: 15.0
+
+
+-------------------------------------------------------------------------------
