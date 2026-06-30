@@ -562,6 +562,28 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
 
                 if (reservaAEliminar != null) {
                     listaReservasSistema.remove(reservaAEliminar);
+                    
+                    Actividad actividadLiberada = reservaAEliminar.getActividad();
+                    Horario horarioLiberado = reservaAEliminar.getHorario();
+                    
+                    Socio afortunado = actividadLiberada.obtenerSiguienteDeLista();
+                    
+                    if (afortunado != null) {
+                        boolean exitoReasignacion = Gimnasio.getInstancia().reservar(actividadLiberada, afortunado, horarioLiberado);
+                        
+                        if (exitoReasignacion) {
+                            try {
+                                ArrayList<Reserva> listaRes = Gimnasio.getInstancia().getReservas();
+                                if (listaRes != null && !listaRes.isEmpty()) {
+                                    Reserva nuevaReserva = listaRes.get(listaRes.size() - 1);
+                                   
+                                    Gimnasio.getInstancia().generaFactura(nuevaReserva);
+                                }
+                            } catch (java.io.IOException e) {
+                                System.out.println("Error al generar recibo para la reasignación: " + e.getMessage());
+                            }
+                        }
+                    }
                     Gimnasio.getInstancia().guardarDatos();
                     javax.swing.JOptionPane.showMessageDialog(this, "La reserva se ha cancelado correctamente.");
                     cargarTablaMisReservas();
@@ -596,15 +618,15 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
             javax.swing.JOptionPane.showMessageDialog(this, "Error: No se ha podido identificar al usuario.");
         }
     }//GEN-LAST:event_botonGuardarCambiosActionPerformed
-    /**
+     /**
      * Maneja el evento de clic en el botón para reservar una actividad.
      * Verifica la selección, comprueba si ya existe la reserva, y la efectúa
-     * generando un recibo si es exitosa.
+     * generando un recibo si es exitosa. Si no hay plazas, ofrece lista de espera.
      *
      * @param evt Evento de acción disparado por el botón.
      */
     private void botonReservarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonReservarActionPerformed
-                                             
+                                                   
         int filaSeleccionada = tablaActividades.getSelectedRow();
 
         if (filaSeleccionada == -1) {
@@ -625,70 +647,82 @@ public class VentanaGestionSocio extends javax.swing.JFrame {
 
         if (actividadElegida != null && socioActual != null) {
 
-        Horario horarioElegido = null;
+            Horario horarioElegido = null;
 
-        if (actividadElegida.getHorarios() != null) {
-            horarioElegido = actividadElegida.getHorarios().stream()
-                    .filter(h -> h.getDia().equalsIgnoreCase(diaElegido) && h.getTurno().equalsIgnoreCase(turnoElegido))
-                    .findFirst()
-                    .orElse(null);
-        }
-
-        if (horarioElegido == null) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Error al recuperar el horario interno de la actividad.");
-            return;
-        }
-
-        boolean existeReserva= false;
-        ArrayList<Reserva> listaReservasSistema = Gimnasio.getInstancia().getReservas();
-
-        if (listaReservasSistema != null) {
-            for (Reserva res : listaReservasSistema) {
-                if (res.getCliente() != null && res.getCliente().getCorreo().equals(socioActual.getCorreo()) &&
-                    res.getActividad() != null && res.getActividad().getTitulo().equalsIgnoreCase(actividadElegida.getTitulo()) &&
-                    res.getHorario() != null && res.getHorario().getDia().equalsIgnoreCase(horarioElegido.getDia()) &&
-                    res.getHorario().getTurno().equalsIgnoreCase(horarioElegido.getTurno())) {
-
-                    existeReserva = true;
-                    break; 
-                }
-            }
-        }
-
-        if (existeReserva) {
-            javax.swing.JOptionPane.showMessageDialog(this, 
-                "Ya estás inscrito en " + tituloClase + " el " + diaElegido + " en el turno de " + turnoElegido.toLowerCase(), "Reserva ya existente", javax.swing.JOptionPane.WARNING_MESSAGE);
-            return; 
-        }
-
-        boolean exito = Gimnasio.getInstancia().reservar(actividadElegida, socioActual, horarioElegido);
-
-        if (exito) {
-            Gimnasio.getInstancia().guardarDatos();
-
-            try {
-                ArrayList<Reserva> listaRes = Gimnasio.getInstancia().getReservas();
-                if (listaRes != null && !listaRes.isEmpty()) {
-                    Reserva ultimaReserva = listaRes.get(listaRes.size() - 1);
-                    Gimnasio.getInstancia().generaFactura(ultimaReserva);
-                }
-            } catch (java.io.IOException e) {
-                System.out.println("Error de escritura en disco al generar la factura: " + e.getMessage());
+            if (actividadElegida.getHorarios() != null) {
+                horarioElegido = actividadElegida.getHorarios().stream()
+                        .filter(h -> h.getDia().equalsIgnoreCase(diaElegido) && h.getTurno().equalsIgnoreCase(turnoElegido))
+                        .findFirst()
+                        .orElse(null);
             }
 
-            javax.swing.JOptionPane.showMessageDialog(this, 
-                "Reserva realizada.\nActividad: " + tituloClase + "\nHorario: " + diaElegido + " (" + turnoElegido + ")");
-            
-            cargarTablaMisReservas(); 
-            
-        } 
-        else {
-            javax.swing.JOptionPane.showMessageDialog(this, "No quedan plazas disponibles. El aforo de la sala está completo.", "Sala llena", javax.swing.JOptionPane.ERROR_MESSAGE);
-        }                                            
-        } 
-        else {
-           javax.swing.JOptionPane.showMessageDialog(this, "Error de autenticación o actividad no encontrada.", "Error crítico", javax.swing.JOptionPane.ERROR_MESSAGE);
-       }
+            if (horarioElegido == null) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Error al recuperar el horario interno de la actividad.");
+                return;
+            }
+
+            boolean existeReserva = false;
+            ArrayList<Reserva> listaReservasSistema = Gimnasio.getInstancia().getReservas();
+
+            if (listaReservasSistema != null) {
+                for (Reserva res : listaReservasSistema) {
+                    if (res.getCliente() != null && res.getCliente().getCorreo().equals(socioActual.getCorreo()) &&
+                        res.getActividad() != null && res.getActividad().getTitulo().equalsIgnoreCase(actividadElegida.getTitulo()) &&
+                        res.getHorario() != null && res.getHorario().getDia().equalsIgnoreCase(horarioElegido.getDia()) &&
+                        res.getHorario().getTurno().equalsIgnoreCase(horarioElegido.getTurno())) {
+
+                        existeReserva = true;
+                        break; 
+                    }
+                }
+            }
+
+            if (existeReserva) {
+                javax.swing.JOptionPane.showMessageDialog(this, 
+                    "Ya estás inscrito en " + tituloClase + " el " + diaElegido + " en el turno de " + turnoElegido.toLowerCase(), "Reserva ya existente", javax.swing.JOptionPane.WARNING_MESSAGE);
+                return; 
+            }
+
+            boolean exito = Gimnasio.getInstancia().reservar(actividadElegida, socioActual, horarioElegido);
+
+            if (exito) {
+                Gimnasio.getInstancia().guardarDatos();
+
+                try {
+                    ArrayList<Reserva> listaRes = Gimnasio.getInstancia().getReservas();
+                    if (listaRes != null && !listaRes.isEmpty()) {
+                        Reserva ultimaReserva = listaRes.get(listaRes.size() - 1);
+                        Gimnasio.getInstancia().generaFactura(ultimaReserva);
+                    }
+                } catch (java.io.IOException e) {
+                    System.out.println("Error de escritura en disco al generar la factura: " + e.getMessage());
+                }
+
+                javax.swing.JOptionPane.showMessageDialog(this, 
+                    "Reserva realizada.\nActividad: " + tituloClase + "\nHorario: " + diaElegido + " (" + turnoElegido + ")");
+                
+                cargarTablaMisReservas(); 
+                
+            } else {
+                int respuesta = javax.swing.JOptionPane.showConfirmDialog(
+                        this,
+                        "No quedan plazas disponibles en la sala. ¿Deseas apuntarte a la lista de espera?",
+                        "Aforo Completo",
+                        javax.swing.JOptionPane.YES_NO_OPTION,
+                        javax.swing.JOptionPane.QUESTION_MESSAGE
+                );
+
+                if (respuesta == javax.swing.JOptionPane.YES_OPTION) {
+                    actividadElegida.apuntarListaEspera(socioActual);
+                    
+                    Gimnasio.getInstancia().guardarDatos();
+                    
+                    javax.swing.JOptionPane.showMessageDialog(this, "Te has apuntado a la lista de espera correctamente. Te avisaremos si queda alguna plaza libre.", "Lista de espera", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                }
+            }                                          
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error de autenticación o actividad no encontrada.", "Error crítico", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_botonReservarActionPerformed
     /**
      * Maneja el evento de clic con el ratón en la tabla de actividades.
